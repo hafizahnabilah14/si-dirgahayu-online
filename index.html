@@ -3,242 +3,1617 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIDAYU - Puskesmas Dirgahayu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>SIDAYU — Puskesmas Dirgahayu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
-        :root {
-            --primary: #00796b;
-            --primary-dark: #004d40;
-            --secondary: #ffb74d;
-            --accent: #e0f2f1;
-            --white: #ffffff;
-            --text-dark: #263238;
-        }
-        * { box-sizing: border-box; }
-        body { font-family: 'Poppins', sans-serif; margin: 0; background: #f4f7f6; color: var(--text-dark); scroll-behavior: smooth; }
 
-        /* HEADER */
-        header {
-            background: linear-gradient(rgba(0,121,107,0.85), rgba(0,121,107,0.85)), url('background_puskesmas.jpeg');
-            background-size: cover; background-position: center;
-            color: white; padding: 50px 20px;
-            clip-path: polygon(0 0, 100% 0, 100% 90%, 0% 100%);
-            display: flex; justify-content: center;
-        }
-        .header-container { max-width: 900px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 30px; }
-        .logo-img { height: 100px; width: auto; filter: drop-shadow(3px 3px 6px rgba(0,0,0,0.3)); }
-        .title-area { text-align: center; }
-        .title-area h1 { margin: 0; font-family: 'Montserrat', sans-serif; font-size: 4em; font-weight: 800; letter-spacing: 4px; text-transform: uppercase; text-shadow: 4px 4px 0px rgba(0,0,0,0.2); }
+    /* ═══════════════════════════════════════════════
+       TOKEN SYSTEM
+    ═══════════════════════════════════════════════ */
+    :root {
+        --green-900: #003d35;
+        --green-800: #004d40;
+        --green-700: #00695c;
+        --green-600: #00796b;
+        --green-500: #00897b;
+        --green-400: #26a69a;
+        --green-100: #e0f2f1;
+        --green-50:  #f0faf9;
+        --gold:      #ffb74d;
+        --gold-dark: #e65100;
+        --white:     #ffffff;
+        --slate-50:  #f8fafb;
+        --slate-100: #f1f5f4;
+        --slate-200: #e2ecea;
+        --slate-500: #607a76;
+        --slate-700: #2e4541;
+        --slate-900: #1a2e2b;
+        --nav-h:     68px;
+        --radius-lg: 18px;
+        --radius-md: 12px;
+        --shadow-sm: 0 2px 8px rgba(0,77,64,0.08);
+        --shadow-md: 0 8px 32px rgba(0,77,64,0.12);
+        --shadow-lg: 0 20px 56px rgba(0,77,64,0.16);
+        --transition: 0.22s cubic-bezier(0.4,0,0.2,1);
+    }
 
-        /* NAVBAR */
-        nav { background: white; display: flex; justify-content: center; padding: 15px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.1); flex-wrap: wrap; gap: 5px; }
-        nav a { color: var(--primary); text-decoration: none; margin: 0 12px; font-weight: 600; display: flex; align-items: center; gap: 8px; font-size: 0.92em; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: var(--slate-50);
+        color: var(--slate-900);
+        min-height: 100vh;
+    }
 
-        .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+    /* ═══════════════════════════════════════════════
+       NAVBAR
+    ═══════════════════════════════════════════════ */
+    .navbar {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        height: var(--nav-h);
+        background: var(--white);
+        border-bottom: 1px solid var(--slate-200);
+        box-shadow: var(--shadow-sm);
+        display: flex;
+        align-items: center;
+        padding: 0 28px;
+        gap: 20px;
+    }
 
-        /* POSTER SECTIONS */
-        .poster-section { background: white; padding: 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 40px; text-align: center; }
-        .poster-img { width: 100%; max-width: 1100px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+    /* Brand */
+    .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        text-decoration: none;
+        flex-shrink: 0;
+    }
+    .nav-brand .brand-logo {
+        width: 36px;
+        height: 36px;
+        background: linear-gradient(135deg, var(--green-700), var(--green-400));
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.1em;
+        font-weight: 900;
+        font-family: 'Montserrat', sans-serif;
+        letter-spacing: -1px;
+        flex-shrink: 0;
+    }
+    .nav-brand .brand-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1;
+    }
+    .nav-brand .brand-name {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.05em;
+        font-weight: 900;
+        color: var(--green-800);
+        letter-spacing: 1.5px;
+    }
+    .nav-brand .brand-sub {
+        font-size: 0.6em;
+        color: var(--slate-500);
+        font-weight: 500;
+        margin-top: 2px;
+        letter-spacing: 0.2px;
+    }
 
-        /* MOTTO */
-        .motto-section { background: var(--primary-dark); color: white; padding: 40px; border-radius: 20px; margin-bottom: 40px; box-shadow: 0 10px 25px rgba(0,77,64,0.3); border-bottom: 8px solid var(--secondary); }
-        .motto-header { font-family: 'Montserrat', sans-serif; font-size: 1.8em; color: var(--secondary); text-align: center; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; }
-        .motto-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
-        .motto-box h3 { font-family: 'Montserrat', sans-serif; font-size: 2.2em; color: white; margin: 0 0 10px 0; border-bottom: 3px solid var(--secondary); display: inline-block; }
-        .motto-box p { font-size: 1.2em; margin: 10px 0; }
-        .motto-box b { color: var(--secondary); font-size: 1.3em; }
+    /* Nav menu */
+    .nav-menu {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        list-style: none;
+        margin-left: auto;
+    }
 
-        /* CARD */
-        .card { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .card h3 { margin-bottom: 10px; font-size: 1.1em; }
-        .card p { font-size: 0.92em; color: #455a64; line-height: 1.6; }
+    .nav-item { position: relative; }
 
-        /* BUTTONS */
-        .btn-action {
-            background: linear-gradient(45deg, var(--primary), var(--primary-dark));
-            color: white; padding: 14px; border-radius: 10px;
-            font-weight: bold; text-transform: uppercase; margin-top: 15px;
-            display: block; text-align: center; text-decoration: none; transition: 0.3s;
-            font-size: 0.88em; letter-spacing: 0.5px;
-        }
-        .btn-action:hover { transform: translateY(-3px); opacity: 0.9; }
+    .nav-link {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 8px 14px;
+        border-radius: 8px;
+        font-size: 0.84em;
+        font-weight: 600;
+        color: var(--slate-700);
+        text-decoration: none;
+        transition: background var(--transition), color var(--transition);
+        white-space: nowrap;
+        cursor: pointer;
+        border: none;
+        background: none;
+        font-family: 'Poppins', sans-serif;
+    }
+    .nav-link:hover,
+    .nav-item:hover > .nav-link,
+    .nav-link.active {
+        background: var(--green-100);
+        color: var(--green-700);
+    }
+    .nav-link .nav-chevron {
+        font-size: 0.7em;
+        transition: transform var(--transition);
+        margin-left: 1px;
+    }
+    .nav-item:hover > .nav-link .nav-chevron,
+    .nav-item.open > .nav-link .nav-chevron {
+        transform: rotate(180deg);
+    }
 
-        /* ── ePUSKESMAS & DIGITAL BANNER ── */
-        .epuskesmas-banner {
-            background: linear-gradient(135deg, #00796b 0%, #004d40 100%);
-            border-radius: 20px; padding: 28px 32px;
-            display: flex; align-items: center; gap: 22px;
-            box-shadow: 0 10px 36px rgba(0,77,64,0.25);
-            margin-bottom: 40px; flex-wrap: wrap;
-        }
-        .ep-icon { background: rgba(255,255,255,0.18); border-radius: 16px; width: 62px; height: 62px; display: flex; align-items: center; justify-content: center; font-size: 1.8em; flex-shrink: 0; }
-        .ep-text { flex: 1; min-width: 200px; }
-        .ep-text .ep-label { font-size: 0.68em; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.75); margin-bottom: 5px; }
-        .ep-text h3 { font-family: 'Montserrat', sans-serif; font-size: 1.15em; font-weight: 900; color: #fff; margin-bottom: 5px; }
-        .ep-text p { font-size: 0.82em; color: rgba(255,255,255,0.85); line-height: 1.55; }
-        .ep-btn {
-            display: inline-flex; align-items: center; gap: 9px;
-            background: #fff; color: #00796b;
-            padding: 13px 24px; border-radius: 50px;
-            font-family: 'Poppins', sans-serif; font-size: 0.88em; font-weight: 700;
-            text-decoration: none; white-space: nowrap;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.15); transition: all 0.2s;
-            flex-shrink: 0;
-        }
-        .ep-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+    /* Dropdown */
+    .dropdown {
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--white);
+        border: 1px solid var(--slate-200);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-lg);
+        min-width: 220px;
+        padding: 6px;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateX(-50%) translateY(-8px);
+        transition: opacity var(--transition), visibility var(--transition), transform var(--transition);
+        pointer-events: none;
+    }
+    .nav-item:hover > .dropdown,
+    .nav-item.open > .dropdown {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) translateY(0);
+        pointer-events: auto;
+    }
+    .dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        border-radius: 8px;
+        font-size: 0.83em;
+        font-weight: 500;
+        color: var(--slate-700);
+        text-decoration: none;
+        transition: background var(--transition), color var(--transition);
+    }
+    .dropdown-item:hover {
+        background: var(--green-100);
+        color: var(--green-700);
+    }
+    .dropdown-item .di-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        background: var(--green-100);
+        color: var(--green-600);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.88em;
+        flex-shrink: 0;
+        transition: background var(--transition);
+    }
+    .dropdown-item:hover .di-icon {
+        background: var(--green-600);
+        color: white;
+    }
+    .dropdown-divider {
+        height: 1px;
+        background: var(--slate-200);
+        margin: 4px 0;
+    }
+    .dropdown-label {
+        padding: 8px 14px 4px;
+        font-size: 0.68em;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+        color: var(--slate-500);
+    }
 
-        /* ── CARD PENGADUAN ── */
-        .card-pengaduan { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-top: 4px solid #e53935; }
-        .card-pengaduan h3 { margin-bottom: 10px; font-size: 1.1em; color: #b71c1c; }
-        .card-pengaduan p { font-size: 0.92em; color: #455a64; line-height: 1.6; }
-        .btn-pengaduan {
-            background: linear-gradient(45deg, #e53935, #b71c1c);
-            color: white; padding: 14px; border-radius: 10px;
-            font-weight: bold; text-transform: uppercase; margin-top: 15px;
-            display: block; text-align: center; text-decoration: none; transition: 0.3s;
-            font-size: 0.88em; letter-spacing: 0.5px;
-        }
-        .btn-pengaduan:hover { transform: translateY(-3px); opacity: 0.9; }
+    /* CTA button in nav */
+    .nav-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 9px 18px;
+        background: var(--green-700);
+        color: white;
+        border-radius: 50px;
+        font-size: 0.83em;
+        font-weight: 700;
+        text-decoration: none;
+        transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+        flex-shrink: 0;
+        margin-left: 6px;
+        font-family: 'Poppins', sans-serif;
+    }
+    .nav-cta:hover {
+        background: var(--green-800);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 14px rgba(0,105,92,0.35);
+    }
 
-        /* FOOTER */
-        footer { text-align: center; padding: 36px; color: var(--primary); font-size: 0.9em; border-top: 1px solid #d0e4e1; margin-top: 20px; }
-        .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 10px; }
-        .footer-links a { color: var(--primary); text-decoration: none; font-size: 0.85em; font-weight: 600; display: flex; align-items: center; gap: 5px; }
-        .footer-links a:hover { text-decoration: underline; }
+    /* Hamburger */
+    .nav-hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        margin-left: auto;
+        padding: 6px;
+        border-radius: 8px;
+        transition: background var(--transition);
+        border: none;
+        background: none;
+    }
+    .nav-hamburger:hover { background: var(--green-100); }
+    .nav-hamburger span {
+        display: block;
+        width: 22px;
+        height: 2px;
+        background: var(--slate-700);
+        border-radius: 2px;
+        transition: transform var(--transition), opacity var(--transition), width var(--transition);
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; width: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-        /* RESPONSIVE */
-        @media (max-width: 768px) {
-            .header-container { flex-direction: column; }
-            .title-area h1 { font-size: 2.5em; }
-            .motto-grid { grid-template-columns: 1fr; text-align: center; }
-            .epuskesmas-banner { flex-direction: column; text-align: center; }
-        }
+    /* Mobile drawer */
+    .nav-drawer {
+        display: none;
+        position: fixed;
+        top: var(--nav-h);
+        left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.4);
+        z-index: 999;
+        backdrop-filter: blur(4px);
+    }
+    .nav-drawer.open { display: block; }
+    .nav-drawer-inner {
+        position: absolute;
+        top: 0; right: 0;
+        width: 300px;
+        height: 100%;
+        background: var(--white);
+        padding: 16px;
+        overflow-y: auto;
+        box-shadow: -8px 0 32px rgba(0,0,0,0.15);
+    }
+    .drawer-section { margin-bottom: 8px; }
+    .drawer-section-label {
+        font-size: 0.68em;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+        color: var(--slate-500);
+        padding: 10px 12px 4px;
+    }
+    .drawer-link {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 11px 12px;
+        border-radius: 10px;
+        font-size: 0.86em;
+        font-weight: 500;
+        color: var(--slate-700);
+        text-decoration: none;
+        transition: background var(--transition), color var(--transition);
+    }
+    .drawer-link:hover, .drawer-link.active {
+        background: var(--green-100);
+        color: var(--green-700);
+    }
+    .drawer-link .dl-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 9px;
+        background: var(--green-100);
+        color: var(--green-600);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9em;
+        flex-shrink: 0;
+    }
+    .drawer-link:hover .dl-icon { background: var(--green-600); color: white; }
+    .drawer-divider { height: 1px; background: var(--slate-200); margin: 8px 0; }
+    .drawer-cta {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 13px;
+        background: var(--green-700);
+        color: white;
+        border-radius: 12px;
+        font-size: 0.88em;
+        font-weight: 700;
+        text-decoration: none;
+        margin-top: 12px;
+        transition: background var(--transition);
+    }
+    .drawer-cta:hover { background: var(--green-800); }
+
+    /* ═══════════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════════ */
+    .hero {
+        position: relative;
+        min-height: 92vh;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        background: linear-gradient(155deg, var(--green-900) 0%, var(--green-700) 55%, var(--green-400) 100%);
+    }
+    /* Subtle texture */
+    .hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(ellipse 60% 50% at 80% 30%, rgba(255,183,77,0.12) 0%, transparent 70%),
+            url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.025'%3E%3Ccircle cx='40' cy='40' r='28'/%3E%3C/g%3E%3C/svg%3E");
+        pointer-events: none;
+    }
+    /* Decorative ring top-right */
+    .hero::after {
+        content: '';
+        position: absolute;
+        right: -140px;
+        top: -140px;
+        width: 520px;
+        height: 520px;
+        border-radius: 50%;
+        border: 60px solid rgba(255,255,255,0.05);
+        pointer-events: none;
+    }
+
+    .hero-inner {
+        position: relative;
+        z-index: 1;
+        max-width: 1160px;
+        margin: 0 auto;
+        padding: 80px 28px 60px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 48px;
+        align-items: center;
+    }
+
+    .hero-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255,255,255,0.12);
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 50px;
+        padding: 6px 16px;
+        font-size: 0.72em;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 22px;
+    }
+    .hero-eyebrow i { font-size: 0.85em; }
+
+    .hero-title {
+        font-family: 'Montserrat', sans-serif;
+        font-size: clamp(2.2em, 4.5vw, 3.4em);
+        font-weight: 900;
+        color: white;
+        line-height: 1.08;
+        letter-spacing: -0.5px;
+        margin-bottom: 20px;
+    }
+    .hero-title .accent {
+        color: var(--gold);
+        display: block;
+    }
+
+    .hero-desc {
+        font-size: 0.97em;
+        color: rgba(255,255,255,0.82);
+        line-height: 1.75;
+        max-width: 500px;
+        margin-bottom: 36px;
+    }
+
+    .hero-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+    .hero-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        padding: 14px 26px;
+        border-radius: 50px;
+        font-size: 0.9em;
+        font-weight: 700;
+        text-decoration: none;
+        transition: all var(--transition);
+        font-family: 'Poppins', sans-serif;
+    }
+    .hero-btn.primary {
+        background: white;
+        color: var(--green-800);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    .hero-btn.primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 28px rgba(0,0,0,0.25);
+    }
+    .hero-btn.secondary {
+        background: rgba(255,255,255,0.15);
+        color: white;
+        border: 1.5px solid rgba(255,255,255,0.3);
+    }
+    .hero-btn.secondary:hover {
+        background: rgba(255,255,255,0.25);
+        transform: translateY(-2px);
+    }
+
+    /* Hero stats */
+    .hero-stats {
+        display: flex;
+        gap: 0;
+        margin-top: 44px;
+        padding-top: 36px;
+        border-top: 1px solid rgba(255,255,255,0.15);
+    }
+    .stat-item {
+        flex: 1;
+        padding: 0 20px 0 0;
+    }
+    .stat-item:not(:last-child) {
+        border-right: 1px solid rgba(255,255,255,0.15);
+        margin-right: 20px;
+    }
+    .stat-num {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.8em;
+        font-weight: 900;
+        color: white;
+        line-height: 1;
+        margin-bottom: 4px;
+    }
+    .stat-label {
+        font-size: 0.72em;
+        color: rgba(255,255,255,0.65);
+        line-height: 1.4;
+    }
+
+    /* Hero visual side */
+    .hero-visual {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+    .hero-card {
+        background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.18);
+        border-radius: var(--radius-lg);
+        padding: 18px 22px;
+        backdrop-filter: blur(12px);
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        transition: transform var(--transition), background var(--transition);
+        text-decoration: none;
+        color: white;
+    }
+    .hero-card:hover {
+        background: rgba(255,255,255,0.18);
+        transform: translateX(6px);
+    }
+    .hero-card-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 13px;
+        background: rgba(255,255,255,0.18);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3em;
+        flex-shrink: 0;
+    }
+    .hero-card-text h4 {
+        font-size: 0.9em;
+        font-weight: 700;
+        margin-bottom: 2px;
+    }
+    .hero-card-text p {
+        font-size: 0.74em;
+        opacity: 0.75;
+        line-height: 1.4;
+    }
+    .hero-card-arrow {
+        margin-left: auto;
+        opacity: 0.6;
+        font-size: 0.85em;
+        transition: transform var(--transition), opacity var(--transition);
+    }
+    .hero-card:hover .hero-card-arrow {
+        transform: translateX(4px);
+        opacity: 1;
+    }
+
+    /* ═══════════════════════════════════════════════
+       MOTTO SECTION
+    ═══════════════════════════════════════════════ */
+    .motto-section {
+        background: white;
+        padding: 64px 28px;
+    }
+    .section-inner { max-width: 1160px; margin: 0 auto; }
+    .section-header {
+        text-align: center;
+        margin-bottom: 48px;
+    }
+    .section-eyebrow {
+        display: inline-block;
+        font-size: 0.72em;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--green-600);
+        margin-bottom: 12px;
+    }
+    .section-title {
+        font-family: 'Montserrat', sans-serif;
+        font-size: clamp(1.6em, 3vw, 2.2em);
+        font-weight: 900;
+        color: var(--slate-900);
+        line-height: 1.15;
+    }
+
+    .motto-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+    }
+    .motto-card {
+        background: linear-gradient(135deg, var(--green-800) 0%, var(--green-600) 100%);
+        border-radius: var(--radius-lg);
+        padding: 32px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+    .motto-card::before {
+        content: '';
+        position: absolute;
+        right: -30px;
+        bottom: -30px;
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.07);
+        pointer-events: none;
+    }
+    .motto-card-label {
+        font-size: 0.68em;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 10px;
+    }
+    .motto-card-word {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 2.6em;
+        font-weight: 900;
+        color: white;
+        margin-bottom: 16px;
+        line-height: 1;
+    }
+    .motto-items {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    .motto-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        font-size: 0.88em;
+        color: rgba(255,255,255,0.88);
+        line-height: 1.4;
+    }
+    .motto-item b { color: var(--gold); font-weight: 800; }
+    .motto-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--gold);
+        flex-shrink: 0;
+        margin-top: 6px;
+    }
+
+    /* ═══════════════════════════════════════════════
+       LAYANAN SECTION (Quick Access)
+    ═══════════════════════════════════════════════ */
+    .layanan-section {
+        background: var(--slate-100);
+        padding: 64px 28px;
+    }
+    .layanan-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 18px;
+    }
+    .layanan-card {
+        background: white;
+        border-radius: var(--radius-lg);
+        padding: 26px 22px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        text-decoration: none;
+        color: var(--slate-900);
+        box-shadow: var(--shadow-sm);
+        border: 1px solid var(--slate-200);
+        transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+        position: relative;
+        overflow: hidden;
+    }
+    .layanan-card::after {
+        content: '';
+        position: absolute;
+        bottom: 0; left: 0; right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--green-600), var(--green-400));
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform var(--transition);
+    }
+    .layanan-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-md);
+        border-color: var(--green-400);
+    }
+    .layanan-card:hover::after { transform: scaleX(1); }
+    .layanan-card-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+        background: var(--green-100);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5em;
+        color: var(--green-700);
+        transition: background var(--transition), color var(--transition);
+    }
+    .layanan-card:hover .layanan-card-icon {
+        background: var(--green-700);
+        color: white;
+    }
+    .layanan-card h4 {
+        font-size: 0.92em;
+        font-weight: 700;
+        color: var(--slate-900);
+        line-height: 1.3;
+    }
+    .layanan-card p {
+        font-size: 0.77em;
+        color: var(--slate-500);
+        line-height: 1.6;
+        flex: 1;
+    }
+    .layanan-card-link {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 0.78em;
+        font-weight: 700;
+        color: var(--green-600);
+    }
+    .layanan-card:hover .layanan-card-link { color: var(--green-800); }
+
+    /* Special antrian card */
+    .layanan-card.antrian {
+        background: linear-gradient(135deg, var(--green-800), var(--green-600));
+        color: white;
+        border: none;
+    }
+    .layanan-card.antrian::after { display: none; }
+    .layanan-card.antrian .layanan-card-icon { background: rgba(255,255,255,0.18); color: white; }
+    .layanan-card.antrian:hover .layanan-card-icon { background: rgba(255,255,255,0.28); color: white; }
+    .layanan-card.antrian h4, .layanan-card.antrian p { color: white; }
+    .layanan-card.antrian p { opacity: 0.82; }
+    .layanan-card.antrian .layanan-card-link { color: var(--gold); }
+    .layanan-card.antrian:hover { box-shadow: var(--shadow-lg); border-color: transparent; }
+
+    /* ═══════════════════════════════════════════════
+       VISIMISI & JADWAL (Poster Sections)
+    ═══════════════════════════════════════════════ */
+    .poster-wrap {
+        background: white;
+        padding: 64px 28px;
+    }
+    .poster-wrap.alt { background: var(--slate-100); }
+    .poster-box {
+        background: white;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-md);
+        overflow: hidden;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+    .poster-box-header {
+        background: linear-gradient(135deg, var(--green-800), var(--green-600));
+        padding: 20px 28px;
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .poster-box-header i { font-size: 1.2em; color: var(--gold); }
+    .poster-box-header h3 { font-family: 'Montserrat', sans-serif; font-size: 0.95em; font-weight: 900; letter-spacing: 0.5px; }
+    .poster-box img {
+        width: 100%;
+        display: block;
+    }
+    .poster-placeholder {
+        background: var(--slate-100);
+        min-height: 320px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        color: var(--slate-500);
+        font-size: 0.85em;
+    }
+    .poster-placeholder i { font-size: 3em; opacity: 0.3; }
+
+    /* ═══════════════════════════════════════════════
+       ANTRIAN BANNER
+    ═══════════════════════════════════════════════ */
+    .antrian-section {
+        background: var(--green-900);
+        padding: 64px 28px;
+        position: relative;
+        overflow: hidden;
+    }
+    .antrian-section::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse 50% 80% at 90% 50%, rgba(255,183,77,0.08) 0%, transparent 70%);
+        pointer-events: none;
+    }
+    .antrian-inner {
+        max-width: 1160px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 48px;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+    }
+    .antrian-text h2 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: clamp(1.5em, 3vw, 2em);
+        font-weight: 900;
+        color: white;
+        margin-bottom: 14px;
+        line-height: 1.15;
+    }
+    .antrian-text h2 span { color: var(--gold); }
+    .antrian-text p {
+        font-size: 0.88em;
+        color: rgba(255,255,255,0.75);
+        line-height: 1.7;
+        margin-bottom: 28px;
+    }
+    .antrian-steps {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .antrian-step {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 0.84em;
+        color: rgba(255,255,255,0.82);
+    }
+    .step-num {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: var(--gold);
+        color: var(--green-900);
+        font-weight: 900;
+        font-size: 0.8em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    .antrian-btns {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .antrian-btn {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        background: rgba(255,255,255,0.08);
+        border: 1px solid rgba(255,255,255,0.15);
+        border-radius: var(--radius-md);
+        padding: 16px 20px;
+        text-decoration: none;
+        color: white;
+        transition: background var(--transition), border-color var(--transition), transform var(--transition);
+    }
+    .antrian-btn:hover {
+        background: rgba(255,255,255,0.16);
+        border-color: rgba(255,255,255,0.3);
+        transform: translateX(4px);
+    }
+    .antrian-btn.primary-btn {
+        background: var(--gold);
+        border-color: var(--gold);
+        color: var(--green-900);
+        font-weight: 700;
+    }
+    .antrian-btn.primary-btn:hover {
+        background: #ffc96b;
+        border-color: #ffc96b;
+    }
+    .antrian-btn-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: rgba(255,255,255,0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1em;
+        flex-shrink: 0;
+    }
+    .antrian-btn.primary-btn .antrian-btn-icon { background: rgba(0,77,64,0.2); }
+    .antrian-btn-text h5 { font-size: 0.88em; font-weight: 700; margin-bottom: 2px; }
+    .antrian-btn-text p { font-size: 0.72em; opacity: 0.75; }
+    .antrian-btn.primary-btn .antrian-btn-text p { opacity: 0.7; }
+    .antrian-btn-arrow { margin-left: auto; opacity: 0.5; transition: transform var(--transition), opacity var(--transition); }
+    .antrian-btn:hover .antrian-btn-arrow { transform: translateX(3px); opacity: 1; }
+
+    /* ═══════════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════════ */
+    footer {
+        background: var(--green-900);
+        padding: 48px 28px 28px;
+        color: rgba(255,255,255,0.7);
+    }
+    .footer-inner {
+        max-width: 1160px;
+        margin: 0 auto;
+    }
+    .footer-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 40px;
+    }
+    .footer-brand-name {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.4em;
+        font-weight: 900;
+        color: white;
+        letter-spacing: 2px;
+        margin-bottom: 8px;
+    }
+    .footer-brand-sub {
+        font-size: 0.78em;
+        color: rgba(255,255,255,0.6);
+        line-height: 1.6;
+        margin-bottom: 18px;
+    }
+    .footer-socials {
+        display: flex;
+        gap: 10px;
+    }
+    .footer-social {
+        width: 36px;
+        height: 36px;
+        border-radius: 9px;
+        background: rgba(255,255,255,0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(255,255,255,0.7);
+        font-size: 0.9em;
+        text-decoration: none;
+        transition: background var(--transition), color var(--transition);
+    }
+    .footer-social:hover { background: var(--green-600); color: white; }
+    .footer-col h5 {
+        font-size: 0.8em;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+        color: white;
+        margin-bottom: 14px;
+    }
+    .footer-col a {
+        display: block;
+        font-size: 0.82em;
+        color: rgba(255,255,255,0.6);
+        text-decoration: none;
+        margin-bottom: 9px;
+        transition: color var(--transition);
+    }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom {
+        border-top: 1px solid rgba(255,255,255,0.1);
+        padding-top: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 10px;
+        font-size: 0.78em;
+    }
+    .footer-bottom a { color: var(--gold); text-decoration: none; }
+
+    /* ═══════════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════════ */
+    @media (max-width: 1024px) {
+        .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+    }
+
+    @media (max-width: 900px) {
+        .nav-menu { display: none; }
+        .nav-cta { display: none; }
+        .nav-hamburger { display: flex; }
+
+        .hero-inner { grid-template-columns: 1fr; gap: 36px; }
+        .hero-visual { display: none; }
+        .hero { min-height: 85vh; }
+
+        .motto-grid { grid-template-columns: 1fr; }
+        .antrian-inner { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+        .hero-stats { flex-wrap: wrap; gap: 20px; }
+        .stat-item:not(:last-child) { border-right: none; margin-right: 0; }
+        .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+        .hero-actions { flex-direction: column; }
+        .hero-btn { justify-content: center; }
+        .layanan-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 420px) {
+        .layanan-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ═══════════════════════════════════════════════
+       UTILITIES
+    ═══════════════════════════════════════════════ */
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: 0.08s; }
+    .reveal-d2 { transition-delay: 0.16s; }
+    .reveal-d3 { transition-delay: 0.24s; }
+    .reveal-d4 { transition-delay: 0.32s; }
+    .reveal-d5 { transition-delay: 0.40s; }
+
     </style>
 </head>
 <body>
 
-<header class="animate__animated animate__fadeIn">
-    <div class="header-container">
-        <img src="logo_puskesmas.png" alt="Logo Puskesmas" class="logo-img">
-        <div class="title-area">
-            <h1>SIDAYU</h1>
-            <p>Sistem Informasi Digital & Layanan Terpadu Puskesmas Dirgahayu</p>
-        </div>
-        <img src="logo_kabupaten.png" alt="Logo Kabupaten" class="logo-img">
-    </div>
-</header>
+<!-- ══════════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════════ -->
+<nav class="navbar" id="mainNav">
 
-<nav>
-    <a href="#visimisi"><i class="fas fa-image"></i> VISI & MISI</a>
-    <a href="#motto"><i class="fas fa-heart"></i> MOTTO</a>
-    <a href="#layanan"><i class="fas fa-concierge-bell"></i> LAYANAN</a>
-    <a href="#antrian"><i class="fas fa-calendar-check"></i> ANTRIAN ONLINE</a>
-    <a href="pengaduan.html"><i class="fas fa-comment-alt"></i> PENGADUAN</a>
+    <a href="#" class="nav-brand">
+        <div class="brand-logo">S</div>
+        <div class="brand-text">
+            <span class="brand-name">SIDAYU</span>
+            <span class="brand-sub">Puskesmas Dirgahayu</span>
+        </div>
+    </a>
+
+    <ul class="nav-menu" role="menubar">
+
+        <!-- Beranda -->
+        <li class="nav-item" role="none">
+            <a href="#" class="nav-link active" role="menuitem">Beranda</a>
+        </li>
+
+        <!-- Profil (dropdown) -->
+        <li class="nav-item" role="none">
+            <span class="nav-link" role="menuitem" aria-haspopup="true">
+                Profil <i class="fas fa-chevron-down nav-chevron"></i>
+            </span>
+            <div class="dropdown" role="menu">
+                <div class="dropdown-label">Puskesmas Dirgahayu</div>
+                <a href="#profil-visimisi" class="dropdown-item" role="menuitem">
+                    <span class="di-icon"><i class="fas fa-bullseye"></i></span>
+                    <div><strong>Visi & Misi</strong></div>
+                </a>
+                <a href="#profil-jadwal" class="dropdown-item" role="menuitem">
+                    <span class="di-icon"><i class="fas fa-calendar-alt"></i></span>
+                    <div><strong>Jadwal Pelayanan</strong></div>
+                </a>
+                <a href="eksplorasi.html" class="dropdown-item" role="menuitem">
+                    <span class="di-icon"><i class="fas fa-sitemap"></i></span>
+                    <div><strong>E-Branding & SDM</strong></div>
+                </a>
+            </div>
+        </li>
+
+        <!-- Layanan (dropdown) -->
+        <li class="nav-item" role="none">
+            <span class="nav-link" role="menuitem" aria-haspopup="true">
+                Layanan <i class="fas fa-chevron-down nav-chevron"></i>
+            </span>
+            <div class="dropdown" role="menu">
+                <div class="dropdown-label">Layanan Digital</div>
+                <a href="skrining.html" class="dropdown-item" role="menuitem">
+                    <span class="di-icon"><i class="fas fa-file-medical-alt"></i></span>
+                    <div><strong>Skrining Mandiri</strong><br><small style="color:var(--slate-500);font-size:0.85em">TBC, HIV, Hepatitis, Jiwa, Anak</small></div>
+                </a>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-label">Antrian & Pendaftaran</div>
+                <a href="https://www.klinisia.id/" target="_blank" rel="noopener" class="dropdown-item" role="menuitem">
+                    <span class="di-icon"><i class="fas fa-mobile-alt"></i></span>
+                    <div><strong>Antrian Online (Umum)</strong></div>
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=app.bpjs.mobile" target="_blank" rel="noopener" class="dropdown-item" role="menuitem">
+                    <span class="di-icon"><i class="fab fa-google-play"></i></span>
+                    <div><strong>JKN Mobile (Android)</strong></div>
+                </a>
+                <a href="https://apps.apple.com/id/app/mobile-jkn/id1237601115" target="_blank" rel="noopener" class="dropdown-item" role="menuitem">
+                    <span class="di-icon"><i class="fab fa-apple"></i></span>
+                    <div><strong>JKN Mobile (iOS)</strong></div>
+                </a>
+                <a href="registrasi.html" class="dropdown-item" role="menuitem">
+                    <span class="di-icon"><i class="fas fa-edit"></i></span>
+                    <div><strong>Pendaftaran Mandiri</strong></div>
+                </a>
+            </div>
+        </li>
+
+        <!-- Edukasi (dropdown) -->
+        <li class="nav-item" role="none">
+            <span class="nav-link" role="menuitem" aria-haspopup="true">
+                Edukasi <i class="fas fa-chevron-down nav-chevron"></i>
+            </span>
+            <div class="dropdown" role="menu">
+                <div class="dropdown-label">Hub Edukasi Kesehatan</div>
+                <a href="edukasi.html#section-youtube" class="dropdown-item" role="menuitem">
+                    <span class="di-icon" style="background:#ffebee;color:#c62828;"><i class="fab fa-youtube"></i></span>
+                    <div><strong>Video YouTube</strong><br><small style="color:var(--slate-500);font-size:0.85em">TBC, HIV, Hepatitis, Gizi, KIA</small></div>
+                </a>
+                <a href="edukasi.html#section-tiktok" class="dropdown-item" role="menuitem">
+                    <span class="di-icon" style="background:#fce4ec;color:#ad1457;"><i class="fab fa-tiktok"></i></span>
+                    <div><strong>Video TikTok</strong><br><small style="color:var(--slate-500);font-size:0.85em">Konten pendek edukasi</small></div>
+                </a>
+                <a href="edukasi.html#section-poster" class="dropdown-item" role="menuitem">
+                    <span class="di-icon"><i class="fas fa-image"></i></span>
+                    <div><strong>Poster Edukasi</strong></div>
+                </a>
+            </div>
+        </li>
+
+        <!-- Pengaduan -->
+        <li class="nav-item" role="none">
+            <a href="pengaduan.html" class="nav-link" role="menuitem">Pengaduan</a>
+        </li>
+
+        <!-- Kontak -->
+        <li class="nav-item" role="none">
+            <a href="eksplorasi.html#kontak" class="nav-link" role="menuitem">Kontak</a>
+        </li>
+
+    </ul>
+
+    <!-- CTA Button -->
+    <a href="skrining.html" class="nav-cta">
+        <i class="fas fa-file-medical-alt"></i> Mulai Skrining
+    </a>
+
+    <!-- Hamburger -->
+    <button class="nav-hamburger" id="hamburger" aria-label="Buka menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+    </button>
+
 </nav>
 
-<div class="container">
+<!-- Mobile Drawer -->
+<div class="nav-drawer" id="navDrawer" role="dialog" aria-label="Menu navigasi">
+    <div class="nav-drawer-inner">
 
-    <section id="visimisi" class="poster-section animate__animated animate__fadeInUp">
-        <h2 style="color: var(--primary); font-family: 'Montserrat', sans-serif; margin-bottom: 20px;">VISI, MISI & PROFIL PUSKESMAS</h2>
-        <img src="poster_visimisi.png" alt="Poster Visi Misi Puskesmas Dirgahayu" class="poster-img">
-    </section>
-
-    <section id="jadwal" class="poster-section animate__animated animate__fadeInUp">
-        <h2 style="color: var(--primary); font-family: 'Montserrat', sans-serif; margin-bottom: 20px;">JADWAL & WAKTU PELAYANAN</h2>
-        <img src="jadwalpelayanan.png" alt="Poster Pelayanan" class="poster-img">
-    </section>
-
-    <section id="motto" class="motto-section animate__animated animate__fadeInUp">
-        <div class="motto-header">MOTTO PELAYANAN: MELAYANI DENGAN</div>
-        <div class="motto-grid">
-            <div class="motto-box">
-                <h3>"SERASI"</h3>
-                <p><b>SE</b>nyum <b>RA</b>mah, <b>SI</b>mpati</p>
-            </div>
-            <div class="motto-box">
-                <h3>"TELITI"</h3>
-                <p><b>TE</b>pat</p>
-                <p><b>L</b>egal</p>
-                <p><b>I</b>novatif</p>
-                <p><b>T</b>erampil</p>
-                <p><b>I</b>ntensif</p>
-            </div>
-        </div>
-    </section>
-
-    <div id="layanan" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px,1fr)); gap:25px; margin-bottom:40px;">
-
-        <div class="card animate__animated animate__fadeInLeft">
-            <h3><i class="fas fa-stethoscope" style="color:var(--primary)"></i> E-Branding</h3>
-            <p>Informasi SDM, Jadwal Praktik, Bagan Organisasi, Peta Lokasi, dan fasilitas Puskesmas Dirgahayu.</p>
-            <a href="eksplorasi.html" class="btn-action">Eksplorasi</a>
-        </div>
-
-        <div class="card animate__animated animate__fadeInUp">
-            <h3><i class="fas fa-file-medical-alt" style="color:var(--primary)"></i> Skrining Mandiri</h3>
-            <p>Self-assessment untuk deteksi dini TBC, HIV, Hepatitis, Penyakit Menular, Kesehatan Jiwa, dan Skrining Anak secara mandiri.</p>
-            <a href="skrining.html" class="btn-action">Mulai Cek</a>
-        </div>
-
-        <div class="card animate__animated animate__fadeInRight">
-            <h3><i class="fas fa-mobile-alt" style="color:var(--primary)"></i> Hub Edukasi</h3>
-            <p>Video edukasi dari YouTube & TikTok serta poster kesehatan interaktif dari tenaga medis Puskesmas Dirgahayu.</p>
-            <a href="edukasi.html" class="btn-action">Buka Library</a>
-        </div>
-
-        <div class="card-pengaduan animate__animated animate__fadeInLeft">
-            <h3><i class="fas fa-comment-dots"></i> Pengaduan & Saran</h3>
-            <p>Sampaikan keluhan, saran, atau masukan terkait layanan Puskesmas Dirgahayu. Kami berkomitmen untuk terus meningkatkan kualitas pelayanan.</p>
-            <a href="pengaduan.html" class="btn-pengaduan">
-                <i class="fas fa-paper-plane" style="margin-right:6px"></i> Sampaikan Pengaduan
+        <div class="drawer-section">
+            <div class="drawer-section-label">Navigasi</div>
+            <a href="#" class="drawer-link active">
+                <span class="dl-icon"><i class="fas fa-home"></i></span> Beranda
             </a>
         </div>
+
+        <div class="drawer-divider"></div>
+        <div class="drawer-section">
+            <div class="drawer-section-label">Profil</div>
+            <a href="#profil-visimisi" class="drawer-link" onclick="closeDrawer()">
+                <span class="dl-icon"><i class="fas fa-bullseye"></i></span> Visi & Misi
+            </a>
+            <a href="#profil-jadwal" class="drawer-link" onclick="closeDrawer()">
+                <span class="dl-icon"><i class="fas fa-calendar-alt"></i></span> Jadwal Pelayanan
+            </a>
+            <a href="eksplorasi.html" class="drawer-link">
+                <span class="dl-icon"><i class="fas fa-sitemap"></i></span> E-Branding & SDM
+            </a>
+        </div>
+
+        <div class="drawer-divider"></div>
+        <div class="drawer-section">
+            <div class="drawer-section-label">Layanan</div>
+            <a href="skrining.html" class="drawer-link">
+                <span class="dl-icon"><i class="fas fa-file-medical-alt"></i></span> Skrining Mandiri
+            </a>
+            <a href="https://www.klinisia.id/" target="_blank" rel="noopener" class="drawer-link">
+                <span class="dl-icon"><i class="fas fa-mobile-alt"></i></span> Antrian Online (Umum)
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=app.bpjs.mobile" target="_blank" rel="noopener" class="drawer-link">
+                <span class="dl-icon"><i class="fab fa-google-play"></i></span> JKN Mobile (Android)
+            </a>
+            <a href="https://apps.apple.com/id/app/mobile-jkn/id1237601115" target="_blank" rel="noopener" class="drawer-link">
+                <span class="dl-icon"><i class="fab fa-apple"></i></span> JKN Mobile (iOS)
+            </a>
+            <a href="registrasi.html" class="drawer-link">
+                <span class="dl-icon"><i class="fas fa-edit"></i></span> Pendaftaran Mandiri
+            </a>
+        </div>
+
+        <div class="drawer-divider"></div>
+        <div class="drawer-section">
+            <div class="drawer-section-label">Edukasi</div>
+            <a href="edukasi.html#section-youtube" class="drawer-link">
+                <span class="dl-icon" style="background:#ffebee;color:#c62828;"><i class="fab fa-youtube"></i></span> Video YouTube
+            </a>
+            <a href="edukasi.html#section-tiktok" class="drawer-link">
+                <span class="dl-icon" style="background:#fce4ec;color:#ad1457;"><i class="fab fa-tiktok"></i></span> Video TikTok
+            </a>
+            <a href="edukasi.html#section-poster" class="drawer-link">
+                <span class="dl-icon"><i class="fas fa-image"></i></span> Poster Edukasi
+            </a>
+        </div>
+
+        <div class="drawer-divider"></div>
+        <div class="drawer-section">
+            <a href="pengaduan.html" class="drawer-link">
+                <span class="dl-icon"><i class="fas fa-comment-alt"></i></span> Pengaduan & Saran
+            </a>
+            <a href="eksplorasi.html#kontak" class="drawer-link">
+                <span class="dl-icon"><i class="fas fa-address-book"></i></span> Kontak
+            </a>
+        </div>
+
+        <a href="skrining.html" class="drawer-cta">
+            <i class="fas fa-file-medical-alt"></i> Mulai Skrining Sekarang
+        </a>
 
     </div>
-
-    <section id="antrian" class="epuskesmas-banner animate__animated animate__fadeInUp">
-        <div class="ep-icon">📱</div>
-        <div class="ep-text">
-            <div class="ep-label">Sistem Pendaftaran Antrian Digital</div>
-            <h3>Ambil Antrian Online & Pendaftaran Mandiri</h3>
-            <p>Guna menghindari antrian panjang di Puskesmas Dirgahayu, silakan ambil nomor antrian Anda secara mandiri dari rumah melalui opsi aplikasi resmi atau formulir web di bawah ini:</p>
-        </div>
-        <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; width: 100%; margin-top: 10px;">
-            <a href="https://www.klinisia.id/"
-               target="_blank" rel="noopener" class="ep-btn" style="background: #ffffff; color: #00796b;">
-                <i class="fas fa-mobile-alt"></i> Jalur Umum (Klinisia)
-            </a>
-
-            <a href="https://play.google.com/store/apps/details?id=app.bpjs.mobile" 
-               target="_blank" rel="noopener" class="ep-btn" style="background: #1e88e5; color: #ffffff;">
-                <i class="fab fa-google-play"></i> JKN Mobile (Android)
-            </a>
-
-            <a href="https://apps.apple.com/id/app/mobile-jkn/id1237601115?l=id" 
-               target="_blank" rel="noopener" class="ep-btn" style="background: #263238; color: #ffffff;">
-                <i class="fab fa-apple" style="color: #ffb74d;"></i> JKN Mobile (iOS)
-            </a>
-
-            <a href="registrasi.html" class="ep-btn" style="background: #ffb74d; color: #263238;">
-                <i class="fas fa-edit"></i> Isi Form Daftar Mandiri
-            </a>
-        </div>
-    </section>
-
 </div>
 
+
+<!-- ══════════════════════════════════════════
+     HERO
+══════════════════════════════════════════ -->
+<section class="hero" id="beranda">
+    <div class="hero-inner">
+        <div class="hero-content">
+            <div class="hero-eyebrow reveal">
+                <i class="fas fa-shield-alt"></i>
+                UPTD Puskesmas Dirgahayu — Kotabaru
+            </div>
+            <h1 class="hero-title reveal reveal-d1">
+                Layanan Kesehatan
+                <span class="accent">Digital Terpadu</span>
+                untuk Masyarakat
+            </h1>
+            <p class="hero-desc reveal reveal-d2">
+                SIDAYU hadir sebagai platform informasi dan layanan kesehatan digital
+                Puskesmas Dirgahayu — dari skrining mandiri, edukasi kesehatan,
+                hingga pendaftaran antrian online.
+            </p>
+            <div class="hero-actions reveal reveal-d3">
+                <a href="skrining.html" class="hero-btn primary">
+                    <i class="fas fa-file-medical-alt"></i> Skrining Mandiri
+                </a>
+                <a href="#layanan" class="hero-btn secondary">
+                    <i class="fas fa-th-large"></i> Jelajahi Layanan
+                </a>
+            </div>
+            <div class="hero-stats reveal reveal-d4">
+                <div class="stat-item">
+                    <div class="stat-num">88</div>
+                    <div class="stat-label">Tenaga<br>Kesehatan</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num">5</div>
+                    <div class="stat-label">Jenis<br>Skrining</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num">9+</div>
+                    <div class="stat-label">Desa<br>Wilayah Kerja</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num">24/7</div>
+                    <div class="stat-label">Info<br>Digital</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hero Visual — Quick Access Cards -->
+        <div class="hero-visual">
+            <a href="skrining.html" class="hero-card reveal reveal-d1">
+                <div class="hero-card-icon">🩺</div>
+                <div class="hero-card-text">
+                    <h4>Skrining Mandiri</h4>
+                    <p>TBC · HIV · Hepatitis · Jiwa · Anak</p>
+                </div>
+                <i class="fas fa-arrow-right hero-card-arrow"></i>
+            </a>
+            <a href="edukasi.html" class="hero-card reveal reveal-d2">
+                <div class="hero-card-icon">📚</div>
+                <div class="hero-card-text">
+                    <h4>Hub Edukasi Kesehatan</h4>
+                    <p>Video YouTube · TikTok · Poster</p>
+                </div>
+                <i class="fas fa-arrow-right hero-card-arrow"></i>
+            </a>
+            <a href="eksplorasi.html" class="hero-card reveal reveal-d3">
+                <div class="hero-card-icon">🏥</div>
+                <div class="hero-card-text">
+                    <h4>E-Branding Puskesmas</h4>
+                    <p>SDM · Fasilitas · Peta · Organisasi</p>
+                </div>
+                <i class="fas fa-arrow-right hero-card-arrow"></i>
+            </a>
+            <a href="pengaduan.html" class="hero-card reveal reveal-d4">
+                <div class="hero-card-icon">💬</div>
+                <div class="hero-card-text">
+                    <h4>Pengaduan & Saran</h4>
+                    <p>Sampaikan masukan Anda</p>
+                </div>
+                <i class="fas fa-arrow-right hero-card-arrow"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     QUICK ACCESS LAYANAN
+══════════════════════════════════════════ -->
+<section class="layanan-section" id="layanan">
+    <div class="section-inner">
+        <div class="section-header reveal">
+            <div class="section-eyebrow">Layanan Digital</div>
+            <h2 class="section-title">Akses Semua Layanan<br>dalam Satu Platform</h2>
+        </div>
+        <div class="layanan-grid">
+
+            <a href="skrining.html" class="layanan-card reveal reveal-d1">
+                <div class="layanan-card-icon"><i class="fas fa-file-medical-alt"></i></div>
+                <h4>Skrining Mandiri</h4>
+                <p>Deteksi dini TBC, HIV, Hepatitis, Kesehatan Jiwa, dan Kesehatan Anak secara mandiri.</p>
+                <div class="layanan-card-link">Mulai Skrining <i class="fas fa-arrow-right" style="font-size:0.8em"></i></div>
+            </a>
+
+            <a href="edukasi.html" class="layanan-card reveal reveal-d2">
+                <div class="layanan-card-icon"><i class="fas fa-graduation-cap"></i></div>
+                <h4>Hub Edukasi</h4>
+                <p>Video edukasi YouTube & TikTok serta poster kesehatan interaktif dari tenaga medis.</p>
+                <div class="layanan-card-link">Buka Library <i class="fas fa-arrow-right" style="font-size:0.8em"></i></div>
+            </a>
+
+            <a href="eksplorasi.html" class="layanan-card reveal reveal-d3">
+                <div class="layanan-card-icon"><i class="fas fa-building"></i></div>
+                <h4>E-Branding</h4>
+                <p>Profil SDM, bagan organisasi, jam operasional, fasilitas, dan lokasi puskesmas.</p>
+                <div class="layanan-card-link">Eksplorasi <i class="fas fa-arrow-right" style="font-size:0.8em"></i></div>
+            </a>
+
+            <a href="pengaduan.html" class="layanan-card reveal reveal-d4">
+                <div class="layanan-card-icon"><i class="fas fa-comment-dots"></i></div>
+                <h4>Pengaduan & Saran</h4>
+                <p>Sampaikan keluhan atau masukan terkait layanan kami. Setiap suara Anda berarti.</p>
+                <div class="layanan-card-link">Beri Masukan <i class="fas fa-arrow-right" style="font-size:0.8em"></i></div>
+            </a>
+
+            <a href="registrasi.html" class="layanan-card reveal reveal-d5">
+                <div class="layanan-card-icon"><i class="fas fa-edit"></i></div>
+                <h4>Pendaftaran Mandiri</h4>
+                <p>Daftarkan kunjungan Anda secara online tanpa perlu mengantri di loket pendaftaran.</p>
+                <div class="layanan-card-link">Daftar Sekarang <i class="fas fa-arrow-right" style="font-size:0.8em"></i></div>
+            </a>
+
+            <a href="#antrian" class="layanan-card antrian reveal reveal-d1">
+                <div class="layanan-card-icon"><i class="fas fa-calendar-check"></i></div>
+                <h4>Ambil Antrian Online</h4>
+                <p>Ambil nomor antrian dari rumah dan hemat waktu tunggu Anda di puskesmas.</p>
+                <div class="layanan-card-link">Ambil Antrian <i class="fas fa-arrow-right" style="font-size:0.8em"></i></div>
+            </a>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     VISI & MISI
+══════════════════════════════════════════ -->
+<section class="poster-wrap" id="profil-visimisi">
+    <div class="section-inner">
+        <div class="section-header reveal">
+            <div class="section-eyebrow">Profil Puskesmas</div>
+            <h2 class="section-title">Visi, Misi & Profil</h2>
+        </div>
+        <div class="poster-box reveal">
+            <div class="poster-box-header">
+                <i class="fas fa-bullseye"></i>
+                <h3>VISI, MISI & PROFIL PUSKESMAS DIRGAHAYU</h3>
+            </div>
+            <!-- Ganti src poster_visimisi.png dengan file gambar yang ada -->
+            <img src="poster_visimisi.png" alt="Poster Visi Misi UPTD Puskesmas Dirgahayu"
+                 onerror="this.parentElement.innerHTML='<div class=\'poster-placeholder\'><i class=\'fas fa-image\'></i><p>poster_visimisi.png</p></div>'">
+        </div>
+    </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     MOTTO
+══════════════════════════════════════════ -->
+<section class="motto-section">
+    <div class="section-inner">
+        <div class="section-header reveal">
+            <div class="section-eyebrow">Motto Pelayanan</div>
+            <h2 class="section-title">Melayani dengan SERASI & TELITI</h2>
+        </div>
+        <div class="motto-grid">
+            <div class="motto-card reveal reveal-d1">
+                <div class="motto-card-label">Motto 1</div>
+                <div class="motto-card-word">"SERASI"</div>
+                <div class="motto-items">
+                    <div class="motto-item"><div class="motto-dot"></div><span><b>SE</b>nyum</span></div>
+                    <div class="motto-item"><div class="motto-dot"></div><span><b>RA</b>mah</span></div>
+                    <div class="motto-item"><div class="motto-dot"></div><span><b>SI</b>mpati</span></div>
+                </div>
+            </div>
+            <div class="motto-card reveal reveal-d2" style="background:linear-gradient(135deg,var(--green-900),var(--green-700));">
+                <div class="motto-card-label">Motto 2</div>
+                <div class="motto-card-word">"TELITI"</div>
+                <div class="motto-items">
+                    <div class="motto-item"><div class="motto-dot"></div><span><b>TE</b>pat</span></div>
+                    <div class="motto-item"><div class="motto-dot"></div><span><b>L</b>egal</span></div>
+                    <div class="motto-item"><div class="motto-dot"></div><span><b>I</b>novatif</span></div>
+                    <div class="motto-item"><div class="motto-dot"></div><span><b>T</b>erampil</span></div>
+                    <div class="motto-item"><div class="motto-dot"></div><span><b>I</b>ntensif</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     JADWAL PELAYANAN
+══════════════════════════════════════════ -->
+<section class="poster-wrap alt" id="profil-jadwal">
+    <div class="section-inner">
+        <div class="section-header reveal">
+            <div class="section-eyebrow">Jadwal Pelayanan</div>
+            <h2 class="section-title">Jam Pendaftaran & Pelayanan</h2>
+        </div>
+        <div class="poster-box reveal">
+            <div class="poster-box-header">
+                <i class="fas fa-calendar-alt"></i>
+                <h3>JADWAL PENDAFTARAN & WAKTU PELAYANAN</h3>
+            </div>
+            <!-- Ganti src jadwalpelayanan.png dengan file gambar yang ada -->
+            <img src="jadwalpelayanan.png" alt="Jadwal Pelayanan UPTD Puskesmas Dirgahayu"
+                 onerror="this.parentElement.innerHTML='<div class=\'poster-placeholder\'><i class=\'fas fa-calendar\'></i><p>jadwalpelayanan.png</p></div>'">
+        </div>
+    </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     ANTRIAN ONLINE
+══════════════════════════════════════════ -->
+<section class="antrian-section" id="antrian">
+    <div class="antrian-inner">
+        <div class="antrian-text reveal">
+            <h2>Hemat Waktu dengan<br><span>Antrian Online</span></h2>
+            <p>Tidak perlu datang pagi-pagi untuk mengambil nomor antrian. Gunakan aplikasi digital berikut untuk mendaftar dari rumah dan datang tepat waktu sesuai jadwal.</p>
+            <div class="antrian-steps">
+                <div class="antrian-step"><div class="step-num">1</div> Pilih jalur antrian sesuai kepesertaan Anda</div>
+                <div class="antrian-step"><div class="step-num">2</div> Daftar dan ambil nomor antrian secara online</div>
+                <div class="antrian-step"><div class="step-num">3</div> Datang ke puskesmas sesuai jadwal antrian</div>
+            </div>
+        </div>
+        <div class="antrian-btns reveal reveal-d2">
+            <a href="registrasi.html" class="antrian-btn primary-btn">
+                <div class="antrian-btn-icon"><i class="fas fa-edit"></i></div>
+                <div class="antrian-btn-text">
+                    <h5>Pendaftaran Mandiri SIDAYU</h5>
+                    <p>Isi form online langsung di sini</p>
+                </div>
+                <i class="fas fa-arrow-right antrian-btn-arrow"></i>
+            </a>
+            <a href="https://www.klinisia.id/" target="_blank" rel="noopener" class="antrian-btn">
+                <div class="antrian-btn-icon"><i class="fas fa-mobile-alt"></i></div>
+                <div class="antrian-btn-text">
+                    <h5>Klinisia (Pasien Umum)</h5>
+                    <p>Antrian digital untuk pasien umum</p>
+                </div>
+                <i class="fas fa-arrow-right antrian-btn-arrow"></i>
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=app.bpjs.mobile" target="_blank" rel="noopener" class="antrian-btn">
+                <div class="antrian-btn-icon"><i class="fab fa-google-play"></i></div>
+                <div class="antrian-btn-text">
+                    <h5>JKN Mobile — Android</h5>
+                    <p>Peserta BPJS Kesehatan (JKN)</p>
+                </div>
+                <i class="fas fa-arrow-right antrian-btn-arrow"></i>
+            </a>
+            <a href="https://apps.apple.com/id/app/mobile-jkn/id1237601115" target="_blank" rel="noopener" class="antrian-btn">
+                <div class="antrian-btn-icon"><i class="fab fa-apple"></i></div>
+                <div class="antrian-btn-text">
+                    <h5>JKN Mobile — iOS</h5>
+                    <p>Peserta BPJS Kesehatan (JKN)</p>
+                </div>
+                <i class="fas fa-arrow-right antrian-btn-arrow"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════ -->
 <footer>
-    <p>SIDAYU &copy; 2026 | Puskesmas Dirgahayu — Kec. Pulau Laut Utara, Kab. Kotabaru</p>
-    <div class="footer-links">
-        <a href="eksplorasi.html"><i class="fas fa-building"></i> E-Branding</a>
-        <a href="skrining.html"><i class="fas fa-file-medical-alt"></i> Skrining Mandiri</a>
-        <a href="edukasi.html"><i class="fas fa-graduation-cap"></i> Hub Edukasi</a>
-        <a href="pengaduan.html"><i class="fas fa-comment-alt"></i> Pengaduan</a>
-        <a href="registrasi.html"><i class="fas fa-edit"></i> Daftar Mandiri</a>
+    <div class="footer-inner">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-brand-name">SIDAYU</div>
+                <div class="footer-brand-sub">
+                    Sistem Informasi Digital & Layanan Terpadu<br>
+                    UPTD Puskesmas Dirgahayu<br>
+                    Kec. Pulau Laut Utara, Kab. Kotabaru<br>
+                    Kalimantan Selatan
+                </div>
+                <div class="footer-socials">
+                    <a href="https://instagram.com/puskesmas_dirgahayu" target="_blank" class="footer-social" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/6281351090323" target="_blank" class="footer-social" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="mailto:puskesmasdirgahayu99@gmail.com" class="footer-social" title="Email"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h5>Profil</h5>
+                <a href="#profil-visimisi">Visi & Misi</a>
+                <a href="#profil-jadwal">Jadwal Pelayanan</a>
+                <a href="eksplorasi.html">E-Branding & SDM</a>
+                <a href="eksplorasi.html#organisasi">Struktur Organisasi</a>
+                <a href="eksplorasi.html#peta">Lokasi & Peta</a>
+            </div>
+            <div class="footer-col">
+                <h5>Layanan</h5>
+                <a href="skrining.html">Skrining Mandiri</a>
+                <a href="edukasi.html">Hub Edukasi</a>
+                <a href="registrasi.html">Pendaftaran Mandiri</a>
+                <a href="pengaduan.html">Pengaduan & Saran</a>
+                <a href="#antrian">Antrian Online</a>
+            </div>
+            <div class="footer-col">
+                <h5>Kontak</h5>
+                <a href="https://wa.me/6281351090323" target="_blank">+62 813-5109-0323</a>
+                <a href="mailto:puskesmasdirgahayu99@gmail.com">puskesmasdirgahayu99<br>@gmail.com</a>
+                <a href="https://share.google/4Hs2GW8MvzzMpl2SJ" target="_blank">Lihat di Google Maps</a>
+                <a href="https://instagram.com/puskesmas_dirgahayu" target="_blank">@puskesmas_dirgahayu</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>SIDAYU &copy; 2026 | UPTD Puskesmas Dirgahayu — Kotabaru</span>
+            <span>Made with ❤️ for healthier Kotabaru</span>
+        </div>
     </div>
 </footer>
 
+
+<script>
+/* ── HAMBURGER & DRAWER ── */
+const hamburger  = document.getElementById('hamburger');
+const navDrawer  = document.getElementById('navDrawer');
+
+hamburger.addEventListener('click', () => {
+    const isOpen = hamburger.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', isOpen);
+    navDrawer.classList.toggle('open', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+});
+
+navDrawer.addEventListener('click', e => {
+    if (e.target === navDrawer) closeDrawer();
+});
+
+function closeDrawer() {
+    hamburger.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    navDrawer.classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+/* ── CLOSE DRAWER ON RESIZE ── */
+window.addEventListener('resize', () => {
+    if (window.innerWidth > 900) closeDrawer();
+});
+
+/* ── ACTIVE NAV LINK ON SCROLL ── */
+const navLinks = document.querySelectorAll('.nav-link, .drawer-link');
+const sections = document.querySelectorAll('section[id]');
+
+window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        const href = link.getAttribute('href');
+        if (href && href === '#' + current) link.classList.add('active');
+    });
+
+    /* Navbar shadow on scroll */
+    document.getElementById('mainNav').style.boxShadow =
+        window.scrollY > 10 ? '0 4px 20px rgba(0,77,64,0.15)' : 'var(--shadow-sm)';
+}, { passive: true });
+
+/* ── SCROLL REVEAL ── */
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+}, { threshold: 0.12 });
+revealEls.forEach(el => io.observe(el));
+
+/* ── SMOOTH CLOSE DRAWER ON ANCHOR CLICK ── */
+document.querySelectorAll('.drawer-link[href^="#"]').forEach(a => {
+    a.addEventListener('click', closeDrawer);
+});
+</script>
 </body>
 </html>
