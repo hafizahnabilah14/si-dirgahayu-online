@@ -379,43 +379,39 @@
         
         /* ── PRINT ── */
         @media print {
-            body {
-                /* Mempertahankan warna background dan gradient pada mode cetak */
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
+    /* Sembunyikan elemen yang tidak perlu saat cetak */
+    .site-header, 
+    .filter-bar, 
+    .hero, 
+    .section-wrap,
+    .modal-close,
+    .modal-dl-btn { 
+        display: none !important; 
+    }
 
-            .site-header, .filter-bar { display: none !important; }
+    /* Pastikan hanya modal yang tampil */
+    .modal-overlay {
+        display: block !important;
+        background: transparent !important;
+        position: static !important;
+    }
 
-            /* Default Print (Ctrl+P): sembunyikan modal agar yang dicetak hanya daftar halamannya saja */
-            body:not(.print-poster-only) .modal-overlay { display: none !important; }
+    .modal-box {
+        box-shadow: none !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        border: none !important;
+        margin: 0 !important;
+        transform: none !important; /* Hilangkan animasi agar tidak lag */
+        animation: none !important;
+    }
 
-            /* PERBAIKAN: Print Poster Saja (Saat diklik lewat tombol Cetak) */
-            body.print-poster-only .hero,
-            body.print-poster-only .section-wrap {
-                display: none !important;
-            }
-            body.print-poster-only .modal-overlay {
-                display: block !important;
-                position: relative !important;
-                background: transparent !important;
-                padding: 0 !important;
-            }
-            body.print-poster-only .modal-box {
-                box-shadow: none !important;
-                max-width: 100% !important;
-                max-height: none !important;
-                width: auto !important;
-                margin: 0 !important;
-                overflow: visible !important;
-                border: none !important;
-                animation: none !important;
-            }
-            body.print-poster-only .modal-close,
-            body.print-poster-only .modal-dl-btn {
-                display: none !important; /* Sembunyikan tombol cetak/close di dalam print */
-            }
-        }
+    /* Paksa warna muncul di print */
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+}
     </style>
 </head>
 <body>
@@ -866,12 +862,11 @@ function closeModal(e) {
 // ── LOGIKA BARU UNTUK PRINT KHUSUS POSTER ── //
 
 function printPoster(key) {
-    // 1. Buka modal poster yang dipilih secara otomatis
+    // 1. Langsung buka modalnya
     openModal(key);
-    // 2. Beri jeda sangat sebentar agar modal merender di layar lalu jalankan print
-    setTimeout(() => {
-        printCurrentModal();
-    }, 150);
+    
+    // 2. Langsung cetak tanpa jeda (browser akan otomatis menunggu modal muncul)
+    window.print();
 }
 
 function printCurrentModal() {
