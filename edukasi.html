@@ -377,16 +377,17 @@
         .delay-5 { animation-delay: 0.5s; }
         .delay-6 { animation-delay: 0.6s; }
         
-        /* ── PRINT ── */
-        @media print {
-    /* Sembunyikan elemen yang tidak perlu saat cetak */
-    .site-header, 
-    .filter-bar, 
-    .hero, 
-    .section-wrap,
-    .modal-close,
-    .modal-dl-btn { 
-        display: none !important; 
+       @media print {
+    iframe {
+        display:none !important;
+    }
+
+    .fade-in {
+        animation:none !important;
+    }
+
+    * {
+        transition:none !important;
     }
 
     /* Pastikan hanya modal yang tampil */
@@ -870,16 +871,67 @@ function printPoster(key) {
 }
 
 function printCurrentModal() {
-    // Tambahkan class penanda cetak ke elemen body
-    document.body.classList.add('print-poster-only');
-    
-    // Memicu dialog Print dari browser
-    window.print();
-    
-    // Hapus kembali class setelah dicetak (mengembalikan web ke keadaan semula)
+    const posterContent =
+        document.querySelector('.modal-box').innerHTML;
+
+    const printWindow = window.open('', '_blank');
+
+    printWindow.document.write(`
+        <html>
+        <head>
+            <title>Cetak Poster</title>
+            <style>
+                body{
+                    font-family: Arial, sans-serif;
+                    padding:20px;
+                }
+
+                .modal-close,
+                .modal-dl-btn{
+                    display:none;
+                }
+
+                .modal-poster-visual{
+                    padding:40px;
+                    text-align:center;
+                    color:white;
+                    border-radius:12px;
+                    margin-bottom:20px;
+                }
+
+                .modal-content{
+                    padding:20px;
+                }
+
+                ul{
+                    padding-left:20px;
+                }
+
+                .chip-row{
+                    margin-top:20px;
+                }
+
+                .m-chip{
+                    display:inline-block;
+                    padding:6px 12px;
+                    margin:4px;
+                    border-radius:20px;
+                    background:#e0f2f1;
+                }
+            </style>
+        </head>
+        <body>
+            ${posterContent}
+        </body>
+        </html>
+    `);
+
+    printWindow.document.close();
+
     setTimeout(() => {
-        document.body.classList.remove('print-poster-only');
-    }, 500);
+        printWindow.print();
+        printWindow.close();
+    }, 300);
 }
 
 // ESC to close modal
