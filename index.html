@@ -540,9 +540,9 @@ document.addEventListener("DOMContentLoaded", function() {
     // 1. Animasi Counter Kunjungan Web (Dummy Data)
     const visitorCounter = document.getElementById('visitor-counter-val');
     if(visitorCounter) {
-        let start = 12200; // Mulai animasi dari angka ini
-        const end = 12458; // Target angka dummy kunjungan
-        const duration = 2000;
+        let start = 0; // Mulai animasi dari angka ini
+        const end = 124; // Target angka dummy kunjungan
+        const duration = 1500;
         const increment = (end - start) / (duration / 16);
         const timer = setInterval(() => {
             start += increment;
