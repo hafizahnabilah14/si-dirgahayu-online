@@ -193,28 +193,6 @@
     .motto-item b { color: var(--gold); font-weight: 800; }
     .motto-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0; margin-top: 6px; }
 
-    .layanan-section { background: var(--slate-100); padding: 64px 28px; }
-    .layanan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
-    .layanan-card { background: white; border-radius: var(--radius-lg); padding: 26px 22px; display: flex; flex-direction: column; gap: 14px; text-decoration: none; color: var(--slate-900); box-shadow: var(--shadow-sm); border: 1px solid var(--slate-200); transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition); position: relative; overflow: hidden; }
-    .layanan-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--green-600), var(--green-400)); transform: scaleX(0); transform-origin: left; transition: transform var(--transition); }
-    .layanan-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--green-400); }
-    .layanan-card:hover::after { transform: scaleX(1); }
-    .layanan-card-icon { width: 52px; height: 52px; border-radius: 14px; background: var(--green-100); display: flex; align-items: center; justify-content: center; font-size: 1.5em; color: var(--green-700); transition: background var(--transition), color var(--transition); }
-    .layanan-card:hover .layanan-card-icon { background: var(--green-700); color: white; }
-    .layanan-card h4 { font-size: 0.92em; font-weight: 700; color: var(--slate-900); line-height: 1.3; }
-    .layanan-card p { font-size: 0.77em; color: var(--slate-500); line-height: 1.6; flex: 1; }
-    .layanan-card-link { display: flex; align-items: center; gap: 5px; font-size: 0.78em; font-weight: 700; color: var(--green-600); }
-    .layanan-card:hover .layanan-card-link { color: var(--green-800); }
-
-    .layanan-card.antrian { background: linear-gradient(135deg, var(--green-800), var(--green-600)); color: white; border: none; }
-    .layanan-card.antrian::after { display: none; }
-    .layanan-card.antrian .layanan-card-icon { background: rgba(255,255,255,0.18); color: white; }
-    .layanan-card.antrian:hover .layanan-card-icon { background: rgba(255,255,255,0.28); color: white; }
-    .layanan-card.antrian h4, .layanan-card.antrian p { color: white; }
-    .layanan-card.antrian p { opacity: 0.82; }
-    .layanan-card.antrian .layanan-card-link { color: var(--gold); }
-    .layanan-card.antrian:hover { box-shadow: var(--shadow-lg); border-color: transparent; }
-
     .poster-wrap { background: white; padding: 64px 28px; }
     .poster-wrap.alt { background: var(--slate-100); }
     .poster-box { background: white; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); overflow: hidden; max-width: 1000px; margin: 0 auto; }
@@ -407,19 +385,6 @@
                     </p>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
-
-<section class="layanan-section" id="layanan">
-    <div class="section-inner">
-        <div class="section-header reveal"><div class="section-eyebrow">Layanan Digital</div><h2 class="section-title">Akses Semua Layanan<br>dalam Satu Platform</h2></div>
-        <div class="layanan-grid">
-            <a href="skrining.html" class="layanan-card reveal reveal-d1"><div class="layanan-card-icon"><i class="fas fa-file-medical-alt"></i></div><h4>Skrining Mandiri</h4><p>Deteksi dini TBC, HIV, Hepatitis, Kesehatan Jiwa, dan Kesehatan Anak secara mandiri.</p><div class="layanan-card-link">Mulai Skrining <i class="fas fa-arrow-right" style="font-size:0.8em"></i></div></a>
-            <a href="edukasi.html" class="layanan-card reveal reveal-d2"><div class="layanan-card-icon"><i class="fas fa-graduation-cap"></i></div><h4>Hub Edukasi</h4><p>Video edukasi YouTube & TikTok serta poster kesehatan interaktif dari tenaga medis.</p><div class="layanan-card-link">Buka Library <i class="fas fa-arrow-right" style="font-size:0.8em"></i></div></a>
-            <a href="eksplorasi.html" class="layanan-card reveal reveal-d3"><div class="layanan-card-icon"><i class="fas fa-building"></i></div><h4>E-Branding</h4><p>Profil SDM, bagan organisasi, jam operasional, fasilitas, dan lokasi puskesmas.</p><div class="layanan-card-link">Eksplorasi <i class="fas fa-arrow-right" style="font-size:0.8em"></i></div></a>
-            <a href="pengaduan.html" class="layanan-card reveal reveal-d4"><div class="layanan-card-icon"><i class="fas fa-comment-dots"></i></div><h4>Pengaduan & Saran</h4><p>Sampaikan keluhan atau masukan terkait layanan kami. Setiap suara Anda berarti.</p><div class="layanan-card-link">Beri Masukan <i class="fas fa-arrow-right" style="font-size:0.8em"></i></div></a>
-            <a href="registrasi.html" class="layanan-card reveal reveal-d5"><div class="layanan-card-icon"><i class="fas fa-edit"></i></div><h4>Pendaftaran Mandiri</h4><p>Daftarkan kunjungan Anda secara online tanpa perlu mengantri di loket pendaftaran.</p><div class="layanan-card-link">Daftar Sekarang <i class="fas fa-arrow-right" style="font-size:0.8em"></i></div></a>
         </div>
     </div>
 </section>
