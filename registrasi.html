@@ -147,9 +147,9 @@
 </header>
 
 <section class="hero">
-    <div class="hero-badge"><i class="fas fa-edit"></i> PRA-PENDAFTARAN MANDIRI</div>
-    <h2>Formulir Pendaftaran<br>Layanan Rawat Jalan</h2>
-    <p>Silakan isi data diri pasien secara lengkap untuk mempermudah pembuatan rekam medis dan pengambilan nomor antrian loket oleh petugas.</p>
+    <div class="hero-badge"><i class="fas fa-edit"></i>LAYANAN PENDAFTARAN ONLINE</div>
+    <h2>Formulir Pendaftaran<br>Daftar Sebelum Datang ke Puskesmas</h2>
+    <p>Silakan isi data diri Anda dengan lengkap dan benar. Data yang dikirim akan diterima oleh petugas puskesmas untuk diproses lebih lanjut pada saat Anda datang berobat..</p>
 </section>
 
 <div class="main-wrap">
@@ -207,12 +207,16 @@
             <div class="form-group">
                 <label>Poliklinik Tujuan <span class="req">*</span></label>
                 <div class="poli-grid" id="poliGrid">
-                    <div class="poli-pill" onclick="pilihPoli(this,'Poli Umum')">🩺 Poli Umum</div>
-                    <div class="poli-pill" onclick="pilihPoli(this,'Poli Gigi & Mulut')">🦷 Poli Gigi & Mulut</div>
-                    <div class="poli-pill" onclick="pilihPoli(this,'Poli KIA / KB / Anak')">👶 Poli KIA / KB / Anak</div>
-                    <div class="poli-pill" onclick="pilihPoli(this,'Poli TB Paru')">🫁 Poli TB Paru</div>
-                    <div class="poli-pill" onclick="pilihPoli(this,'Poli Gizi')">🍏 Poli Gizi</div>
-                    <div class="poli-pill" onclick="pilihPoli(this,'UGD / Gawat Darurat')">🚨 UGD / Gawat Darurat</div>
+                    <div class="poli-pill" onclick="pilihPoli(this,'Ruang Pelayanan Kesehatan Umum Dewasa/Lansia')">🩺 Ruang Pelayanan Kesehatan Umum Dewasa/Lansia</div>
+                    <div class="poli-pill" onclick="pilihPoli(this,'Ruang Kesehatan Gigi & Mulut')">🦷 Ruang Kesehatan Gigi & Mulut</div>
+                    <div class="poli-pill" onclick="pilihPoli(this,'Ruang KIA')">👶 Ruang KIA</div>
+                    <div class="poli-pill" onclick="pilihPoli(this,'Ruang MTBS/Anak')">🧒 Ruang MTBS/Anak</div>
+                    <div class="poli-pill" onclick="pilihPoli(this,'Ruang PKPR/Remaja')">🧑‍🎓 Ruang PKPR/Remaja</div>
+                    <div class="poli-pill" onclick="pilihPoli(this,'Ruang Pelayanan Gizi')">🍏 Ruang Pelayanan Gizi</div>
+                    <div class="poli-pill" onclick="pilihPoli(this,'Ruang Pelayanan Imunisasi')">💉 Ruang Pelayanan Imunisasi</div>
+                    <div class="poli-pill" onclick="pilihPoli(this,'Ruang Tindakan')">🩹 Ruang Tindakan</div>
+                    <div class="poli-pill" onclick="pilihPoli(this,'Ruang Pelayanan Penyakit Menular (TB/HIV/Sifilis/Hepatitis/Kusta)')">🦠 Ruang Pelayanan Penyakit Menular</div>
+                    <div class="poli-pill" onclick="pilihPoli(this,'KIE Kesehatan')">📢 KIE Kesehatan</div>
                 </div>
                 <input type="hidden" id="r-poli">
                 <span class="err-msg" id="err-poli">Pilih poliklinik tujuan berobat</span>
@@ -452,7 +456,7 @@ Tanggal Lahir   : ${formatTanggal(data.tanggalLahir)}
 No. HP Kontak   : ${data.noHp}
 Alamat Rumah    : ${data.alamat}
 ==============================
-Mohon divalidasi datanya untuk diproses berkas antrian loket pendaftarannya. Terima kasih petugas loket!`;
+Mohon divalidasi datanya untuk diproses berkas antrian loket pendaftarannya. Terima kasih!`;
 
     document.getElementById('templateWA').textContent = templateText;
 
