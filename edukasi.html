@@ -431,10 +431,10 @@
 
 <section class="hero">
     <div class="hero-badge">
-        <i class="fas fa-graduation-cap"></i> HUB EDUKASI KESEHATAN
+        <i class="fas fa-graduation-cap"></i> MEDIA EDUKASI KESEHATAN
     </div>
-    <h2>Belajar Sehat,<br>Hidup Lebih Baik</h2>
-    <p>Kumpulan video edukasi dari YouTube & TikTok serta poster kesehatan yang bisa kamu pelajari dan bagikan.</p>
+    <h2>Informasi Sehat,<br>Masyarakat Hebat </h2>
+    <p>Dapatkan informasi kesehatan melalui video edukasi dan poster informatif mengenai pencegahan penyakit serta penerapan pola hidup sehat.</p>
 </section>
 
 <div class="filter-bar">
@@ -833,7 +833,6 @@ function openModal(key) {
     });
     let chipsHtml = d.chips.map(c => `<span class="m-chip">${c}</span>`).join('');
     
-    // Perbaikan: Tombol Cetak dalam modal sekarang memanggil printCurrentModal()
     document.getElementById('modal-box').innerHTML = `
         <div class="modal-close">
             <button onclick="closeModal()" aria-label="Tutup"><i class="fas fa-times"></i></button>
@@ -846,7 +845,7 @@ function openModal(key) {
             ${sectionsHtml}
             <div class="mc-title" style="margin-top:16px">Poin Kunci</div>
             <div class="chip-row">${chipsHtml}</div>
-            <button class="modal-dl-btn" onclick="printCurrentModal()">
+            <button class="modal-dl-btn" onclick="printCurrentModal('${key}')">
                 <i class="fas fa-print"></i> Cetak / Simpan sebagai PDF
             </button>
         </div>
@@ -860,78 +859,78 @@ function closeModal(e) {
     }
 }
 
-// ── LOGIKA BARU UNTUK PRINT KHUSUS POSTER ── //
+// ── LOGIKA BARU UNTUK PRINT KHUSUS POSTER GAMBAR ── //
 
+// Dipanggil dari tombol "Cetak" di halaman utama
 function printPoster(key) {
-    // 1. Langsung buka modalnya
-    openModal(key);
-    
-    // 2. Langsung cetak tanpa jeda (browser akan otomatis menunggu modal muncul)
-    window.print();
+    cetakGambarPoster(key);
 }
 
-function printCurrentModal() {
-    const posterContent =
-        document.querySelector('.modal-box').innerHTML;
+// Dipanggil dari tombol "Cetak" di dalam modal
+function printCurrentModal(key) {
+    cetakGambarPoster(key);
+}
 
+// Fungsi utama untuk membuka gambar di tab baru dan mencetaknya
+function cetakGambarPoster(key) {
+    // Sesuaikan format penamaan ini dengan nama file gambar Anda di dalam folder
+    // Contoh output: "poster_tbc.png", "poster_hiv.png", dsb.
+    const imageUrl = `poster_${key}.png`; 
+    
     const printWindow = window.open('', '_blank');
 
     printWindow.document.write(`
+        <!DOCTYPE html>
         <html>
         <head>
-            <title>Cetak Poster</title>
+            <title>Cetak Poster Kesehatan</title>
             <style>
-                body{
-                    font-family: Arial, sans-serif;
-                    padding:20px;
+                body {
+                    margin: 0;
+                    padding: 0;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    min-height: 100vh;
+                    background-color: #fff;
                 }
-
-                .modal-close,
-                .modal-dl-btn{
-                    display:none;
+                img {
+                    max-width: 100%;
+                    max-height: 100vh;
+                    object-fit: contain;
                 }
-
-                .modal-poster-visual{
-                    padding:40px;
-                    text-align:center;
-                    color:white;
-                    border-radius:12px;
-                    margin-bottom:20px;
-                }
-
-                .modal-content{
-                    padding:20px;
-                }
-
-                ul{
-                    padding-left:20px;
-                }
-
-                .chip-row{
-                    margin-top:20px;
-                }
-
-                .m-chip{
-                    display:inline-block;
-                    padding:6px 12px;
-                    margin:4px;
-                    border-radius:20px;
-                    background:#e0f2f1;
+                /* Sembunyikan elemen lain saat mencetak, hanya fokus ke gambar */
+                @media print {
+                    @page { margin: 0; }
+                    body { margin: 1cm; }
                 }
             </style>
         </head>
         <body>
-            ${posterContent}
+            <img src="${imageUrl}" id="posterImage" alt="Poster Edukasi">
+            
+            <script>
+                const img = document.getElementById('posterImage');
+                
+                // Jika gambar berhasil dimuat, jalankan print
+                img.onload = function() {
+                    setTimeout(() => {
+                        window.print();
+                        window.close(); // Tutup tab otomatis setelah selesai print/cancel
+                    }, 300); // Jeda singkat agar gambar terender penuh oleh browser sebelum dialog print muncul
+                };
+                
+                // Jika gambar tidak ditemukan (error/typo nama file)
+                img.onerror = function() {
+                    alert('Gagal memuat gambar: ' + img.src + '. Pastikan file gambar tersedia di folder yang sama.');
+                    window.close();
+                };
+            <\/script>
         </body>
         </html>
     `);
-
+    
     printWindow.document.close();
-
-    setTimeout(() => {
-        printWindow.print();
-        printWindow.close();
-    }, 300);
 }
 
 // ESC to close modal
