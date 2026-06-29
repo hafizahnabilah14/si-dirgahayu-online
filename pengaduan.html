@@ -241,15 +241,16 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Email <span class="req">*</span></label>
-                    <input type="email" id="p-email" placeholder="email@contoh.com">
-                    <span class="err-msg" id="err-email">Email tidak valid</span>
+                    <label>No. HP / WhatsApp <span class="req">*</span></label>
+                    <input type="tel" id="p-hp" placeholder="Contoh: 0812xxxxxxxx" maxlength="15">
+                    <span class="err-msg" id="err-hp">No. HP wajib diisi dengan benar</span>
                 </div>
             </div>
 
             <div class="form-group">
-                <label>No. HP / WhatsApp <span style="font-weight:400;text-transform:none;letter-spacing:0">(opsional, untuk konfirmasi)</span></label>
-                <input type="tel" id="p-hp" placeholder="Contoh: 0812xxxxxxxx" maxlength="15">
+                <label>Email <span style="font-weight:400;text-transform:none;letter-spacing:0">(opsional)</span></label>
+                <input type="email" id="p-email" placeholder="email@contoh.com">
+                <span class="err-msg" id="err-email">Format email tidak valid</span>
             </div>
 
             <div class="form-group">
@@ -264,7 +265,9 @@
             </button>
 
         </div>
-    </div><div class="hasil-panel" id="hasilPanel">
+    </div>
+    
+    <div class="hasil-panel" id="hasilPanel">
         <div class="hasil-card">
             <div class="hasil-header">
                 <div class="h-icon">✅</div>
@@ -313,7 +316,10 @@
 
             </div>
         </div>
-    </div></div><footer style="text-align:center;padding:32px;color:var(--primary);font-size:0.86em;border-top:1px solid var(--border);">
+    </div>
+</div>
+
+<footer style="text-align:center;padding:32px;color:var(--primary);font-size:0.86em;border-top:1px solid var(--border);">
     <p>SI-Dirgahayu &copy; 2026 | Puskesmas Dirgahayu — Kec. Pulau Laut Utara, Kab. Kotabaru</p>
 </footer>
 
@@ -352,12 +358,15 @@ function updateCounter() {
     el.className = 'char-counter' + (v > 800 ? ' warn' : '');
 }
 
-// ── Validasi form ──
+// ── Validasi form (Diperbarui) ──
 function validate() {
     const checks = [
         { id:'p-tanggal', err:'err-tanggal', ok: v => v !== '' },
         { id:'p-nama',    err:'err-nama',    ok: v => v.trim().length >= 2 },
-        { id:'p-email',   err:'err-email',   ok: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
+        // Validasi HP: wajib diisi, minimal 9 digit
+        { id:'p-hp',      err:'err-hp',      ok: v => v.trim().length >= 9 && /^[0-9+]+$/.test(v.trim()) },
+        // Validasi Email: boleh kosong, TAPI jika diisi harus format valid
+        { id:'p-email',   err:'err-email',   ok: v => v.trim() === '' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
         { id:'p-isi',     err:'err-isi',     ok: v => v.trim().length >= 20 },
     ];
     let ok = true, first = null;
@@ -390,20 +399,19 @@ async function submitPengaduan() {
         jenis:    selectedJenis,
         unit:     document.getElementById('p-unit').value || 'Tidak disebutkan',
         nama:     document.getElementById('p-nama').value.trim(),
-        email:    document.getElementById('p-email').value.trim(),
-        hp:       document.getElementById('p-hp').value.trim() || '—',
+        // Jika email kosong, kirim strip "—" agar tidak merusak urutan kolom script
+        email:    document.getElementById('p-email').value.trim() || '—', 
+        hp:       document.getElementById('p-hp').value.trim(),
         isi:      document.getElementById('p-isi').value.trim(),
         timestamp: new Date().toLocaleString('id-ID'),
     };
 
     try {
-        // MENGUBAH DATA MENJADI FORM URL-ENCODED
         const formData = new URLSearchParams();
         for (const key in data) {
             formData.append(key, data[key]);
         }
 
-        // MENGIRIM DATA KE GOOGLE APPS SCRIPT
         await fetch(SCRIPT_URL_PENGADUAN, {
             method: 'POST',
             body: formData
@@ -429,7 +437,7 @@ function tampilkanHasil(data) {
         <div class="ringkasan-row"><span class="rr-label">Jenis</span><span class="rr-val">${data.jenis}</span></div>
         <div class="ringkasan-row"><span class="rr-label">Unit Terkait</span><span class="rr-val">${data.unit}</span></div>
         <div class="ringkasan-row"><span class="rr-label">Nama</span><span class="rr-val">${data.nama}</span></div>
-        <div class="ringkasan-row"><span class="rr-label">Email</span><span class="rr-val">${data.email}</span></div>
+        <div class="ringkasan-row"><span class="rr-label">No. HP</span><span class="rr-val">${data.hp}</span></div>
         <div class="ringkasan-row"><span class="rr-label">Isi Pengaduan</span><span class="rr-val">${data.isi}</span></div>
     `;
 
@@ -442,7 +450,6 @@ Saya ingin menyampaikan pengaduan/saran melalui DM Instagram. Berikut detail pen
 🏷️ Jenis   : ${data.jenis}
 🏥 Unit    : ${data.unit}
 👤 Nama    : ${data.nama}
-📧 Email   : ${data.email}
 📱 No HP   : ${data.hp}
 
 📝 Isi Pengaduan:

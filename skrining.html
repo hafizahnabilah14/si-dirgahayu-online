@@ -386,6 +386,13 @@
                     <input type="text" id="f-nama" placeholder="Contoh: Budi Santoso">
                     <span class="error-msg" id="err-nama">Nama wajib diisi (min. 2 karakter)</span>
                 </div>
+                
+                <div class="form-group full">
+                    <label>NIK (Nomor Induk Kependudukan) <span class="req">*</span></label>
+                    <input type="tel" id="f-nik" placeholder="Masukkan 16 digit angka NIK" maxlength="16" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                    <span class="error-msg" id="err-nik">NIK wajib diisi dengan tepat 16 digit angka</span>
+                </div>
+
                 <div class="form-group">
                     <label>Tanggal Lahir <span class="req">*</span></label>
                     <input type="date" id="f-tgl" max="">
@@ -419,7 +426,7 @@
                 </div>
                 <div class="form-group">
                     <label>Nomor HP / WhatsApp <span class="req">*</span></label>
-                    <input type="tel" id="f-nohp" placeholder="Contoh: 08123456789" maxlength="15">
+                    <input type="tel" id="f-nohp" placeholder="Contoh: 08123456789" maxlength="15" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                     <span class="error-msg" id="err-nohp">Nomor HP minimal 8 angka</span>
                 </div>
             </div>
@@ -637,6 +644,8 @@ document.addEventListener('DOMContentLoaded', () => {
 function submitIdentityAndStart() {
     const fields = [
         { id: 'f-nama',      err: 'err-nama',      check: v => v.trim().length >= 2 },
+        // Validasi NIK wajib 16 angka
+        { id: 'f-nik',       err: 'err-nik',       check: v => v.trim().length === 16 }, 
         { id: 'f-tgl',       err: 'err-tgl',       check: v => v !== '' },
         { id: 'f-alamat',    err: 'err-alamat',    check: v => v.trim().length >= 3 },
         { id: 'f-pekerjaan', err: 'err-pekerjaan', check: v => v !== '' },
@@ -651,6 +660,7 @@ function submitIdentityAndStart() {
     if (!valid) { if (firstError) firstError.focus(); return; }
 
     identitas = {
+        nik: document.getElementById('f-nik').value.trim(),
         nama: document.getElementById('f-nama').value.trim(),
         tanggalLahir: document.getElementById('f-tgl').value,
         umur: document.getElementById('f-umur').value,
@@ -661,6 +671,7 @@ function submitIdentityAndStart() {
 
     // Update blok identitas print
     document.getElementById('print-identity-grid').innerHTML = `
+        <div class="print-row full" style="grid-column:1/-1"><span>NIK:</span> ${identitas.nik}</div>
         <div class="print-row"><span>Nama:</span> ${identitas.nama}</div>
         <div class="print-row"><span>Tgl Lahir:</span> ${identitas.tanggalLahir}</div>
         <div class="print-row"><span>Umur:</span> ${identitas.umur}</div>
@@ -722,7 +733,7 @@ function switchDisease(key) {
     document.getElementById('q-nav').style.display           = 'none';
     document.getElementById('progress-wrap').style.display   = 'none';
 
-    ['nama','tgl','alamat','pekerjaan','nohp'].forEach(f => {
+    ['nik','nama','tgl','alamat','pekerjaan','nohp'].forEach(f => {
         const el = document.getElementById('f-' + f), er = document.getElementById('err-' + f);
         if (el) el.classList.remove('error'); if (er) er.classList.remove('show');
     });
