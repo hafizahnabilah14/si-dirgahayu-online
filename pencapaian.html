@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pencapaian SPM — SIDAYU Puskesmas Dirgahayu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <style>
+    /* ═══ DESIGN TOKENS (same as index.html) ═══ */
+    :root {
+        --green-900: #003d35; --green-800: #004d40; --green-700: #00695c;
+        --green-600: #00796b; --green-500: #00897b; --green-400: #26a69a;
+        --green-100: #e0f2f1; --green-50:  #f0faf9;
+        --gold: #ffb74d;      --gold-dark: #e65100;
+        --white: #ffffff;     --slate-50: #f8fafb;   --slate-100: #f1f5f4;
+        --slate-200: #e2ecea; --slate-500: #607a76;  --slate-700: #2e4541;
+        --slate-900: #1a2e2b;
+        --nav-h: 68px;        --radius-lg: 18px;     --radius-md: 12px;
+        --shadow-sm: 0 2px 8px rgba(0,77,64,0.08);
+        --shadow-md: 0 8px 32px rgba(0,77,64,0.12);
+        --shadow-lg: 0 20px 56px rgba(0,77,64,0.16);
+        --transition: 0.22s cubic-bezier(0.4,0,0.2,1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body { font-family: 'Poppins', sans-serif; background: var(--slate-50); color: var(--slate-900); min-height: 100vh; }
+
+    /* ═══ NAVBAR ═══ */
+    .navbar {
+        position: sticky; top: 0; z-index: 1000; height: var(--nav-h);
+        background: var(--white); border-bottom: 1px solid var(--slate-200);
+        box-shadow: var(--shadow-sm); display: flex; align-items: center;
+        padding: 0 28px; gap: 20px;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 11px; text-decoration: none; flex-shrink: 0; }
+    .nav-brand .brand-logo { width: 36px; height: 36px; background: linear-gradient(135deg, var(--green-700), var(--green-400)); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.1em; font-weight: 900; font-family: 'Montserrat', sans-serif; letter-spacing: -1px; }
+    .nav-brand .brand-name { font-family: 'Montserrat', sans-serif; font-size: 1.05em; font-weight: 900; color: var(--green-800); letter-spacing: 1.5px; }
+    .nav-brand .brand-sub  { font-size: 0.6em; color: var(--slate-500); font-weight: 500; margin-top: 2px; }
+    .nav-menu { display: flex; align-items: center; gap: 2px; list-style: none; margin-left: auto; }
+    .nav-item { position: relative; }
+    .nav-link {
+        display: flex; align-items: center; gap: 5px; padding: 8px 14px;
+        border-radius: 8px; font-size: 0.84em; font-weight: 600; color: var(--slate-700);
+        text-decoration: none; transition: background var(--transition), color var(--transition);
+        white-space: nowrap; cursor: pointer; border: none; background: none; font-family: 'Poppins', sans-serif;
+    }
+    .nav-link:hover, .nav-item:hover > .nav-link, .nav-link.active { background: var(--green-100); color: var(--green-700); }
+    .nav-chevron { font-size: 0.7em; transition: transform var(--transition); margin-left: 1px; }
+    .nav-item:hover > .nav-link .nav-chevron { transform: rotate(180deg); }
+    .dropdown {
+        position: absolute; top: calc(100% + 8px); left: 50%;
+        transform: translateX(-50%) translateY(-8px);
+        background: var(--white); border: 1px solid var(--slate-200); border-radius: var(--radius-md);
+        box-shadow: var(--shadow-lg); min-width: 220px; padding: 6px;
+        opacity: 0; visibility: hidden; transition: opacity var(--transition), visibility var(--transition), transform var(--transition); pointer-events: none;
+    }
+    .nav-item:hover > .dropdown { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+    .dropdown-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 8px; font-size: 0.83em; font-weight: 500; color: var(--slate-700); text-decoration: none; transition: background var(--transition), color var(--transition); }
+    .dropdown-item:hover { background: var(--green-100); color: var(--green-700); }
+    .di-icon { width: 30px; height: 30px; border-radius: 8px; background: var(--green-100); color: var(--green-600); display: flex; align-items: center; justify-content: center; font-size: 0.88em; flex-shrink: 0; transition: background var(--transition); }
+    .dropdown-item:hover .di-icon { background: var(--green-600); color: white; }
+    .dropdown-divider { height: 1px; background: var(--slate-200); margin: 4px 0; }
+    .dropdown-label { padding: 8px 14px 4px; font-size: 0.68em; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--slate-500); }
+    .nav-cta { display: inline-flex; align-items: center; gap: 7px; padding: 9px 18px; background: var(--green-700); color: white; border-radius: 50px; font-size: 0.83em; font-weight: 700; text-decoration: none; transition: background var(--transition), transform var(--transition), box-shadow var(--transition); flex-shrink: 0; margin-left: 6px; font-family: 'Poppins', sans-serif; }
+    .nav-cta:hover { background: var(--green-800); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,105,92,0.35); }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; margin-left: auto; padding: 6px; border-radius: 8px; transition: background var(--transition); border: none; background: none; }
+    .nav-hamburger:hover { background: var(--green-100); }
+    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--slate-700); border-radius: 2px; transition: transform var(--transition), opacity var(--transition), width var(--transition); }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; width: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav-drawer { display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.4); z-index: 999; backdrop-filter: blur(4px); }
+    .nav-drawer.open { display: block; }
+    .nav-drawer-inner { position: absolute; top: 0; right: 0; width: 300px; height: 100%; background: var(--white); padding: 16px; overflow-y: auto; box-shadow: -8px 0 32px rgba(0,0,0,0.15); }
+    .drawer-section { margin-bottom: 8px; }
+    .drawer-section-label { font-size: 0.68em; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--slate-500); padding: 10px 12px 4px; }
+    .drawer-link { display: flex; align-items: center; gap: 10px; padding: 11px 12px; border-radius: 10px; font-size: 0.86em; font-weight: 500; color: var(--slate-700); text-decoration: none; transition: background var(--transition), color var(--transition); }
+    .drawer-link:hover, .drawer-link.active { background: var(--green-100); color: var(--green-700); }
+    .dl-icon { width: 34px; height: 34px; border-radius: 9px; background: var(--green-100); color: var(--green-600); display: flex; align-items: center; justify-content: center; font-size: 0.9em; flex-shrink: 0; }
+    .drawer-link:hover .dl-icon { background: var(--green-600); color: white; }
+    .drawer-divider { height: 1px; background: var(--slate-200); margin: 8px 0; }
+    .drawer-cta { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 13px; background: var(--green-700); color: white; border-radius: 12px; font-size: 0.88em; font-weight: 700; text-decoration: none; margin-top: 12px; transition: background var(--transition); }
+    .drawer-cta:hover { background: var(--green-800); }
+
+    /* ═══ HERO ═══ */
+    .hero {
+        background: linear-gradient(155deg, var(--green-900) 0%, var(--green-700) 55%, var(--green-400) 100%);
+        padding: 60px 28px 80px; text-align: center; color: white; position: relative; overflow: hidden;
+        clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+    }
+    .hero::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='40' cy='40' r='28' fill='%23ffffff' fill-opacity='0.025'/%3E%3C/svg%3E"); pointer-events: none; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); border-radius: 50px; padding: 6px 18px; font-size: 0.74em; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; }
+    .hero h1 { font-family: 'Montserrat', sans-serif; font-size: clamp(1.8em, 4vw, 2.8em); font-weight: 900; line-height: 1.1; margin-bottom: 14px; }
+    .hero p { font-size: 0.95em; opacity: 0.85; max-width: 580px; margin: 0 auto; line-height: 1.7; }
+
+    /* ═══ MAIN WRAPPER ═══ */
+    .page-wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px 80px; }
+
+    /* ═══ INDICATOR GRID ═══ */
+    .indicators-section { margin-top: -36px; position: relative; z-index: 10; }
+    .indicators-header { text-align: center; margin-bottom: 28px; }
+    .indicators-header h2 { font-family: 'Montserrat', sans-serif; font-size: 1.35em; font-weight: 900; color: var(--slate-900); }
+    .indicators-header p { font-size: 0.82em; color: var(--slate-500); margin-top: 5px; }
+    .indicators-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+    .ind-card {
+        background: var(--white); border-radius: var(--radius-lg); padding: 20px 18px;
+        box-shadow: var(--shadow-sm); border: 2px solid transparent;
+        cursor: pointer; transition: all var(--transition); position: relative; overflow: hidden;
+    }
+    .ind-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--green-600), var(--green-400)); transform: scaleX(0); transform-origin: left; transition: transform var(--transition); }
+    .ind-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--green-200, #b2dfdb); }
+    .ind-card:hover::after { transform: scaleX(1); }
+    .ind-card.active { border-color: var(--green-600); background: var(--green-50); box-shadow: var(--shadow-md); }
+    .ind-card.active::after { transform: scaleX(1); }
+    .ind-num { font-size: 0.68em; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: var(--slate-500); margin-bottom: 8px; }
+    .ind-card.active .ind-num { color: var(--green-600); }
+    .ind-icon-wrap { width: 44px; height: 44px; border-radius: 12px; background: var(--green-100); color: var(--green-700); display: flex; align-items: center; justify-content: center; font-size: 1.2em; margin-bottom: 10px; transition: background var(--transition), color var(--transition); }
+    .ind-card.active .ind-icon-wrap, .ind-card:hover .ind-icon-wrap { background: var(--green-600); color: white; }
+    .ind-name { font-size: 0.82em; font-weight: 700; color: var(--slate-700); line-height: 1.4; margin-bottom: 12px; }
+    .ind-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 0.75em; font-weight: 700; color: var(--green-600); background: var(--green-100); padding: 6px 12px; border-radius: 50px; transition: background var(--transition), color var(--transition); }
+    .ind-card:hover .ind-btn, .ind-card.active .ind-btn { background: var(--green-600); color: white; }
+
+    /* ═══ DASHBOARD AREA ═══ */
+    .dashboard-section { margin-top: 36px; }
+    .dashboard-panel {
+        background: var(--white); border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-md); overflow: hidden;
+        animation: fadeSlide 0.35s ease;
+    }
+    @keyframes fadeSlide { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Dashboard header */
+    .db-header { background: linear-gradient(135deg, var(--green-800), var(--green-600)); padding: 24px 28px; color: white; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .db-header-icon { width: 52px; height: 52px; border-radius: 14px; background: rgba(255,255,255,0.18); display: flex; align-items: center; justify-content: center; font-size: 1.5em; flex-shrink: 0; }
+    .db-header-text { flex: 1; min-width: 200px; }
+    .db-header-num { font-size: 0.72em; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.7); margin-bottom: 4px; }
+    .db-header-title { font-family: 'Montserrat', sans-serif; font-size: 1.15em; font-weight: 900; margin-bottom: 3px; }
+    .db-header-sub { font-size: 0.8em; color: rgba(255,255,255,0.78); }
+    .db-badge { padding: 5px 14px; border-radius: 50px; font-size: 0.78em; font-weight: 700; letter-spacing: 0.5px; flex-shrink: 0; }
+    .badge-baik     { background: #c8e6c9; color: #1b5e20; }
+    .badge-cukup    { background: #fff9c4; color: #f57f17; }
+    .badge-rendah   { background: #ffcdd2; color: #b71c1c; }
+    .badge-melebihi { background: #e3f2fd; color: #1565c0; }
+
+    /* Progress section */
+    .db-progress-wrap { padding: 22px 28px; border-bottom: 1px solid var(--slate-200); }
+    .db-progress-label { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .db-progress-label span { font-size: 0.82em; font-weight: 600; color: var(--slate-700); }
+    .db-progress-label .pct { font-family: 'Montserrat', sans-serif; font-size: 1.15em; font-weight: 900; color: var(--green-700); }
+    .db-progress-track { height: 14px; background: var(--slate-100); border-radius: 10px; overflow: hidden; }
+    .db-progress-fill { height: 100%; border-radius: 10px; transition: width 0.8s cubic-bezier(0.4,0,0.2,1); }
+    .fill-baik     { background: linear-gradient(90deg, #2e7d32, #4caf50); }
+    .fill-cukup    { background: linear-gradient(90deg, #f57f17, #ffb300); }
+    .fill-rendah   { background: linear-gradient(90deg, #c62828, #ef5350); }
+    .fill-melebihi { background: linear-gradient(90deg, #1565c0, #42a5f5); }
+    .db-progress-hint { font-size: 0.72em; color: var(--slate-500); margin-top: 6px; }
+
+    /* Summary cards */
+    .db-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; padding: 22px 28px; border-bottom: 1px solid var(--slate-200); }
+    .sum-card { background: var(--slate-50); border-radius: var(--radius-md); padding: 16px 14px; border: 1px solid var(--slate-200); }
+    .sum-card-label { font-size: 0.7em; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--slate-500); margin-bottom: 6px; }
+    .sum-card-val { font-family: 'Montserrat', sans-serif; font-size: 1.5em; font-weight: 900; color: var(--slate-900); line-height: 1; }
+    .sum-card-sub { font-size: 0.72em; color: var(--slate-500); margin-top: 3px; }
+    .sum-card.tw1 { border-top: 3px solid var(--green-500); }
+    .sum-card.tw2 { border-top: 3px solid #1976d2; }
+    .sum-card.target { border-top: 3px solid var(--gold-dark); }
+    .sum-card .pct-mini { font-size: 0.68em; font-weight: 700; padding: 2px 8px; border-radius: 50px; display: inline-block; margin-top: 4px; }
+    .pct-mini.g { background: #e8f5e9; color: #2e7d32; }
+    .pct-mini.b { background: #e3f2fd; color: #1565c0; }
+
+    /* Triwulan progress bars */
+    .db-tw-bars { padding: 20px 28px; border-bottom: 1px solid var(--slate-200); display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .tw-bar-item .tw-label { display: flex; justify-content: space-between; font-size: 0.78em; font-weight: 600; color: var(--slate-700); margin-bottom: 6px; }
+    .tw-bar-item .tw-label .tw-pct { font-family: 'Montserrat', sans-serif; font-weight: 900; }
+    .tw-track { height: 10px; background: var(--slate-100); border-radius: 6px; overflow: hidden; }
+    .tw-fill { height: 100%; border-radius: 6px; transition: width 0.7s ease 0.2s; }
+    .tw-fill.tw1 { background: linear-gradient(90deg, var(--green-700), var(--green-400)); }
+    .tw-fill.tw2 { background: linear-gradient(90deg, #1565c0, #42a5f5); }
+
+    /* Chart */
+    .db-chart-wrap { padding: 22px 28px; border-bottom: 1px solid var(--slate-200); }
+    .db-chart-title { font-size: 0.84em; font-weight: 700; color: var(--slate-700); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .db-chart-title i { color: var(--green-600); }
+    .db-chart-box { position: relative; height: 240px; }
+
+    /* Table */
+    .db-table-wrap { padding: 22px 28px; }
+    .db-table-title { font-size: 0.84em; font-weight: 700; color: var(--slate-700); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .db-table-title i { color: var(--green-600); }
+    .table-scroll { overflow-x: auto; border-radius: 12px; border: 1px solid var(--slate-200); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.78em; min-width: 900px; }
+    thead tr { background: var(--green-800); }
+    thead th { padding: 11px 12px; text-align: center; font-weight: 700; font-size: 0.82em; letter-spacing: 0.3px; color: white; white-space: nowrap; }
+    thead th:first-child { text-align: left; min-width: 220px; }
+    tbody tr { border-bottom: 1px solid var(--slate-200); transition: background var(--transition); }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--green-50); }
+    tbody td { padding: 10px 12px; vertical-align: middle; text-align: center; color: var(--slate-700); }
+    tbody td:first-child { text-align: left; font-weight: 600; color: var(--slate-900); }
+    .td-empty { color: var(--slate-500); font-style: italic; }
+    .td-highlight { font-family: 'Montserrat', sans-serif; font-weight: 900; }
+    .td-pct { background: var(--green-100); color: var(--green-800); font-weight: 700; border-radius: 6px; padding: 3px 8px; font-size: 0.9em; }
+    .td-pct.over { background: #e3f2fd; color: #1565c0; }
+
+    /* Empty / placeholder state */
+    .db-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 28px; gap: 14px; color: var(--slate-500); }
+    .db-empty i { font-size: 3em; opacity: 0.25; }
+    .db-empty h3 { font-size: 1em; font-weight: 700; color: var(--slate-700); }
+    .db-empty p { font-size: 0.82em; text-align: center; line-height: 1.6; }
+
+    /* ═══ FOOTER ═══ */
+    footer { background: var(--green-900); padding: 48px 28px 28px; color: rgba(255,255,255,0.7); }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-brand-name { font-family: 'Montserrat', sans-serif; font-size: 1.4em; font-weight: 900; color: white; letter-spacing: 2px; margin-bottom: 8px; }
+    .footer-brand-sub { font-size: 0.78em; color: rgba(255,255,255,0.6); line-height: 1.6; margin-bottom: 18px; }
+    .footer-socials { display: flex; gap: 10px; }
+    .footer-social { width: 36px; height: 36px; border-radius: 9px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.7); font-size: 0.9em; text-decoration: none; transition: background var(--transition), color var(--transition); }
+    .footer-social:hover { background: var(--green-600); color: white; }
+    .footer-col h5 { font-size: 0.8em; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: white; margin-bottom: 14px; }
+    .footer-col a { display: block; font-size: 0.82em; color: rgba(255,255,255,0.6); text-decoration: none; margin-bottom: 9px; transition: color var(--transition); }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-size: 0.78em; }
+    .footer-bottom a { color: var(--gold); text-decoration: none; }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 900px) {
+        .nav-menu { display: none; } .nav-cta { display: none; } .nav-hamburger { display: flex; }
+        .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+        .db-tw-bars { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+        .indicators-grid { grid-template-columns: repeat(2, 1fr); }
+        .db-summary { grid-template-columns: repeat(2, 1fr); }
+        .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+        .db-header { padding: 18px 18px; }
+        .db-progress-wrap, .db-tw-bars, .db-chart-wrap, .db-table-wrap, .db-summary { padding: 16px 16px; }
+    }
+
+    /* ═══ UTILS ═══ */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: 0.06s; } .reveal-d2 { transition-delay: 0.12s; }
+    .reveal-d3 { transition-delay: 0.18s; } .reveal-d4 { transition-delay: 0.24s; }
+    </style>
+</head>
+<body>
+
+<!-- ══ NAVBAR ══ -->
+<nav class="navbar" id="mainNav">
+    <a href="index.html" class="nav-brand">
+        <div class="brand-logo">S</div>
+        <div>
+            <div class="brand-name">SIDAYU</div>
+            <div class="brand-sub">Puskesmas Dirgahayu</div>
+        </div>
+    </a>
+
+    <ul class="nav-menu">
+        <li class="nav-item"><a href="index.html" class="nav-link">Beranda</a></li>
+        <li class="nav-item">
+            <span class="nav-link">Profil <i class="fas fa-chevron-down nav-chevron"></i></span>
+            <div class="dropdown">
+                <div class="dropdown-label">Puskesmas Dirgahayu</div>
+                <a href="index.html#profil-visimisi" class="dropdown-item"><span class="di-icon"><i class="fas fa-bullseye"></i></span><div><strong>Visi & Misi</strong></div></a>
+                <a href="index.html#profil-jadwal"   class="dropdown-item"><span class="di-icon"><i class="fas fa-calendar-alt"></i></span><div><strong>Jadwal Pelayanan</strong></div></a>
+                <a href="eksplorasi.html"             class="dropdown-item"><span class="di-icon"><i class="fas fa-sitemap"></i></span><div><strong>Profil Puskesmas</strong></div></a>
+            </div>
+        </li>
+        <li class="nav-item">
+            <span class="nav-link">Layanan <i class="fas fa-chevron-down nav-chevron"></i></span>
+            <div class="dropdown">
+                <div class="dropdown-label">Layanan Digital</div>
+                <a href="skrining.html"  class="dropdown-item"><span class="di-icon"><i class="fas fa-file-medical-alt"></i></span><div><strong>Skrining Mandiri</strong></div></a>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-label">Antrian & Pendaftaran</div>
+                <a href="https://www.klinisia.id/" target="_blank" class="dropdown-item"><span class="di-icon"><i class="fas fa-mobile-alt"></i></span><div><strong>Antrian Online (Umum)</strong></div></a>
+                <a href="registrasi.html" class="dropdown-item"><span class="di-icon"><i class="fas fa-edit"></i></span><div><strong>Pendaftaran Mandiri</strong></div></a>
+            </div>
+        </li>
+        <li class="nav-item">
+            <span class="nav-link">Edukasi <i class="fas fa-chevron-down nav-chevron"></i></span>
+            <div class="dropdown">
+                <div class="dropdown-label">Media Edukasi Kesehatan</div>
+                <a href="edukasi.html#section-youtube" class="dropdown-item"><span class="di-icon" style="background:#ffebee;color:#c62828"><i class="fab fa-youtube"></i></span><div><strong>Video YouTube</strong></div></a>
+                <a href="edukasi.html#section-tiktok"  class="dropdown-item"><span class="di-icon" style="background:#fce4ec;color:#ad1457"><i class="fab fa-tiktok"></i></span><div><strong>Video TikTok</strong></div></a>
+                <a href="edukasi.html#section-poster"  class="dropdown-item"><span class="di-icon"><i class="fas fa-image"></i></span><div><strong>Poster Edukasi</strong></div></a>
+            </div>
+        </li>
+        <li class="nav-item"><a href="pencapaian.html" class="nav-link active">Pencapaian</a></li>
+        <li class="nav-item"><a href="eksplorasi.html#kontak" class="nav-link">Kontak</a></li>
+    </ul>
+
+    <a href="skrining.html" class="nav-cta"><i class="fas fa-file-medical-alt"></i> Mulai Skrining</a>
+    <button class="nav-hamburger" id="hamburger" aria-label="Buka menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+
+<!-- Mobile Drawer -->
+<div class="nav-drawer" id="navDrawer">
+    <div class="nav-drawer-inner">
+        <div class="drawer-section">
+            <div class="drawer-section-label">Navigasi</div>
+            <a href="index.html" class="drawer-link"><span class="dl-icon"><i class="fas fa-home"></i></span> Beranda</a>
+        </div>
+        <div class="drawer-divider"></div>
+        <div class="drawer-section">
+            <div class="drawer-section-label">Profil</div>
+            <a href="index.html#profil-visimisi" class="drawer-link"><span class="dl-icon"><i class="fas fa-bullseye"></i></span> Visi & Misi</a>
+            <a href="eksplorasi.html" class="drawer-link"><span class="dl-icon"><i class="fas fa-sitemap"></i></span> E-Branding & SDM</a>
+        </div>
+        <div class="drawer-divider"></div>
+        <div class="drawer-section">
+            <div class="drawer-section-label">Layanan</div>
+            <a href="skrining.html"   class="drawer-link"><span class="dl-icon"><i class="fas fa-file-medical-alt"></i></span> Skrining Mandiri</a>
+            <a href="registrasi.html" class="drawer-link"><span class="dl-icon"><i class="fas fa-edit"></i></span> Pendaftaran Mandiri</a>
+        </div>
+        <div class="drawer-divider"></div>
+        <div class="drawer-section">
+            <div class="drawer-section-label">Edukasi</div>
+            <a href="edukasi.html" class="drawer-link"><span class="dl-icon"><i class="fas fa-graduation-cap"></i></span> Hub Edukasi</a>
+        </div>
+        <div class="drawer-divider"></div>
+        <div class="drawer-section">
+            <a href="pencapaian.html"          class="drawer-link active"><span class="dl-icon"><i class="fas fa-chart-bar"></i></span> Pencapaian SPM</a>
+            <a href="pengaduan.html"           class="drawer-link"><span class="dl-icon"><i class="fas fa-comment-alt"></i></span> Pengaduan</a>
+            <a href="eksplorasi.html#kontak"   class="drawer-link"><span class="dl-icon"><i class="fas fa-address-book"></i></span> Kontak</a>
+        </div>
+        <a href="skrining.html" class="drawer-cta"><i class="fas fa-file-medical-alt"></i> Mulai Skrining Sekarang</a>
+    </div>
+</div>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+    <div class="hero-eyebrow"><i class="fas fa-chart-bar"></i> Dashboard SPM 2025</div>
+    <h1>Dashboard Pencapaian<br>Pelayanan Kesehatan</h1>
+    <p>Monitoring capaian Standar Pelayanan Minimal (SPM) Puskesmas Dirgahayu berdasarkan indikator pelayanan kesehatan tahun 2026.</p>
+</section>
+
+<div class="page-wrap">
+
+    <!-- ══ INDICATOR GRID ══ -->
+    <section class="indicators-section">
+        <div class="indicators-header reveal">
+            <h2>Pilih Indikator Pelayanan</h2>
+            <p>Klik salah satu indikator di bawah untuk melihat data capaian secara detail</p>
+        </div>
+        <div class="indicators-grid" id="indicatorGrid">
+            <!-- Rendered by JS -->
+        </div>
+    </section>
+
+    <!-- ══ DASHBOARD PANEL ══ -->
+    <section class="dashboard-section" id="dashboardSection">
+        <div class="dashboard-panel" id="dashboardPanel">
+            <div class="db-empty">
+                <i class="fas fa-chart-pie"></i>
+                <h3>Pilih Indikator untuk Melihat Data</h3>
+                <p>Klik salah satu card indikator di atas untuk menampilkan<br>dashboard capaian SPM secara lengkap.</p>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-brand-name">SIDAYU</div>
+                <div class="footer-brand-sub">Sistem Informasi Digital & Layanan Terpadu<br>UPTD Puskesmas Dirgahayu<br>Kec. Pulau Laut Utara, Kab. Kotabaru<br>Kalimantan Selatan</div>
+                <div class="footer-socials">
+                    <a href="https://instagram.com/puskesmas_dirgahayu" target="_blank" class="footer-social"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/6281351090323" target="_blank" class="footer-social"><i class="fab fa-whatsapp"></i></a>
+                    <a href="mailto:puskesmasdirgahayu99@gmail.com" class="footer-social"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h5>Profil</h5>
+                <a href="index.html#profil-visimisi">Visi & Misi</a>
+                <a href="index.html#profil-jadwal">Jadwal Pelayanan</a>
+                <a href="eksplorasi.html">Profil Puskesmas</a>
+                <a href="eksplorasi.html#organisasi">Struktur Organisasi</a>
+                <a href="eksplorasi.html#peta">Lokasi & Peta</a>
+            </div>
+            <div class="footer-col">
+                <h5>Layanan</h5>
+                <a href="skrining.html">Skrining Mandiri</a>
+                <a href="edukasi.html">Media Edukasi</a>
+                <a href="registrasi.html">Pendaftaran Mandiri</a>
+                <a href="pengaduan.html">Pengaduan & Saran</a>
+                <a href="pencapaian.html">Pencapaian SPM</a>
+            </div>
+            <div class="footer-col">
+                <h5>Kontak</h5>
+                <a href="mailto:puskesmasdirgahayu99@gmail.com">puskesmasdirgahayu99@gmail.com</a>
+                <a href="https://share.google/4Hs2GW8MvzzMpl2SJ" target="_blank">Lihat di Google Maps</a>
+                <a href="https://instagram.com/puskesmas_dirgahayu" target="_blank">@puskesmas_dirgahayu</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>SIDAYU &copy; 2026 | UPTD Puskesmas Dirgahayu — Kotabaru</span>
+            <span>Bersama Mewujudkan Kotabaru yang Lebih Sehat</span>
+        </div>
+    </div>
+</footer>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   DATA 12 INDIKATOR SPM
+   Untuk menambah/mengubah data: edit objek di array DATA_INDIKATOR
+   Kolom bulan yg belum ada data: isi dengan null
+══════════════════════════════════════════════════════════════ */
+const DATA_INDIKATOR = [
+  {
+    id: 1,
+    nama: 'Pelayanan Kesehatan Ibu Hamil',
+    icon: 'fas fa-baby',
+    targetPersen: 80,
+    rows: [
+      {
+        indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Ibu Hamil',
+        satuan: 'Orang',
+        target: 980,
+        bulan: [64, 79, 45, 69, 65, null, null, null, null, null, null, null],
+        tw1Total: 188, tw1Pct: 19.18,
+        tw2Total: 322, tw2Pct: 32.86
+      }
+    ]
+  },
+  {
+    id: 2,
+    nama: 'Pelayanan Kesehatan Ibu Bersalin',
+    icon: 'fas fa-heart',
+    targetPersen: 80,
+    rows: [
+      {
+        indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Ibu Bersalin',
+        satuan: 'Orang',
+        target: 936,
+        bulan: [41, 46, 33, 51, 54, null, null, null, null, null, null, null],
+        tw1Total: 120, tw1Pct: 12.82,
+        tw2Total: 225, tw2Pct: 24.04
+      }
+    ]
+  },
+  {
+    id: 3,
+    nama: 'Pelayanan Kesehatan Bayi Baru Lahir',
+    icon: 'fas fa-child',
+    targetPersen: 80,
+    rows: [
+      {
+        indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Bayi Baru Lahir',
+        satuan: 'Orang',
+        target: 891,
+        bulan: [42, 46, 34, 51, 55, null, null, null, null, null, null, null],
+        tw1Total: 122, tw1Pct: 13.69,
+        tw2Total: 228, tw2Pct: 25.59
+      }
+    ]
+  },
+  {
+    id: 4,
+    nama: 'Pelayanan Kesehatan Balita',
+    icon: 'fas fa-baby-carriage',
+    targetPersen: 80,
+    rows: [
+      {
+        indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Balita',
+        satuan: 'Orang',
+        target: 4267,
+        bulan: [251, 272, 141, 349, 277, null, null, null, null, null, null, null],
+        tw1Total: 664, tw1Pct: 15.56,
+        tw2Total: 1290, tw2Pct: 30.23
+      }
+    ]
+  },
+  {
+    id: 5,
+    nama: 'Pelayanan Kesehatan Usia Pendidikan Dasar',
+    icon: 'fas fa-school',
+    targetPersen: 80,
+    rows: [
+      {
+        indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Usia Pendidikan Dasar',
+        satuan: 'Orang',
+        target: 8908,
+        bulan: [0, 0, 0, 0, 0, null, null, null, null, null, null, null],
+        tw1Total: 0, tw1Pct: 0,
+        tw2Total: 0, tw2Pct: 0
+      }
+    ]
+  },
+  {
+    id: 6,
+    nama: 'Pelayanan Kesehatan Usia Produktif',
+    icon: 'fas fa-user-tie',
+    targetPersen: 80,
+    rows: [
+      {
+        indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Usia 15–59 Tahun',
+        satuan: 'Orang',
+        target: 12954,
+        bulan: [1668, 1506, 1320, 584, 829, null, null, null, null, null, null, null],
+        tw1Total: 4494, tw1Pct: 34.69,
+        tw2Total: 5907, tw2Pct: 45.60
+      },
+      {
+        indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Pemeriksaan SADANIS dan IVA Tes',
+        satuan: 'Orang',
+        target: 1500,
+        bulan: [0, 0, 4, 1, 18, null, null, null, null, null, null, null],
+        tw1Total: 4, tw1Pct: 0.27,
+        tw2Total: 23, tw2Pct: 1.53
+      },
+      {
+        indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Calon Pengantin (Catin)',
+        satuan: 'Orang',
+        target: 245,
+        bulan: [29, 31, 16, 33, 44, null, null, null, null, null, null, null],
+        tw1Total: 76, tw1Pct: 31.02,
+        tw2Total: 153, tw2Pct: 62.45
+      },
+      {
+        indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap PUS Perempuan dengan 4T',
+        satuan: 'Orang',
+        target: 1657,
+        bulan: [405, 185, 147, 112, 130, null, null, null, null, null, null, null],
+        tw1Total: 737, tw1Pct: 44.48,
+        tw2Total: 979, tw2Pct: 59.08
+      }
+    ]
+  },
+  {
+    id: 7,
+    nama: 'Pelayanan Kesehatan Usia Lanjut',
+    icon: 'fas fa-user-clock',
+    targetPersen: 80,
+    rows: [
+      {
+        indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Usia Lanjut',
+        satuan: 'Orang',
+        target: 2700,
+        bulan: [220, 152, 134, 281, 233, null, null, null, null, null, null, null],
+        tw1Total: 506, tw1Pct: 18.74,
+        tw2Total: 1020, tw2Pct: 37.78
+      }
+    ]
+  },
+  {
+    id: 8,
+    nama: 'Pelayanan Kesehatan Penderita Hipertensi',
+    icon: 'fas fa-heartbeat',
+    targetPersen: 80,
+    rows: [
+      {
+        indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Penderita Hipertensi',
+        satuan: 'Orang',
+        target: 1002,
+        bulan: [100, 277, 114, 79, 79, null, null, null, null, null, null, null],
+        tw1Total: 491, tw1Pct: 49.00,
+        tw2Total: 649, tw2Pct: 64.77
+      }
+    ]
+  },
+  {
+    id: 9,
+    nama: 'Pelayanan Kesehatan Penderita Diabetes Melitus',
+    icon: 'fas fa-syringe',
+    targetPersen: 80,
+    rows: [
+      {
+        indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Penderita Diabetes Melitus',
+        satuan: 'Orang',
+        target: 152,
+        bulan: [20, 130, 47, 22, 24, null, null, null, null, null, null, null],
+        tw1Total: 197, tw1Pct: 129.61,
+        tw2Total: 243, tw2Pct: 159.87
+      }
+    ]
+  },
+  {
+    id: 10,
+    nama: 'Pelayanan Kesehatan ODGJ',
+    icon: 'fas fa-brain',
+    targetPersen: 80,
+    rows: [
+      {
+        indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Penderita ODGJ',
+        satuan: 'Orang',
+        target: 63,
+        bulan: [13, 10, 9, 12, 5, null, null, null, null, null, null, null],
+        tw1Total: 32, tw1Pct: 50.79,
+        tw2Total: 49, tw2Pct: 77.78
+      }
+    ]
+  },
+  {
+    id: 11,
+    nama: 'Pelayanan Kesehatan Orang Terduga Tuberkulosis',
+    icon: 'fas fa-lungs',
+    targetPersen: 80,
+    rows: [
+      {
+        indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Orang Terduga Tuberkulosis',
+        satuan: 'Orang',
+        target: 487,
+        bulan: [22, 12, 8, 16, 15, null, null, null, null, null, null, null],
+        tw1Total: 42, tw1Pct: 8.62,
+        tw2Total: 73, tw2Pct: 14.99
+      }
+    ]
+  },
+  {
+    id: 12,
+    nama: 'Pelayanan Kesehatan Orang Dengan Risiko Terinfeksi HIV',
+    icon: 'fas fa-shield-virus',
+    targetPersen: 80,
+    rows: [
+      {
+        indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Orang dengan Risiko Terinfeksi HIV',
+        satuan: 'Orang',
+        target: 1000,
+        bulan: [50, 170, 65, 200, 124, null, null, null, null, null, null, null],
+        tw1Total: 285, tw1Pct: 28.50,
+        tw2Total: 609, tw2Pct: 60.90
+      }
+    ]
+  }
+];
+
+const BULAN = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+const BULAN_FULL = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+let activeChart = null;
+let activeId = null;
+
+/* ── Helpers ── */
+function fmt(n) {
+  if (n === null || n === undefined) return '-';
+  return Number(n).toLocaleString('id-ID');
+}
+function fmtPct(n) {
+  return Number(n).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '%';
+}
+function getBadge(pct) {
+  if (pct >= 100) return { label: 'Melebihi Target', cls: 'badge-melebihi', fillCls: 'fill-melebihi' };
+  if (pct >= 80)  return { label: 'Baik',            cls: 'badge-baik',     fillCls: 'fill-baik' };
+  if (pct >= 50)  return { label: 'Cukup',           cls: 'badge-cukup',    fillCls: 'fill-cukup' };
+  return              { label: 'Rendah',          cls: 'badge-rendah',   fillCls: 'fill-rendah' };
+}
+function clampPct(n) { return Math.min(n, 100); }
+
+/* ── Build indicator grid ── */
+function buildIndicatorGrid() {
+  const grid = document.getElementById('indicatorGrid');
+  grid.innerHTML = DATA_INDIKATOR.map(ind => `
+    <div class="ind-card reveal" id="indCard${ind.id}" onclick="selectIndicator(${ind.id})">
+      <div class="ind-num">Indikator ${ind.id}</div>
+      <div class="ind-icon-wrap"><i class="${ind.icon}"></i></div>
+      <div class="ind-name">${ind.nama}</div>
+      <span class="ind-btn"><i class="fas fa-chart-bar" style="font-size:0.85em"></i> Lihat Data</span>
+    </div>
+  `).join('');
+
+  // Trigger reveal
+  setTimeout(() => {
+    document.querySelectorAll('.ind-card.reveal').forEach((el, i) => {
+      setTimeout(() => el.classList.add('visible'), i * 40);
+    });
+  }, 100);
+}
+
+/* ── Select indicator ── */
+function selectIndicator(id) {
+  if (activeId === id) return;
+  activeId = id;
+
+  // Update active card
+  document.querySelectorAll('.ind-card').forEach(c => c.classList.remove('active'));
+  document.getElementById('indCard' + id).classList.add('active');
+
+  // Scroll to dashboard
+  const panel = document.getElementById('dashboardSection');
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  // Render
+  const ind = DATA_INDIKATOR.find(d => d.id === id);
+  renderDashboard(ind);
+}
+
+/* ── Render dashboard ── */
+function renderDashboard(ind) {
+  const panel = document.getElementById('dashboardPanel');
+
+  // Compute aggregate capaian from TW2 of first row for main progress
+  const mainRow   = ind.rows[0];
+  const mainPct   = mainRow.tw2Pct;
+  const badge     = getBadge(mainPct);
+  const fillWidth = clampPct(mainPct);
+
+  // Aggregate totals across all rows (for multi-row indikators like no.6)
+  const totalTW1  = ind.rows.reduce((s, r) => s + r.tw1Total, 0);
+  const totalTW2  = ind.rows.reduce((s, r) => s + r.tw2Total, 0);
+  const totalTarget = ind.rows.reduce((s, r) => s + r.target, 0);
+  const aggTW1Pct = totalTarget > 0 ? (totalTW1 / totalTarget * 100) : 0;
+  const aggTW2Pct = totalTarget > 0 ? (totalTW2 / totalTarget * 100) : 0;
+
+  // Chart data: sum bulan across all rows
+  const chartData = BULAN.map((_, i) =>
+    ind.rows.reduce((s, r) => s + (r.bulan[i] || 0), 0)
+  );
+  const chartLabels = BULAN_FULL;
+  const hasData = chartData.some(v => v > 0);
+
+  // Build table rows
+  const tableRows = ind.rows.map(r => {
+    const bulanCells = r.bulan.map(v => v === null
+      ? `<td class="td-empty">—</td>`
+      : `<td>${fmt(v)}</td>`
+    ).join('');
+    const tw1PctClass = r.tw1Pct > 100 ? 'td-pct over' : 'td-pct';
+    const tw2PctClass = r.tw2Pct > 100 ? 'td-pct over' : 'td-pct';
+    return `
+      <tr>
+        <td>${r.indikator}</td>
+        <td>${r.satuan}</td>
+        <td class="td-highlight">${fmt(r.target)}</td>
+        ${bulanCells}
+        <td class="td-highlight">${fmt(r.tw1Total)}</td>
+        <td><span class="${tw1PctClass}">${fmtPct(r.tw1Pct)}</span></td>
+        <td class="td-highlight">${fmt(r.tw2Total)}</td>
+        <td><span class="${tw2PctClass}">${fmtPct(r.tw2Pct)}</span></td>
+      </tr>`;
+  }).join('');
+
+  panel.innerHTML = `
+    <!-- Header -->
+    <div class="db-header">
+      <div class="db-header-icon"><i class="${ind.icon}"></i></div>
+      <div class="db-header-text">
+        <div class="db-header-num">Indikator ${ind.id} dari 12</div>
+        <div class="db-header-title">${ind.nama}</div>
+        <div class="db-header-sub">Persentase Pencapaian Penerima Layanan Dasar — Target ${ind.targetPersen}%</div>
+      </div>
+      <span class="db-badge ${badge.cls}">${badge.label}</span>
+    </div>
+
+    <!-- Main progress -->
+    <div class="db-progress-wrap">
+      <div class="db-progress-label">
+        <span>Capaian Triwulan II (s/d Mei ${new Date().getFullYear()})</span>
+        <span class="pct">${fmtPct(mainPct)}</span>
+      </div>
+      <div class="db-progress-track">
+        <div class="db-progress-fill ${badge.fillCls}" id="mainFill" style="width:0%"></div>
+      </div>
+      <div class="db-progress-hint">Target tahunan: ${ind.targetPersen}% &nbsp;|&nbsp; Status: ${badge.label}</div>
+    </div>
+
+    <!-- Summary cards -->
+    <div class="db-summary">
+      <div class="sum-card target">
+        <div class="sum-card-label"><i class="fas fa-bullseye" style="margin-right:4px"></i>Target Setahun</div>
+        <div class="sum-card-val">${fmt(totalTarget)}</div>
+        <div class="sum-card-sub">orang yang harus dilayani</div>
+      </div>
+      <div class="sum-card tw1">
+        <div class="sum-card-label"><i class="fas fa-calendar-check" style="margin-right:4px"></i>Total Triwulan I</div>
+        <div class="sum-card-val">${fmt(totalTW1)}</div>
+        <div class="sum-card-sub">Jan – Mar 2026<br><span class="pct-mini g">${fmtPct(aggTW1Pct)}</span></div>
+      </div>
+      <div class="sum-card tw2">
+        <div class="sum-card-label"><i class="fas fa-calendar-alt" style="margin-right:4px"></i>Total Triwulan II</div>
+        <div class="sum-card-val">${fmt(totalTW2)}</div>
+        <div class="sum-card-sub">Jan – Mei 2026<br><span class="pct-mini b">${fmtPct(aggTW2Pct)}</span></div>
+      </div>
+      <div class="sum-card" style="border-top:3px solid var(--slate-400)">
+        <div class="sum-card-label"><i class="fas fa-percentage" style="margin-right:4px"></i>Persentase TW I</div>
+        <div class="sum-card-val" style="font-size:1.2em">${fmtPct(mainRow.tw1Pct)}</div>
+        <div class="sum-card-sub">dari target tahunan</div>
+      </div>
+    </div>
+
+    <!-- Triwulan bars -->
+    <div class="db-tw-bars">
+      <div class="tw-bar-item">
+        <div class="tw-label">
+          <span>Capaian Triwulan I (Jan–Mar)</span>
+          <span class="tw-pct" style="color:var(--green-700)">${fmtPct(mainRow.tw1Pct)}</span>
+        </div>
+        <div class="tw-track"><div class="tw-fill tw1" id="tw1Fill" style="width:0%"></div></div>
+      </div>
+      <div class="tw-bar-item">
+        <div class="tw-label">
+          <span>Capaian Triwulan II (Jan–Mei)</span>
+          <span class="tw-pct" style="color:#1565c0">${fmtPct(mainRow.tw2Pct)}</span>
+        </div>
+        <div class="tw-track"><div class="tw-fill tw2" id="tw2Fill" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <!-- Chart -->
+    <div class="db-chart-wrap">
+      <div class="db-chart-title"><i class="fas fa-chart-bar"></i> Realisasi Pelayanan per Bulan (Orang)</div>
+      <div class="db-chart-box"><canvas id="myChart"></canvas></div>
+    </div>
+
+    <!-- Table -->
+    <div class="db-table-wrap">
+      <div class="db-table-title"><i class="fas fa-table"></i> Tabel Data Capaian SPM</div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Indikator Pelayanan</th>
+              <th>Satuan</th>
+              <th>Target Setahun</th>
+              ${BULAN_FULL.map(b => `<th>${b}</th>`).join('')}
+              <th>Total TW I</th>
+              <th>% TW I</th>
+              <th>Total TW II</th>
+              <th>% TW II</th>
+            </tr>
+          </thead>
+          <tbody>${tableRows}</tbody>
+        </table>
+      </div>
+    </div>
+  `;
+
+  // Animate bars
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      document.getElementById('mainFill').style.width = fillWidth + '%';
+      const tw1w = clampPct(mainRow.tw1Pct);
+      const tw2w = clampPct(mainRow.tw2Pct);
+      document.getElementById('tw1Fill').style.width = tw1w + '%';
+      document.getElementById('tw2Fill').style.width = tw2w + '%';
+    });
+  });
+
+  // Destroy old chart
+  if (activeChart) { activeChart.destroy(); activeChart = null; }
+
+  // Build chart
+  const ctx = document.getElementById('myChart').getContext('2d');
+  const bg = chartData.map(v => v > 0 ? 'rgba(0,121,107,0.85)' : 'rgba(200,220,218,0.5)');
+  activeChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: BULAN_FULL,
+      datasets: [{
+        label: 'Realisasi (Orang)',
+        data: chartData,
+        backgroundColor: bg,
+        borderRadius: 7,
+        borderSkipped: false,
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => {
+              const v = ctx.parsed.y;
+              return v === 0 ? ' Belum ada data' : ' ' + fmt(v) + ' orang';
+            }
+          }
+        }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { family: 'Poppins', size: 11 } } },
+        y: {
+          grid: { color: 'rgba(0,0,0,0.05)' },
+          ticks: { font: { family: 'Poppins', size: 11 }, callback: v => fmt(v) },
+          beginAtZero: true
+        }
+      }
+    }
+  });
+}
+
+/* ── Navbar / Hamburger ── */
+const hamburger = document.getElementById('hamburger');
+const navDrawer = document.getElementById('navDrawer');
+hamburger.addEventListener('click', () => {
+  const open = hamburger.classList.toggle('open');
+  hamburger.setAttribute('aria-expanded', open);
+  navDrawer.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+});
+navDrawer.addEventListener('click', e => { if (e.target === navDrawer) closeDrawer(); });
+function closeDrawer() {
+  hamburger.classList.remove('open');
+  hamburger.setAttribute('aria-expanded', 'false');
+  navDrawer.classList.remove('open');
+  document.body.style.overflow = '';
+}
+window.addEventListener('resize', () => { if (window.innerWidth > 900) closeDrawer(); });
+
+/* ── Scroll reveal ── */
+const revealIO = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealIO.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal:not(.ind-card)').forEach(el => revealIO.observe(el));
+
+/* ── Init ── */
+buildIndicatorGrid();
+</script>
+</body>
+</html>
