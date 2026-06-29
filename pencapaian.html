@@ -96,30 +96,38 @@
     .hero p { font-size: 0.95em; opacity: 0.85; max-width: 580px; margin: 0 auto; line-height: 1.7; }
 
     /* ═══ MAIN WRAPPER ═══ */
-    .page-wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px 80px; }
+    .page-wrap { max-width: 1200px; margin: 0 auto; padding: 24px 24px 80px; }
 
     /* ═══ INDICATOR GRID ═══ */
-    .indicators-section { margin-top: -36px; position: relative; z-index: 10; }
-    .indicators-header { text-align: center; margin-bottom: 28px; }
-    .indicators-header h2 { font-family: 'Montserrat', sans-serif; font-size: 1.35em; font-weight: 900; color: var(--slate-900); }
-    .indicators-header p { font-size: 0.82em; color: var(--slate-500); margin-top: 5px; }
-    .indicators-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+    .indicators-section { position: relative; z-index: 10; margin-bottom: 40px; }
+    
+    .indicators-header { text-align: center; margin-bottom: 34px; }
+    .indicators-header h2 { font-family: 'Montserrat', sans-serif; font-size: 1.5em; font-weight: 900; color: var(--slate-900); }
+    .indicators-header p { font-size: 0.88em; color: var(--slate-500); margin: 8px auto 0; max-width: 600px; line-height: 1.6; }
+    
+    .indicators-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 18px; }
+    
     .ind-card {
-        background: var(--white); border-radius: var(--radius-lg); padding: 20px 18px;
+        background: var(--white); border-radius: var(--radius-lg); padding: 24px 20px;
         box-shadow: var(--shadow-sm); border: 2px solid transparent;
         cursor: pointer; transition: all var(--transition); position: relative; overflow: hidden;
+        display: flex; flex-direction: column; align-items: flex-start; height: 100%;
     }
     .ind-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--green-600), var(--green-400)); transform: scaleX(0); transform-origin: left; transition: transform var(--transition); }
-    .ind-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--green-200, #b2dfdb); }
+    .ind-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--green-200); }
     .ind-card:hover::after { transform: scaleX(1); }
     .ind-card.active { border-color: var(--green-600); background: var(--green-50); box-shadow: var(--shadow-md); }
     .ind-card.active::after { transform: scaleX(1); }
-    .ind-num { font-size: 0.68em; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: var(--slate-500); margin-bottom: 8px; }
+    
+    .ind-num { font-size: 0.68em; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: var(--slate-500); margin-bottom: 12px; }
     .ind-card.active .ind-num { color: var(--green-600); }
-    .ind-icon-wrap { width: 44px; height: 44px; border-radius: 12px; background: var(--green-100); color: var(--green-700); display: flex; align-items: center; justify-content: center; font-size: 1.2em; margin-bottom: 10px; transition: background var(--transition), color var(--transition); }
+    
+    .ind-icon-wrap { width: 48px; height: 48px; border-radius: 12px; background: var(--green-100); color: var(--green-700); display: flex; align-items: center; justify-content: center; font-size: 1.35em; margin-bottom: 14px; transition: background var(--transition), color var(--transition); }
     .ind-card.active .ind-icon-wrap, .ind-card:hover .ind-icon-wrap { background: var(--green-600); color: white; }
-    .ind-name { font-size: 0.82em; font-weight: 700; color: var(--slate-700); line-height: 1.4; margin-bottom: 12px; }
-    .ind-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 0.75em; font-weight: 700; color: var(--green-600); background: var(--green-100); padding: 6px 12px; border-radius: 50px; transition: background var(--transition), color var(--transition); }
+    
+    .ind-name { font-size: 0.85em; font-weight: 700; color: var(--slate-700); line-height: 1.5; margin-bottom: 24px; flex-grow: 1; }
+    
+    .ind-btn { margin-top: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 0.75em; font-weight: 700; color: var(--green-600); background: var(--green-100); padding: 8px 14px; border-radius: 50px; transition: background var(--transition), color var(--transition); }
     .ind-card:hover .ind-btn, .ind-card.active .ind-btn { background: var(--green-600); color: white; }
 
     /* ═══ DASHBOARD AREA ═══ */
@@ -248,7 +256,6 @@
 </head>
 <body>
 
-<!-- ══ NAVBAR ══ -->
 <nav class="navbar" id="mainNav">
     <a href="index.html" class="nav-brand">
         <div class="brand-logo">S</div>
@@ -299,7 +306,6 @@
     </button>
 </nav>
 
-<!-- Mobile Drawer -->
 <div class="nav-drawer" id="navDrawer">
     <div class="nav-drawer-inner">
         <div class="drawer-section">
@@ -333,7 +339,6 @@
     </div>
 </div>
 
-<!-- ══ HERO ══ -->
 <section class="hero">
     <div class="hero-eyebrow"><i class="fas fa-chart-bar"></i> Dashboard SPM 2025</div>
     <h1>Dashboard Pencapaian<br>Pelayanan Kesehatan</h1>
@@ -342,18 +347,15 @@
 
 <div class="page-wrap">
 
-    <!-- ══ INDICATOR GRID ══ -->
     <section class="indicators-section">
         <div class="indicators-header reveal">
             <h2>Pilih Indikator Pelayanan</h2>
             <p>Klik salah satu indikator di bawah untuk melihat data capaian secara detail</p>
         </div>
         <div class="indicators-grid" id="indicatorGrid">
-            <!-- Rendered by JS -->
-        </div>
+            </div>
     </section>
 
-    <!-- ══ DASHBOARD PANEL ══ -->
     <section class="dashboard-section" id="dashboardSection">
         <div class="dashboard-panel" id="dashboardPanel">
             <div class="db-empty">
@@ -366,7 +368,6 @@
 
 </div>
 
-<!-- ══ FOOTER ══ -->
 <footer>
     <div class="footer-inner">
         <div class="footer-grid">
@@ -739,7 +740,6 @@ function renderDashboard(ind) {
   }).join('');
 
   panel.innerHTML = `
-    <!-- Header -->
     <div class="db-header">
       <div class="db-header-icon"><i class="${ind.icon}"></i></div>
       <div class="db-header-text">
@@ -750,7 +750,6 @@ function renderDashboard(ind) {
       <span class="db-badge ${badge.cls}">${badge.label}</span>
     </div>
 
-    <!-- Main progress -->
     <div class="db-progress-wrap">
       <div class="db-progress-label">
         <span>Capaian Triwulan II (s/d Mei ${new Date().getFullYear()})</span>
@@ -762,7 +761,6 @@ function renderDashboard(ind) {
       <div class="db-progress-hint">Target tahunan: ${ind.targetPersen}% &nbsp;|&nbsp; Status: ${badge.label}</div>
     </div>
 
-    <!-- Summary cards -->
     <div class="db-summary">
       <div class="sum-card target">
         <div class="sum-card-label"><i class="fas fa-bullseye" style="margin-right:4px"></i>Target Setahun</div>
@@ -786,7 +784,6 @@ function renderDashboard(ind) {
       </div>
     </div>
 
-    <!-- Triwulan bars -->
     <div class="db-tw-bars">
       <div class="tw-bar-item">
         <div class="tw-label">
@@ -804,13 +801,11 @@ function renderDashboard(ind) {
       </div>
     </div>
 
-    <!-- Chart -->
     <div class="db-chart-wrap">
       <div class="db-chart-title"><i class="fas fa-chart-bar"></i> Realisasi Pelayanan per Bulan (Orang)</div>
       <div class="db-chart-box"><canvas id="myChart"></canvas></div>
     </div>
 
-    <!-- Table -->
     <div class="db-table-wrap">
       <div class="db-table-title"><i class="fas fa-table"></i> Tabel Data Capaian SPM</div>
       <div class="table-scroll">
