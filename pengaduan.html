@@ -116,11 +116,16 @@
         .template-text { background: var(--white); border: 1px solid #ffe082; border-radius: 10px; padding: 14px 16px; font-size: 0.82em; color: var(--text); line-height: 1.7; font-family: monospace; white-space: pre-wrap; word-break: break-word; }
 
         /* Action buttons */
-        .action-row { display: flex; gap: 12px; flex-wrap: wrap; }
-        .act-btn { flex: 1; min-width: 150px; padding: 13px 18px; border-radius: 12px; border: 2px solid var(--border); background: var(--white); font-family: 'Poppins', sans-serif; font-size: 0.85em; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--text); text-decoration: none; transition: all 0.2s; }
+        .action-row { display: flex; gap: 10px; flex-wrap: wrap; }
+        .act-btn { flex: 1; min-width: 150px; padding: 13px 14px; border-radius: 12px; border: 2px solid var(--border); background: var(--white); font-family: 'Poppins', sans-serif; font-size: 0.85em; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--text); text-decoration: none; transition: all 0.2s; }
         .act-btn:hover { background: var(--bg); transform: translateY(-1px); }
+        
+        .act-btn.wa { background: linear-gradient(135deg, #25D366, #128C7E); border: none; color: #fff; }
+        .act-btn.wa:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(37,211,102,0.3); }
+
         .act-btn.ig { background: linear-gradient(135deg, #833ab4, #c13584, #e1306c); border: none; color: #fff; }
-        .act-btn.ig:hover { opacity: 0.9; transform: translateY(-2px); }
+        .act-btn.ig:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(193,53,132,0.3); }
+        
         .act-btn.copy { background: #fff3e0; border-color: #ffcc80; color: #e65100; }
         .act-btn.copy:hover { background: #ffe0b2; }
         .act-btn.primary { background: var(--primary); border-color: var(--primary); color: #fff; }
@@ -282,9 +287,9 @@
                 </div>
 
                 <div class="template-box">
-                    <h4><i class="fab fa-instagram"></i> Template Pesan untuk DM Instagram</h4>
+                    <h4><i class="fab fa-whatsapp"></i> / <i class="fab fa-instagram"></i> Template Pesan untuk Petugas</h4>
                     <p style="font-size:0.78em;color:#795548;margin-bottom:10px;line-height:1.55;">
-                        Salin teks di bawah ini lalu kirimkan ke DM Instagram
+                        Salin teks di bawah ini lalu kirimkan ke WhatsApp atau DM Instagram 
                         <strong>@puskesmas_dirgahayu</strong> untuk tindak lanjut lebih cepat.
                     </p>
                     <div class="template-text" id="templateDM"></div>
@@ -294,21 +299,23 @@
                     <button class="act-btn copy" onclick="copyTemplate()" id="copyBtn">
                         <i class="fas fa-copy"></i> Salin Teks
                     </button>
+                    <!-- Tombol WhatsApp Baru -->
+                    <a href="#" target="_blank" rel="noopener" class="act-btn wa" id="waBtn">
+                        <i class="fab fa-whatsapp" style="font-size:1.1em;"></i> Kirim via WA
+                    </a>
                     <a href="https://ig.me/m/puskesmas_dirgahayu" target="_blank" rel="noopener" class="act-btn ig" id="igBtn">
-                        <i class="fab fa-instagram"></i> Kirim via DM Instagram
+                        <i class="fab fa-instagram" style="font-size:1.1em;"></i> Kirim via DM IG
                     </a>
                     <button class="act-btn primary" onclick="resetForm()">
                         <i class="fas fa-plus-circle"></i> Pengaduan Baru
                     </button>
-                    <a href="index.html" class="act-btn">
-                        <i class="fas fa-home"></i> Beranda
-                    </a>
+                    <!-- Tombol beranda dihapus agar layout tidak terlalu padat (sudah ada di header) -->
                 </div>
 
                 <div class="catatan-box">
                     <i class="fas fa-info-circle" style="margin-right:6px"></i>
                     <strong>Catatan:</strong> Data pengaduan Anda telah tersimpan di sistem Puskesmas Dirgahayu.
-                    Untuk tindak lanjut lebih cepat, Anda dapat mengirim pesan di atas melalui DM Instagram
+                    Untuk tindak lanjut lebih cepat, Anda dapat mengirim pesan di atas melalui WhatsApp atau DM Instagram
                     <strong>@puskesmas_dirgahayu</strong>.
                     Jika tidak menerima konfirmasi dalam 3 hari kerja, hubungi kami di
                     <strong>+62 813-5109-0323</strong>.
@@ -321,6 +328,9 @@
 
 <footer style="text-align:center;padding:32px;color:var(--primary);font-size:0.86em;border-top:1px solid var(--border);">
     <p>SI-Dirgahayu &copy; 2026 | Puskesmas Dirgahayu — Kec. Pulau Laut Utara, Kab. Kotabaru</p>
+    <div style="font-size: 0.7em; opacity: 0.25; margin-top: 10px; letter-spacing: 1px; user-select: none; pointer-events: none;">
+        Innovator: ajiiskandar
+    </div>
 </footer>
 
 <div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMsg">Berhasil!</span></div>
@@ -358,7 +368,7 @@ function updateCounter() {
     el.className = 'char-counter' + (v > 800 ? ' warn' : '');
 }
 
-// ── Validasi form (Diperbarui) ──
+// ── Validasi form ──
 function validate() {
     const checks = [
         { id:'p-tanggal', err:'err-tanggal', ok: v => v !== '' },
@@ -441,10 +451,11 @@ function tampilkanHasil(data) {
         <div class="ringkasan-row"><span class="rr-label">Isi Pengaduan</span><span class="rr-val">${data.isi}</span></div>
     `;
 
+    // Teks diubah agar lebih universal (tidak menyebut DM Instagram secara spesifik di badan teks)
     templateText =
-`Halo Admin @puskesmas_dirgahayu 👋
+`Halo Admin Puskesmas Dirgahayu 👋
 
-Saya ingin menyampaikan pengaduan/saran melalui DM Instagram. Berikut detail pengaduan saya:
+Saya ingin menyampaikan pengaduan/saran. Berikut detail pengaduan saya:
 
 📅 Tanggal : ${formatTanggal(data.tanggal)}
 🏷️ Jenis   : ${data.jenis}
@@ -458,6 +469,11 @@ ${data.isi}
 Mohon ditindaklanjuti. Terima kasih 🙏`;
 
     document.getElementById('templateDM').textContent = templateText;
+    
+    // Inject link WhatsApp
+    const waNumber = '628134259201';
+    const waEncodedText = encodeURIComponent(templateText);
+    document.getElementById('waBtn').href = `https://api.whatsapp.com/send?phone=${waNumber}&text=${waEncodedText}`;
 
     const panel = document.getElementById('hasilPanel');
     panel.classList.add('show');
@@ -478,7 +494,7 @@ function formatTanggal(d) {
 function copyTemplate() {
     if (!templateText) return;
     navigator.clipboard.writeText(templateText).then(() => {
-        showToast('Teks berhasil disalin! Sekarang buka DM Instagram.', false);
+        showToast('Teks berhasil disalin! Silakan kirim ke WhatsApp / DM Instagram.', false);
         const btn = document.getElementById('copyBtn');
         btn.innerHTML = '<i class="fas fa-check"></i> Tersalin!';
         setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy"></i> Salin Teks'; }, 2500);
