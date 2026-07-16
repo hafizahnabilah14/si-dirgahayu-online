@@ -149,7 +149,7 @@
     .hero-card:hover .hero-card-arrow { transform: translateX(4px); opacity: 1; }
 
     /* ═══════════════════════════════════════════════
-       MOTTO & LAYANAN & POSTERS (Existing)
+       MOTTO & LAYANAN & POSTERS 
     ═══════════════════════════════════════════════ */
     .motto-section { background: white; padding: 64px 28px; }
     .section-inner { max-width: 1160px; margin: 0 auto; }
@@ -168,7 +168,10 @@
     .motto-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0; margin-top: 6px; }
 
     .layanan-section { background: var(--slate-100); padding: 64px 28px; }
-    .layanan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
+    
+    /* MODIFIKASI LAYANAN GRID UNTUK 3 KOLOM */
+    .layanan-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    
     .layanan-card { background: white; border-radius: var(--radius-lg); padding: 26px 22px; display: flex; flex-direction: column; gap: 14px; text-decoration: none; color: var(--slate-900); box-shadow: var(--shadow-sm); border: 1px solid var(--slate-200); transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition); position: relative; overflow: hidden; }
     .layanan-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--green-600), var(--green-400)); transform: scaleX(0); transform-origin: left; transition: transform var(--transition); }
     .layanan-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--green-400); }
@@ -245,6 +248,7 @@
        RESPONSIVE
     ═══════════════════════════════════════════════ */
     @media (max-width: 1024px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; } }
+    
     @media (max-width: 900px) {
         .nav-menu, .nav-cta { display: none; }
         .nav-hamburger { display: flex; }
@@ -252,17 +256,22 @@
         .hero-visual { display: none; }
         .hero { min-height: 85vh; }
         .motto-grid, .antrian-inner { grid-template-columns: 1fr; }
+        
+        /* Grid Layanan turun menjadi 2 kolom di tablet */
+        .layanan-grid { grid-template-columns: repeat(2, 1fr); }
     }
+    
     @media (max-width: 640px) {
         .hero-stats { flex-wrap: wrap; gap: 20px; }
         .stat-item:not(:last-child) { border-right: none; margin-right: 0; }
         .footer-grid { grid-template-columns: 1fr; gap: 24px; }
         .hero-actions { flex-direction: column; }
         .hero-btn { justify-content: center; }
-        .layanan-grid { grid-template-columns: 1fr 1fr; }
         .dash-chart-wrap { height: 250px; }
+        
+        /* Grid Layanan turun menjadi 1 kolom di HP */
+        .layanan-grid { grid-template-columns: 1fr; }
     }
-    @media (max-width: 420px) { .layanan-grid { grid-template-columns: 1fr; } }
 
     /* UTILITIES */
     .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
@@ -395,12 +404,19 @@
 <section class="layanan-section" id="layanan">
     <div class="section-inner">
         <div class="section-header reveal"><div class="section-eyebrow">Layanan Digital</div><h2 class="section-title">Akses Semua Layanan<br>dalam Satu Platform</h2></div>
+        
+        <!-- CARD LAYANAN (DENGAN TATA LETAK 3 KOLOM) -->
         <div class="layanan-grid">
             <a href="skrining.html" class="layanan-card reveal reveal-d1"><div class="layanan-card-icon"><i class="fas fa-file-medical-alt"></i></div><h4>Skrining Mandiri</h4><p>Deteksi dini TBC, HIV, Hepatitis, Kesehatan Jiwa, dan Kesehatan Anak secara mandiri.</p><div class="layanan-card-link">Mulai Skrining <i class="fas fa-arrow-right" style="font-size:0.8em"></i></div></a>
+            
             <a href="berita.html" class="layanan-card reveal reveal-d2"><div class="layanan-card-icon"><i class="fas fa-newspaper"></i></div><h4>Berita Terkini</h4><p>Dapatkan update terbaru mengenai kabar, kegiatan, dan informasi penting dari Puskesmas.</p><div class="layanan-card-link">Baca Berita <i class="fas fa-arrow-right" style="font-size:0.8em"></i></div></a>
+            
             <a href="edukasi.html" class="layanan-card reveal reveal-d3"><div class="layanan-card-icon"><i class="fas fa-graduation-cap"></i></div><h4>Hub Edukasi</h4><p>Video edukasi YouTube & TikTok serta poster kesehatan interaktif dari tenaga medis.</p><div class="layanan-card-link">Buka Library <i class="fas fa-arrow-right" style="font-size:0.8em"></i></div></a>
+            
             <a href="pengaduan.html" class="layanan-card reveal reveal-d4"><div class="layanan-card-icon"><i class="fas fa-comment-dots"></i></div><h4>Pengaduan & Saran</h4><p>Sampaikan keluhan atau masukan terkait layanan kami. Setiap suara Anda berarti.</p><div class="layanan-card-link">Beri Masukan <i class="fas fa-arrow-right" style="font-size:0.8em"></i></div></a>
+            
             <a href="registrasi.html" class="layanan-card reveal reveal-d5"><div class="layanan-card-icon"><i class="fas fa-edit"></i></div><h4>Pendaftaran Mandiri</h4><p>Daftarkan kunjungan Anda secara online tanpa perlu mengantri di loket pendaftaran.</p><div class="layanan-card-link">Daftar Sekarang <i class="fas fa-arrow-right" style="font-size:0.8em"></i></div></a>
+            
             <a href="#antrian" class="layanan-card antrian reveal reveal-d1"><div class="layanan-card-icon"><i class="fas fa-calendar-check"></i></div><h4>Ambil Antrian Online</h4><p>Ambil nomor antrian dari rumah dan hemat waktu tunggu Anda di puskesmas.</p><div class="layanan-card-link">Ambil Antrian <i class="fas fa-arrow-right" style="font-size:0.8em"></i></div></a>
         </div>
     </div>
@@ -451,15 +467,14 @@
 <footer>
     <div class="footer-inner">
         <div class="footer-grid">
-            <div><div class="footer-brand-name">SI-Dirgahayu</div><div class="footer-brand-sub">Sistem Informasi Digital & Layanan Terpadu<br>UPTD Puskesmas Dirgahayu<br>Kec. Pulau Laut Utara, Kab. Kotabaru<br>Kalimantan Selatan</div><div class="footer-socials"><a href="https://instagram.com/puskesmas_dirgahayu" target="_blank" class="footer-social" title="Instagram"><i class="fab fa-instagram"></i></a><a href="https://wa.me/6281351090323" target="_blank" class="footer-social" title="WhatsApp"><i class="fab fa-whatsapp"></i></a><a href="mailto:puskesmasdirgahayu99@gmail.com" class="footer-social" title="Email"><i class="fas fa-envelope"></i></a></div></div>
+            <div><div class="footer-brand-name">SI-Dirgahayu</div><div class="footer-brand-sub">Sistem Informasi Digital & Layanan Terpadu<br>UPTD Puskesmas Dirgahayu<br>Kec. Pulau Laut Utara, Kab. Kotabaru<br>Kalimantan Selatan</div><div class="footer-socials"><a href="https://instagram.com/puskesmas_dirgahayu" target="_blank" class="footer-social" title="Instagram"><i class="fab fa-instagram"></i></a><a href="https://wa.me/628134259201" target="_blank" class="footer-social" title="WhatsApp"><i class="fab fa-whatsapp"></i></a><a href="mailto:puskesmasdirgahayu99@gmail.com" class="footer-social" title="Email"><i class="fas fa-envelope"></i></a></div></div>
             <div class="footer-col"><h5>Profil</h5><a href="#profil-visimisi">Visi & Misi</a><a href="#profil-jadwal">Jadwal Pelayanan</a><a href="pencapaian.html">Dashboard Capaian</a><a href="eksplorasi.html">Profil Puskesmas</a><a href="eksplorasi.html#organisasi">Struktur Organisasi</a><a href="eksplorasi.html#peta">Lokasi & Peta</a></div>
             <div class="footer-col"><h5>Layanan</h5><a href="skrining.html">Skrining Mandiri</a><a href="berita.html">Berita Terkini</a><a href="edukasi.html">Hub Edukasi</a><a href="registrasi.html">Pendaftaran Mandiri</a><a href="pengaduan.html">Pengaduan & Saran</a><a href="#antrian">Antrian Online</a></div>
-            <div class="footer-col"><h5>Kontak</h5><a href="mailto:puskesmasdirgahayu99@gmail.com">puskesmasdirgahayu99<br>@gmail.com</a><a href="https://share.google/4Hs2GW8MvzzMpl2SJ" target="_blank">Lihat di Google Maps</a><a href="https://instagram.com/puskesmas_dirgahayu" target="_blank">@puskesmas_dirgahayu</a></div>
+            <div class="footer-col"><h5>Kontak</h5><a href="https://wa.me/628134259201" target="_blank">+62 813-4259-201</a><a href="mailto:puskesmasdirgahayu99@gmail.com">puskesmasdirgahayu99@gmail.com</a><a href="https://share.google/4Hs2GW8MvzzMpl2SJ" target="_blank">Lihat di Google Maps</a><a href="https://instagram.com/puskesmas_dirgahayu" target="_blank">@puskesmas_dirgahayu</a></div>
         </div>
-        <div class="footer-bottom"><span>SI-Dirgahayu &copy; 2026 | UPTD Puskesmas Dirgahayu — Kotabaru</span><span>Bersama Mewujudkan Kotabaru yang Lebih Sehat</span></div>
-        <div style="text-align: center; font-size: 0.6em; opacity: 0.25; margin-top: 18px; letter-spacing: 1px; user-select: none; pointer-events: none;">
-            Innovator: ajiiskandar
-        </div>
+       <div class="footer-bottom"><span>SI-Dirgahayu &copy; 2026 | UPTD Puskesmas Dirgahayu — Kotabaru</span><span>Bersama Mewujudkan Kotabaru yang Lebih Sehat</span></div>
+       <div style="text-align: center; font-size: 0.6em; opacity: 0.25; margin-top: 18px; letter-spacing: 1px; user-select: none; pointer-events: none;">
+            Innovator: ajiiskandar</div>
     </div>
 </footer>
 
