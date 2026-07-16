@@ -8,7 +8,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
     <style>
-    /* ═══ DESIGN TOKENS ═══ */
+    /* ═══ DESIGN TOKENS (same as index.html) ═══ */
     :root {
         --green-900: #003d35; --green-800: #004d40; --green-700: #00695c;
         --green-600: #00796b; --green-500: #00897b; --green-400: #26a69a;
@@ -375,7 +375,7 @@
         <div class="dashboard-panel" id="dashboardPanel">
             <div class="db-empty">
                 <i class="fas fa-chart-pie"></i>
-                <h3>Pilih Indikator untuk Melihat Data</h3>
+                <h3 id="empty-title">Pilih Indikator untuk Melihat Data 2026</h3>
                 <p>Klik salah satu card indikator di atas untuk menampilkan<br>dashboard capaian SPM secara lengkap.</p>
             </div>
         </div>
@@ -387,7 +387,7 @@
     <div class="footer-inner">
         <div class="footer-grid">
             <div>
-                <div class="footer-brand-name">SI-Dirgahayu</div>
+                <div class="footer-brand-name">SIDAYU</div>
                 <div class="footer-brand-sub">Sistem Informasi Digital & Layanan Terpadu<br>UPTD Puskesmas Dirgahayu<br>Kec. Pulau Laut Utara, Kab. Kotabaru<br>Kalimantan Selatan</div>
                 <div class="footer-socials">
                     <a href="https://instagram.com/puskesmas_dirgahayu" target="_blank" class="footer-social"><i class="fab fa-instagram"></i></a>
@@ -419,106 +419,108 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <span>SI-Dirgahayu &copy; 2026 | UPTD Puskesmas Dirgahayu — Kotabaru</span>
+            <span>SIDAYU &copy; 2026 | UPTD Puskesmas Dirgahayu — Kotabaru</span>
             <span>Bersama Mewujudkan Kotabaru yang Lebih Sehat</span>
         </div>
         <div style="text-align: center; font-size: 0.6em; opacity: 0.25; margin-top: 18px; letter-spacing: 1px; user-select: none; pointer-events: none;">
-            Innovator: ajiiskandar</div>
+            Innovator: ajiiskandar
+        </div>
     </div>
 </footer>
 
 <script>
 /* ══════════════════════════════════════════════════════════════
    DATABASE 12 INDIKATOR SPM BANYAK TAHUN
+   Nilai array = [Jan, Feb, Mar, Apr, Mei, Jun, Jul, Agu, Sep, Okt, Nov, Des]
 ══════════════════════════════════════════════════════════════ */
 const DATA_SPM = {
-  // DATA TAHUN 2026 (Data Baru)
+  // ── DATA TAHUN 2026 ── //
   '2026': [
       { id: 1, nama: 'Pelayanan Kesehatan Ibu Hamil', icon: 'fas fa-baby', targetPersen: 80,
-        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Ibu Hamil', satuan: 'Orang', target: 980, bulan: [64, 79, 45, 69, 65, 42, null, null, null, null, null, null], tw1Total: 188, tw1Pct: 19.18, tw2Total: 364, tw2Pct: 37.14 }]
+        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Ibu Hamil', satuan: 'Orang', target: 980, bulan: [64, 79, 45, 69, 65, 42, null, null, null, null, null, null] }]
       },
       { id: 2, nama: 'Pelayanan Kesehatan Ibu Bersalin', icon: 'fas fa-heart', targetPersen: 80,
-        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Ibu Bersalin', satuan: 'Orang', target: 936, bulan: [41, 46, 33, 51, 54, 48, null, null, null, null, null, null], tw1Total: 120, tw1Pct: 12.82, tw2Total: 273, tw2Pct: 29.17 }]
+        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Ibu Bersalin', satuan: 'Orang', target: 936, bulan: [41, 46, 33, 51, 54, 48, null, null, null, null, null, null] }]
       },
       { id: 3, nama: 'Pelayanan Kesehatan Bayi Baru Lahir', icon: 'fas fa-child', targetPersen: 80,
-        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Bayi Baru Lahir', satuan: 'Orang', target: 891, bulan: [42, 46, 34, 51, 55, 48, null, null, null, null, null, null], tw1Total: 122, tw1Pct: 13.69, tw2Total: 276, tw2Pct: 30.98 }]
+        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Bayi Baru Lahir', satuan: 'Orang', target: 891, bulan: [42, 46, 34, 51, 55, 48, null, null, null, null, null, null] }]
       },
       { id: 4, nama: 'Pelayanan Kesehatan Balita', icon: 'fas fa-baby-carriage', targetPersen: 80,
-        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Balita', satuan: 'Orang', target: 4267, bulan: [251, 272, 141, 349, 277, 355, null, null, null, null, null, null], tw1Total: 664, tw1Pct: 15.56, tw2Total: 1645, tw2Pct: 38.55 }]
+        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Balita', satuan: 'Orang', target: 4267, bulan: [251, 272, 141, 349, 277, 355, null, null, null, null, null, null] }]
       },
       { id: 5, nama: 'Pelayanan Kesehatan Usia Pendidikan Dasar', icon: 'fas fa-school', targetPersen: 80,
-        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Usia Pendidikan Dasar', satuan: 'Orang', target: 8908, bulan: [0, 0, 0, 0, 0, 0, null, null, null, null, null, null], tw1Total: 0, tw1Pct: 0, tw2Total: 0, tw2Pct: 0 }]
+        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Usia Pendidikan Dasar', satuan: 'Orang', target: 8908, bulan: [0, 0, 0, 0, 0, 0, null, null, null, null, null, null] }]
       },
       { id: 6, nama: 'Pelayanan Kesehatan Usia Produktif', icon: 'fas fa-user-tie', targetPersen: 80,
         rows: [
-          { indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Usia 15–59 Tahun', satuan: 'Orang', target: 12954, bulan: [1668, 1506, 1320, 584, 829, 500, null, null, null, null, null, null], tw1Total: 4494, tw1Pct: 34.69, tw2Total: 6407, tw2Pct: 49.46 },
-          { indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Pemeriksaan SADANIS dan IVA Tes', satuan: 'Orang', target: 1500, bulan: [0, 0, 4, 1, 18, 9, null, null, null, null, null, null], tw1Total: 4, tw1Pct: 0.27, tw2Total: 32, tw2Pct: 2.13 },
-          { indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Calon Pengantin (Catin)', satuan: 'Orang', target: 245, bulan: [29, 31, 16, 33, 44, 19, null, null, null, null, null, null], tw1Total: 76, tw1Pct: 31.02, tw2Total: 172, tw2Pct: 70.20 },
-          { indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap PUS Perempuan dengan 4T', satuan: 'Orang', target: 1657, bulan: [405, 185, 147, 112, 130, 93, null, null, null, null, null, null], tw1Total: 737, tw1Pct: 44.48, tw2Total: 1072, tw2Pct: 64.70 }
+          { indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Usia 15–59 Tahun', satuan: 'Orang', target: 12954, bulan: [1668, 1506, 1320, 584, 829, 500, null, null, null, null, null, null] },
+          { indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Pemeriksaan SADANIS dan IVA Tes', satuan: 'Orang', target: 1500, bulan: [0, 0, 4, 1, 18, 9, null, null, null, null, null, null] },
+          { indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Calon Pengantin (Catin)', satuan: 'Orang', target: 245, bulan: [29, 31, 16, 33, 44, 19, null, null, null, null, null, null] },
+          { indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap PUS Perempuan dengan 4T', satuan: 'Orang', target: 1657, bulan: [405, 185, 147, 112, 130, 93, null, null, null, null, null, null] }
         ]
       },
       { id: 7, nama: 'Pelayanan Kesehatan Usia Lanjut', icon: 'fas fa-user-clock', targetPersen: 80,
-        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Usia Lanjut', satuan: 'Orang', target: 2700, bulan: [220, 152, 134, 281, 233, 247, null, null, null, null, null, null], tw1Total: 506, tw1Pct: 18.74, tw2Total: 1267, tw2Pct: 46.93 }]
+        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Usia Lanjut', satuan: 'Orang', target: 2700, bulan: [220, 152, 134, 281, 233, 247, null, null, null, null, null, null] }]
       },
       { id: 8, nama: 'Pelayanan Kesehatan Penderita Hipertensi', icon: 'fas fa-heartbeat', targetPersen: 80,
-        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Penderita Hipertensi', satuan: 'Orang', target: 1002, bulan: [100, 277, 114, 79, 79, 80, null, null, null, null, null, null], tw1Total: 491, tw1Pct: 49.00, tw2Total: 729, tw2Pct: 72.75 }]
+        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Penderita Hipertensi', satuan: 'Orang', target: 1002, bulan: [100, 277, 114, 79, 79, 80, null, null, null, null, null, null] }]
       },
       { id: 9, nama: 'Pelayanan Kesehatan Penderita Diabetes Melitus', icon: 'fas fa-syringe', targetPersen: 80,
-        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Penderita Diabetes Melitus', satuan: 'Orang', target: 152, bulan: [20, 130, 47, 22, 24, 25, null, null, null, null, null, null], tw1Total: 197, tw1Pct: 129.61, tw2Total: 268, tw2Pct: 176.32 }]
+        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Penderita Diabetes Melitus', satuan: 'Orang', target: 152, bulan: [20, 130, 47, 22, 24, 25, null, null, null, null, null, null] }]
       },
       { id: 10, nama: 'Pelayanan Kesehatan ODGJ', icon: 'fas fa-brain', targetPersen: 80,
-        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Penderita ODGJ', satuan: 'Orang', target: 63, bulan: [13, 10, 9, 12, 5, 5, null, null, null, null, null, null], tw1Total: 32, tw1Pct: 50.79, tw2Total: 54, tw2Pct: 85.71 }]
+        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Penderita ODGJ', satuan: 'Orang', target: 63, bulan: [13, 10, 9, 12, 5, 5, null, null, null, null, null, null] }]
       },
       { id: 11, nama: 'Pelayanan Kesehatan Orang Terduga Tuberkulosis', icon: 'fas fa-lungs', targetPersen: 80,
-        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Orang Terduga Tuberkulosis', satuan: 'Orang', target: 487, bulan: [34, 24, 20, 30, 16, 11, null, null, null, null, null, null], tw1Total: 78, tw1Pct: 16.02, tw2Total: 135, tw2Pct: 27.72 }]
+        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Orang Terduga Tuberkulosis', satuan: 'Orang', target: 487, bulan: [34, 24, 20, 30, 16, 11, null, null, null, null, null, null] }]
       },
       { id: 12, nama: 'Pelayanan Kesehatan Orang Dengan Risiko Terinfeksi HIV', icon: 'fas fa-shield-virus', targetPersen: 80,
-        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Orang dengan Risiko Terinfeksi HIV', satuan: 'Orang', target: 1000, bulan: [50, 170, 65, 200, 124, 117, null, null, null, null, null, null], tw1Total: 285, tw1Pct: 28.50, tw2Total: 726, tw2Pct: 72.60 }]
+        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Orang dengan Risiko Terinfeksi HIV', satuan: 'Orang', target: 1000, bulan: [50, 170, 65, 200, 124, 117, null, null, null, null, null, null] }]
       }
   ],
 
-  // DATA TAHUN 2025 (Data Lama)
+  // ── DATA TAHUN 2025 (Data Historis Berbeda) ── //
   '2025': [
       { id: 1, nama: 'Pelayanan Kesehatan Ibu Hamil', icon: 'fas fa-baby', targetPersen: 80,
-        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Ibu Hamil', satuan: 'Orang', target: 980, bulan: [64, 79, 45, 69, 65, null, null, null, null, null, null, null], tw1Total: 188, tw1Pct: 19.18, tw2Total: 322, tw2Pct: 32.86 }]
+        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Ibu Hamil', satuan: 'Orang', target: 960, bulan: [60, 75, 50, 65, 70, 50, 80, 65, 70, 85, 60, 75] }]
       },
       { id: 2, nama: 'Pelayanan Kesehatan Ibu Bersalin', icon: 'fas fa-heart', targetPersen: 80,
-        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Ibu Bersalin', satuan: 'Orang', target: 936, bulan: [41, 46, 33, 51, 54, null, null, null, null, null, null, null], tw1Total: 120, tw1Pct: 12.82, tw2Total: 225, tw2Pct: 24.04 }]
+        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Ibu Bersalin', satuan: 'Orang', target: 920, bulan: [40, 50, 35, 55, 60, 45, 65, 55, 50, 70, 45, 60] }]
       },
       { id: 3, nama: 'Pelayanan Kesehatan Bayi Baru Lahir', icon: 'fas fa-child', targetPersen: 80,
-        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Bayi Baru Lahir', satuan: 'Orang', target: 891, bulan: [42, 46, 34, 51, 55, null, null, null, null, null, null, null], tw1Total: 122, tw1Pct: 13.69, tw2Total: 228, tw2Pct: 25.59 }]
+        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Bayi Baru Lahir', satuan: 'Orang', target: 880, bulan: [45, 48, 30, 50, 58, 46, 60, 52, 48, 65, 42, 55] }]
       },
       { id: 4, nama: 'Pelayanan Kesehatan Balita', icon: 'fas fa-baby-carriage', targetPersen: 80,
-        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Balita', satuan: 'Orang', target: 4267, bulan: [251, 272, 141, 349, 277, null, null, null, null, null, null, null], tw1Total: 664, tw1Pct: 15.56, tw2Total: 1290, tw2Pct: 30.23 }]
+        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Balita', satuan: 'Orang', target: 4100, bulan: [240, 260, 150, 320, 280, 310, 340, 290, 300, 380, 250, 310] }]
       },
       { id: 5, nama: 'Pelayanan Kesehatan Usia Pendidikan Dasar', icon: 'fas fa-school', targetPersen: 80,
-        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Usia Pendidikan Dasar', satuan: 'Orang', target: 8908, bulan: [0, 0, 0, 0, 0, null, null, null, null, null, null, null], tw1Total: 0, tw1Pct: 0, tw2Total: 0, tw2Pct: 0 }]
+        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Usia Pendidikan Dasar', satuan: 'Orang', target: 8500, bulan: [0, 0, 0, 0, 0, 0, 4000, 2500, 500, 200, 100, 50] }] 
       },
       { id: 6, nama: 'Pelayanan Kesehatan Usia Produktif', icon: 'fas fa-user-tie', targetPersen: 80,
         rows: [
-          { indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Usia 15–59 Tahun', satuan: 'Orang', target: 12954, bulan: [1668, 1506, 1320, 584, 829, null, null, null, null, null, null, null], tw1Total: 4494, tw1Pct: 34.69, tw2Total: 5907, tw2Pct: 45.60 },
-          { indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Pemeriksaan SADANIS dan IVA Tes', satuan: 'Orang', target: 1500, bulan: [0, 0, 4, 1, 18, null, null, null, null, null, null, null], tw1Total: 4, tw1Pct: 0.27, tw2Total: 23, tw2Pct: 1.53 },
-          { indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Calon Pengantin (Catin)', satuan: 'Orang', target: 245, bulan: [29, 31, 16, 33, 44, null, null, null, null, null, null, null], tw1Total: 76, tw1Pct: 31.02, tw2Total: 153, tw2Pct: 62.45 },
-          { indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap PUS Perempuan dengan 4T', satuan: 'Orang', target: 1657, bulan: [405, 185, 147, 112, 130, null, null, null, null, null, null, null], tw1Total: 737, tw1Pct: 44.48, tw2Total: 979, tw2Pct: 59.08 }
+          { indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Usia 15–59 Tahun', satuan: 'Orang', target: 12500, bulan: [1500, 1400, 1200, 600, 800, 550, 1300, 1100, 900, 1400, 850, 700] },
+          { indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Pemeriksaan SADANIS dan IVA Tes', satuan: 'Orang', target: 1400, bulan: [0, 2, 5, 3, 15, 10, 20, 15, 8, 25, 12, 5] },
+          { indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Calon Pengantin (Catin)', satuan: 'Orang', target: 230, bulan: [25, 28, 15, 30, 40, 20, 25, 22, 18, 35, 20, 15] },
+          { indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap PUS Perempuan dengan 4T', satuan: 'Orang', target: 1600, bulan: [380, 170, 150, 120, 140, 100, 160, 140, 130, 180, 110, 90] }
         ]
       },
       { id: 7, nama: 'Pelayanan Kesehatan Usia Lanjut', icon: 'fas fa-user-clock', targetPersen: 80,
-        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Usia Lanjut', satuan: 'Orang', target: 2700, bulan: [220, 152, 134, 281, 233, null, null, null, null, null, null, null], tw1Total: 506, tw1Pct: 18.74, tw2Total: 1020, tw2Pct: 37.78 }]
+        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Usia Lanjut', satuan: 'Orang', target: 2600, bulan: [210, 160, 140, 270, 240, 250, 260, 230, 220, 290, 200, 180] }]
       },
       { id: 8, nama: 'Pelayanan Kesehatan Penderita Hipertensi', icon: 'fas fa-heartbeat', targetPersen: 80,
-        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Penderita Hipertensi', satuan: 'Orang', target: 1002, bulan: [100, 277, 114, 79, 79, null, null, null, null, null, null, null], tw1Total: 491, tw1Pct: 49.00, tw2Total: 649, tw2Pct: 64.77 }]
+        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Penderita Hipertensi', satuan: 'Orang', target: 980, bulan: [90, 250, 120, 80, 85, 75, 110, 95, 85, 130, 80, 70] }]
       },
       { id: 9, nama: 'Pelayanan Kesehatan Penderita Diabetes Melitus', icon: 'fas fa-syringe', targetPersen: 80,
-        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Penderita Diabetes Melitus', satuan: 'Orang', target: 152, bulan: [20, 130, 47, 22, 24, null, null, null, null, null, null, null], tw1Total: 197, tw1Pct: 129.61, tw2Total: 243, tw2Pct: 159.87 }]
+        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Penderita Diabetes Melitus', satuan: 'Orang', target: 145, bulan: [18, 120, 45, 25, 20, 28, 35, 30, 25, 40, 22, 18] }]
       },
       { id: 10, nama: 'Pelayanan Kesehatan ODGJ', icon: 'fas fa-brain', targetPersen: 80,
-        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Penderita ODGJ', satuan: 'Orang', target: 63, bulan: [13, 10, 9, 12, 5, null, null, null, null, null, null, null], tw1Total: 32, tw1Pct: 50.79, tw2Total: 49, tw2Pct: 77.78 }]
+        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Penderita ODGJ', satuan: 'Orang', target: 60, bulan: [10, 12, 8, 10, 6, 8, 12, 9, 7, 14, 8, 5] }]
       },
       { id: 11, nama: 'Pelayanan Kesehatan Orang Terduga Tuberkulosis', icon: 'fas fa-lungs', targetPersen: 80,
-        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Orang Terduga Tuberkulosis', satuan: 'Orang', target: 487, bulan: [22, 12, 8, 16, 15, null, null, null, null, null, null, null], tw1Total: 42, tw1Pct: 8.62, tw2Total: 73, tw2Pct: 14.99 }]
+        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Orang Terduga Tuberkulosis', satuan: 'Orang', target: 450, bulan: [30, 25, 22, 28, 18, 15, 35, 28, 20, 40, 22, 15] }]
       },
       { id: 12, nama: 'Pelayanan Kesehatan Orang Dengan Risiko Terinfeksi HIV', icon: 'fas fa-shield-virus', targetPersen: 80,
-        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Orang dengan Risiko Terinfeksi HIV', satuan: 'Orang', target: 1000, bulan: [50, 170, 65, 200, 124, null, null, null, null, null, null, null], tw1Total: 285, tw1Pct: 28.50, tw2Total: 609, tw2Pct: 60.90 }]
+        rows: [{ indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Orang dengan Risiko Terinfeksi HIV', satuan: 'Orang', target: 950, bulan: [45, 160, 70, 180, 130, 110, 150, 140, 120, 190, 100, 80] }]
       }
   ]
 };
@@ -546,12 +548,11 @@ function changeYear(year) {
   currentYear = year;
   document.getElementById('hero-year-badge').innerHTML = `<i class="fas fa-chart-bar"></i> Dashboard SPM ${year}`;
   
-  // Tutup panel dashboard jika sedang terbuka
   const panel = document.getElementById('dashboardSection');
   document.getElementById('dashboardPanel').innerHTML = `
       <div class="db-empty">
           <i class="fas fa-chart-pie"></i>
-          <h3>Pilih Indikator untuk Melihat Data ${year}</h3>
+          <h3 id="empty-title">Pilih Indikator untuk Melihat Data ${year}</h3>
           <p>Klik salah satu card indikator di atas untuk menampilkan<br>dashboard capaian SPM secara lengkap.</p>
       </div>`;
   activeId = null;
@@ -572,7 +573,6 @@ function buildIndicatorGrid() {
     </div>
   `).join('');
 
-  // Trigger reveal
   setTimeout(() => {
     document.querySelectorAll('.ind-card.reveal').forEach((el, i) => {
       setTimeout(() => el.classList.add('visible'), i * 40);
@@ -598,36 +598,93 @@ function selectIndicator(id) {
 /* ── Render dashboard ── */
 function renderDashboard(ind) {
   const panel = document.getElementById('dashboardPanel');
+  const is2026 = currentYear === '2026';
 
-  const mainRow   = ind.rows[0];
-  const mainPct   = mainRow.tw2Pct;
-  const badge     = getBadge(mainPct);
+  // Helper calculation function
+  const calcTW = (arr, target, m) => {
+      let t = 0; 
+      for(let i=0; i<m; i++) t += (arr[i] || 0);
+      return { total: t, pct: target > 0 ? (t/target*100) : 0 };
+  };
+
+  const mainRow = ind.rows[0];
+  
+  // Define variables based on year selection
+  let mainPct = 0;
+  let lastMonthTxt = '';
+  
+  if(is2026) {
+      const tw2 = calcTW(mainRow.bulan, mainRow.target, 6);
+      mainPct = tw2.pct;
+      lastMonthTxt = 'Juni 2026';
+  } else {
+      const tw4 = calcTW(mainRow.bulan, mainRow.target, 12);
+      mainPct = tw4.pct;
+      lastMonthTxt = 'Desember 2025';
+  }
+
+  const badge = getBadge(mainPct);
   const fillWidth = clampPct(mainPct);
 
-  const totalTW1  = ind.rows.reduce((s, r) => s + r.tw1Total, 0);
-  const totalTW2  = ind.rows.reduce((s, r) => s + r.tw2Total, 0);
-  const totalTarget = ind.rows.reduce((s, r) => s + r.target, 0);
+  let totalTW1 = 0, totalTW2 = 0, totalTW3 = 0, totalTW4 = 0, totalTarget = 0;
+  ind.rows.forEach(r => {
+      totalTarget += r.target;
+      totalTW1 += calcTW(r.bulan, r.target, 3).total;
+      totalTW2 += calcTW(r.bulan, r.target, 6).total;
+      totalTW3 += calcTW(r.bulan, r.target, 9).total;
+      totalTW4 += calcTW(r.bulan, r.target, 12).total;
+  });
+  
   const aggTW1Pct = totalTarget > 0 ? (totalTW1 / totalTarget * 100) : 0;
   const aggTW2Pct = totalTarget > 0 ? (totalTW2 / totalTarget * 100) : 0;
+  const aggTW4Pct = totalTarget > 0 ? (totalTW4 / totalTarget * 100) : 0;
 
   const chartData = BULAN.map((_, i) => ind.rows.reduce((s, r) => s + (r.bulan[i] || 0), 0));
-  
-  // Mencari bulan terakhir yang ada datanya untuk label Triwulan 2
-  const lastMonthIdx = mainRow.bulan.findLastIndex(v => v !== null);
-  const lastMonthTxt = lastMonthIdx >= 0 ? BULAN_FULL[lastMonthIdx] : 'Desember';
 
+  // Table Headers
+  let thHtml = `
+      <th>Total TW I</th><th>% TW I</th>
+      <th>Total TW II</th><th>% TW II</th>
+  `;
+  if(!is2026) {
+      thHtml += `
+          <th>Total TW III</th><th>% TW III</th>
+          <th>Total Tahunan</th><th>% Tahunan</th>
+      `;
+  }
+
+  // Table Rows
   const tableRows = ind.rows.map(r => {
     const bulanCells = r.bulan.map(v => v === null ? `<td class="td-empty">—</td>` : `<td>${fmt(v)}</td>`).join('');
+    
+    const tw1 = calcTW(r.bulan, r.target, 3);
+    const tw2 = calcTW(r.bulan, r.target, 6);
+    const tw3 = calcTW(r.bulan, r.target, 9);
+    const tw4 = calcTW(r.bulan, r.target, 12);
+    
+    let tds = `
+        <td class="td-highlight">${fmt(tw1.total)}</td>
+        <td><span class="${tw1.pct > 100 ? 'td-pct over' : 'td-pct'}">${fmtPct(tw1.pct)}</span></td>
+        <td class="td-highlight">${fmt(tw2.total)}</td>
+        <td><span class="${tw2.pct > 100 ? 'td-pct over' : 'td-pct'}">${fmtPct(tw2.pct)}</span></td>
+    `;
+
+    if(!is2026) {
+        tds += `
+            <td class="td-highlight">${fmt(tw3.total)}</td>
+            <td><span class="${tw3.pct > 100 ? 'td-pct over' : 'td-pct'}">${fmtPct(tw3.pct)}</span></td>
+            <td class="td-highlight" style="background:#e0f2f1">${fmt(tw4.total)}</td>
+            <td style="background:#e0f2f1"><span class="${tw4.pct > 100 ? 'td-pct over' : 'td-pct'}">${fmtPct(tw4.pct)}</span></td>
+        `;
+    }
+
     return `
       <tr>
         <td>${r.indikator}</td>
         <td>${r.satuan}</td>
         <td class="td-highlight">${fmt(r.target)}</td>
         ${bulanCells}
-        <td class="td-highlight">${fmt(r.tw1Total)}</td>
-        <td><span class="${r.tw1Pct > 100 ? 'td-pct over' : 'td-pct'}">${fmtPct(r.tw1Pct)}</span></td>
-        <td class="td-highlight">${fmt(r.tw2Total)}</td>
-        <td><span class="${r.tw2Pct > 100 ? 'td-pct over' : 'td-pct'}">${fmtPct(r.tw2Pct)}</span></td>
+        ${tds}
       </tr>`;
   }).join('');
 
@@ -644,7 +701,7 @@ function renderDashboard(ind) {
 
     <div class="db-progress-wrap">
       <div class="db-progress-label">
-        <span>Capaian Triwulan II (s/d ${lastMonthTxt} ${currentYear})</span>
+        <span>Capaian Kumulatif (s/d ${lastMonthTxt})</span>
         <span class="pct">${fmtPct(mainPct)}</span>
       </div>
       <div class="db-progress-track">
@@ -659,38 +716,73 @@ function renderDashboard(ind) {
         <div class="sum-card-val">${fmt(totalTarget)}</div>
         <div class="sum-card-sub">orang yang harus dilayani</div>
       </div>
-      <div class="sum-card tw1">
-        <div class="sum-card-label"><i class="fas fa-calendar-check" style="margin-right:4px"></i>Total Triwulan I</div>
-        <div class="sum-card-val">${fmt(totalTW1)}</div>
-        <div class="sum-card-sub">Jan – Mar ${currentYear}<br><span class="pct-mini g">${fmtPct(aggTW1Pct)}</span></div>
-      </div>
-      <div class="sum-card tw2">
-        <div class="sum-card-label"><i class="fas fa-calendar-alt" style="margin-right:4px"></i>Total Triwulan II</div>
-        <div class="sum-card-val">${fmt(totalTW2)}</div>
-        <div class="sum-card-sub">Jan – ${lastMonthTxt.substring(0,3)} ${currentYear}<br><span class="pct-mini b">${fmtPct(aggTW2Pct)}</span></div>
-      </div>
-      <div class="sum-card" style="border-top:3px solid var(--slate-400)">
-        <div class="sum-card-label"><i class="fas fa-percentage" style="margin-right:4px"></i>Persentase TW I</div>
-        <div class="sum-card-val" style="font-size:1.2em">${fmtPct(mainRow.tw1Pct)}</div>
-        <div class="sum-card-sub">dari target tahunan</div>
-      </div>
+      ${ is2026 ? `
+          <div class="sum-card tw1">
+            <div class="sum-card-label"><i class="fas fa-calendar-check" style="margin-right:4px"></i>Total Triwulan I</div>
+            <div class="sum-card-val">${fmt(totalTW1)}</div>
+            <div class="sum-card-sub">Jan – Mar ${currentYear}<br><span class="pct-mini g">${fmtPct(aggTW1Pct)}</span></div>
+          </div>
+          <div class="sum-card tw2">
+            <div class="sum-card-label"><i class="fas fa-calendar-alt" style="margin-right:4px"></i>Total Triwulan II</div>
+            <div class="sum-card-val">${fmt(totalTW2)}</div>
+            <div class="sum-card-sub">Jan – Jun ${currentYear}<br><span class="pct-mini b">${fmtPct(aggTW2Pct)}</span></div>
+          </div>
+          <div class="sum-card" style="border-top:3px solid var(--slate-400)">
+            <div class="sum-card-label"><i class="fas fa-percentage" style="margin-right:4px"></i>Persentase TW II</div>
+            <div class="sum-card-val" style="font-size:1.2em">${fmtPct(calcTW(mainRow.bulan, mainRow.target, 6).pct)}</div>
+            <div class="sum-card-sub">dari target tahunan</div>
+          </div>
+      ` : `
+          <div class="sum-card tw1">
+            <div class="sum-card-label"><i class="fas fa-calendar-check" style="margin-right:4px"></i>Total Semester 1</div>
+            <div class="sum-card-val">${fmt(totalTW2)}</div>
+            <div class="sum-card-sub">Jan – Jun ${currentYear}<br><span class="pct-mini g">${fmtPct(aggTW2Pct)}</span></div>
+          </div>
+          <div class="sum-card tw2">
+            <div class="sum-card-label"><i class="fas fa-calendar-alt" style="margin-right:4px"></i>Total Akhir Tahun</div>
+            <div class="sum-card-val">${fmt(totalTW4)}</div>
+            <div class="sum-card-sub">Jan – Des ${currentYear}<br><span class="pct-mini b">${fmtPct(aggTW4Pct)}</span></div>
+          </div>
+          <div class="sum-card" style="border-top:3px solid var(--slate-400)">
+            <div class="sum-card-label"><i class="fas fa-percentage" style="margin-right:4px"></i>Persentase Akhir</div>
+            <div class="sum-card-val" style="font-size:1.2em">${fmtPct(calcTW(mainRow.bulan, mainRow.target, 12).pct)}</div>
+            <div class="sum-card-sub">Capaian Tahunan</div>
+          </div>
+      ` }
     </div>
 
     <div class="db-tw-bars">
-      <div class="tw-bar-item">
-        <div class="tw-label">
-          <span>Capaian Triwulan I (Jan–Mar)</span>
-          <span class="tw-pct" style="color:var(--green-700)">${fmtPct(mainRow.tw1Pct)}</span>
-        </div>
-        <div class="tw-track"><div class="tw-fill tw1" id="tw1Fill" style="width:0%"></div></div>
-      </div>
-      <div class="tw-bar-item">
-        <div class="tw-label">
-          <span>Capaian Triwulan II (Jan–${lastMonthTxt.substring(0,3)})</span>
-          <span class="tw-pct" style="color:#1565c0">${fmtPct(mainRow.tw2Pct)}</span>
-        </div>
-        <div class="tw-track"><div class="tw-fill tw2" id="tw2Fill" style="width:0%"></div></div>
-      </div>
+      ${ is2026 ? `
+          <div class="tw-bar-item">
+            <div class="tw-label">
+              <span>Capaian Triwulan I (Jan–Mar)</span>
+              <span class="tw-pct" style="color:var(--green-700)">${fmtPct(calcTW(mainRow.bulan, mainRow.target, 3).pct)}</span>
+            </div>
+            <div class="tw-track"><div class="tw-fill tw1" id="tw1Fill" style="width:0%"></div></div>
+          </div>
+          <div class="tw-bar-item">
+            <div class="tw-label">
+              <span>Capaian Triwulan II (Jan–Jun)</span>
+              <span class="tw-pct" style="color:#1565c0">${fmtPct(calcTW(mainRow.bulan, mainRow.target, 6).pct)}</span>
+            </div>
+            <div class="tw-track"><div class="tw-fill tw2" id="tw2Fill" style="width:0%"></div></div>
+          </div>
+      ` : `
+          <div class="tw-bar-item">
+            <div class="tw-label">
+              <span>Semester 1 (Jan–Jun)</span>
+              <span class="tw-pct" style="color:var(--green-700)">${fmtPct(calcTW(mainRow.bulan, mainRow.target, 6).pct)}</span>
+            </div>
+            <div class="tw-track"><div class="tw-fill tw1" id="tw1Fill" style="width:0%"></div></div>
+          </div>
+          <div class="tw-bar-item">
+            <div class="tw-label">
+              <span>Akhir Tahun (Jan–Des)</span>
+              <span class="tw-pct" style="color:#1565c0">${fmtPct(calcTW(mainRow.bulan, mainRow.target, 12).pct)}</span>
+            </div>
+            <div class="tw-track"><div class="tw-fill tw2" id="tw2Fill" style="width:0%"></div></div>
+          </div>
+      ` }
     </div>
 
     <div class="db-chart-wrap">
@@ -708,10 +800,7 @@ function renderDashboard(ind) {
               <th>Satuan</th>
               <th>Target Setahun</th>
               ${BULAN_FULL.map(b => `<th>${b}</th>`).join('')}
-              <th>Total TW I</th>
-              <th>% TW I</th>
-              <th>Total TW II</th>
-              <th>% TW II</th>
+              ${thHtml}
             </tr>
           </thead>
           <tbody>${tableRows}</tbody>
@@ -724,8 +813,8 @@ function renderDashboard(ind) {
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       document.getElementById('mainFill').style.width = fillWidth + '%';
-      document.getElementById('tw1Fill').style.width = clampPct(mainRow.tw1Pct) + '%';
-      document.getElementById('tw2Fill').style.width = clampPct(mainRow.tw2Pct) + '%';
+      document.getElementById('tw1Fill').style.width = clampPct( is2026 ? calcTW(mainRow.bulan, mainRow.target, 3).pct : calcTW(mainRow.bulan, mainRow.target, 6).pct ) + '%';
+      document.getElementById('tw2Fill').style.width = clampPct( is2026 ? calcTW(mainRow.bulan, mainRow.target, 6).pct : calcTW(mainRow.bulan, mainRow.target, 12).pct ) + '%';
     });
   });
 
