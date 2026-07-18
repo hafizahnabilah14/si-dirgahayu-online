@@ -65,14 +65,14 @@
     .news-img-wrap { position: relative; padding-bottom: 55%; overflow: hidden; background: var(--bg2); }
     .news-img-wrap img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
     .news-card:hover .news-img-wrap img { transform: scale(1.05); }
-    .news-badge { position: absolute; top: 12px; left: 12px; background: var(--primary); color: #fff; padding: 4px 10px; border-radius: 6px; font-size: 0.7em; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+    .news-badge { position: absolute; top: 12px; left: 12px; background: var(--primary); color: #fff; padding: 4px 10px; border-radius: 6px; font-size: 0.7em; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); z-index: 10; }
 
     .news-content { padding: 20px 22px; display: flex; flex-direction: column; flex: 1; }
     .news-meta { display: flex; align-items: center; gap: 12px; font-size: 0.75em; color: var(--text-muted); margin-bottom: 10px; font-weight: 500; }
     .news-meta i { color: var(--primary); }
     .news-title { font-family: 'Montserrat', sans-serif; font-size: 1.1em; font-weight: 800; line-height: 1.4; margin-bottom: 10px; color: var(--slate-900); }
     .news-card:hover .news-title { color: var(--primary); }
-    .news-excerpt { font-size: 0.82em; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; flex: 1; }
+    .news-excerpt { font-size: 0.82em; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; flex: 1; }
     
     .news-readmore { display: flex; align-items: center; gap: 6px; font-size: 0.8em; font-weight: 700; color: var(--primary); margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border); transition: gap 0.2s; }
     .news-card:hover .news-readmore { gap: 10px; color: var(--primary-dark); }
@@ -111,44 +111,41 @@
 
     <div class="news-grid">
         
-        <!-- CARD BERITA 1 -->
-        <!-- Link href langsung mengarah ke Media Nasional -->
-        <!-- target="_blank" digunakan agar web Puskesmas tidak tertutup saat link diklik -->
-        <a href="https://www.medianasional.id/puskesmas-dirgahayu-lakukan-kunjungan-monev/" target="_blank" rel="noopener" class="news-card">
+        <!-- CARD BERITA 1 (Penghargaan TBC) -->
+        <a href="https://www.medianasional.id/puskesmas-dirgahayu-meraih-peringkat-satu-terbaik-fasilitas-pelayanan-kesehatan-puskesmas-se-kalimantan-selatan/" target="_blank" rel="noopener" class="news-card">
             <div class="news-img-wrap">
-                <div class="news-badge">Kegiatan</div>
-                <!-- Gambar Thumbnail -->
-                <img src="foto_monev.jpg" alt="Monev Puskesmas" onerror="this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80'">
+                <div class="news-badge" style="background:var(--gold-dark);">Prestasi</div>
+                <!-- URL Gambar langsung mengambil dari website Media Nasional -->
+                <img src="https://www.medianasional.id/wp-content/uploads/2023/11/IMG-20231120-WA0085.jpg" alt="Puskesmas Dirgahayu Raih Peringkat 1 TBC" onerror="this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80'">
             </div>
             <div class="news-content">
                 <div class="news-meta">
-                    <span><i class="far fa-calendar-alt"></i> Juli 2026</span>
+                    <span><i class="far fa-calendar-alt"></i> November 2023</span>
                     <span><i class="fas fa-pen-nib"></i> Media Nasional</span>
                 </div>
-                <h4 class="news-title">Puskesmas Dirgahayu Lakukan Kunjungan Monev</h4>
-                <p class="news-excerpt">Jajaran pimpinan dan tim kesehatan Puskesmas Dirgahayu melaksanakan kegiatan Monitoring dan Evaluasi (Monev) rutin ke pos pelayanan tingkat desa untuk memastikan SOP berjalan baik.</p>
+                <h4 class="news-title">Puskesmas Dirgahayu Meraih Peringkat Satu Terbaik Pelayanan TBC se-Kalimantan Selatan</h4>
+                <p class="news-excerpt">Puskesmas Dirgahayu berhasil meraih penghargaan sebagai fasilitas pelayanan kesehatan terbaik peringkat satu tingkat Provinsi Kalimantan Selatan atas dedikasi dalam program penanggulangan TBC.</p>
                 <div class="news-readmore">Baca di Media Nasional <i class="fas fa-external-link-alt"></i></div>
             </div>
         </a>
 
-        <!-- TEMPLATE UNTUK CARD BERITA LAINNYA -->
-        <!-- 
-        <a href="MASUKKAN_LINK_BERITA_DISINI" target="_blank" rel="noopener" class="news-card">
+        <!-- CARD BERITA 2 (Monev) -->
+        <a href="https://www.medianasional.id/puskesmas-dirgahayu-lakukan-kunjungan-monev/" target="_blank" rel="noopener" class="news-card">
             <div class="news-img-wrap">
-                <div class="news-badge">Kategori</div>
-                <img src="link_atau_nama_gambar.jpg" alt="Thumbnail">
+                <div class="news-badge">Kegiatan</div>
+                <!-- URL Gambar langsung mengambil dari website Media Nasional -->
+                <img src="https://www.medianasional.id/wp-content/uploads/2023/07/IMG-20230713-WA0001.jpg" alt="Monev Puskesmas" onerror="this.src='foto_monev.jpg'">
             </div>
             <div class="news-content">
                 <div class="news-meta">
-                    <span><i class="far fa-calendar-alt"></i> Bulan Tahun</span>
-                    <span><i class="fas fa-pen-nib"></i> Sumber</span>
+                    <span><i class="far fa-calendar-alt"></i> Juli 2023</span>
+                    <span><i class="fas fa-pen-nib"></i> Media Nasional</span>
                 </div>
-                <h4 class="news-title">Judul Berita Baru</h4>
-                <p class="news-excerpt">Deskripsi atau ringkasan berita...</p>
-                <div class="news-readmore">Baca Selengkapnya <i class="fas fa-external-link-alt"></i></div>
+                <h4 class="news-title">Puskesmas Dirgahayu Lakukan Kunjungan Monev</h4>
+                <p class="news-excerpt">Jajaran pimpinan dan tim kesehatan Puskesmas Dirgahayu melaksanakan kegiatan Monitoring dan Evaluasi (Monev) ke pos pelayanan tingkat desa untuk memastikan SOP dan layanan berjalan dengan baik.</p>
+                <div class="news-readmore">Baca di Media Nasional <i class="fas fa-external-link-alt"></i></div>
             </div>
-        </a> 
-        -->
+        </a>
 
     </div>
 </div>

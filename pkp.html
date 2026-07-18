@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Penilaian Kinerja Puskesmas (PKP) | SI-Dirgahayu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+    /* ═══════════════════════════════════════════════
+       TOKEN SYSTEM & UTILITIES
+    ═══════════════════════════════════════════════ */
+    :root {
+        --primary:       #00796b; --primary-dark:  #004d40; --primary-light: #e0f2f1;
+        --secondary:     #ffb74d; --secondary-dark:#e65100; --white:         #ffffff;
+        --bg:            #f4f7f6; --text:          #1a2e2b; --text-muted:    #5a7470;
+        --border:        #d0e4e1;
+        --shadow:        0 8px 32px rgba(0,77,64,0.08);
+        --nav-h: 68px;   --transition: 0.3s ease;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* ── HEADER ── */
+    .site-header { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%); padding: 14px 28px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 900; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .brand h1 { font-family: 'Montserrat', sans-serif; font-size: 1.4em; color: #fff; font-weight: 900; letter-spacing: 2px; line-height: 1; }
+    .brand p { font-size: 0.63em; color: rgba(255,255,255,0.75); margin-top: 2px; }
+    .back-btn { display: flex; align-items: center; gap: 7px; background: rgba(255,255,255,0.15); color: #fff; text-decoration: none; padding: 8px 18px; border-radius: 50px; font-size: 0.82em; font-weight: 600; border: 1px solid rgba(255,255,255,0.25); transition: background 0.2s; }
+    .back-btn:hover { background: rgba(255,255,255,0.28); }
+
+    /* ── HERO ── */
+    .hero { background: linear-gradient(135deg, #004d40 0%, #00695c 60%, #00897b 100%); padding: 50px 28px 60px; text-align: center; color: #fff; position: relative; overflow: hidden; clip-path: polygon(0 0,100% 0,100% 90%,0 100%); }
+    .hero::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='20' fill='%23ffffff' fill-opacity='0.05'/%3E%3C/svg%3E"); }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); border-radius: 50px; padding: 6px 18px; font-size: 0.78em; font-weight: 600; letter-spacing: 1px; margin-bottom: 16px; }
+    .hero h2 { font-family: 'Montserrat', sans-serif; font-size: clamp(1.8em, 4vw, 2.4em); font-weight: 900; line-height: 1.15; margin-bottom: 12px; }
+    .hero p { font-size: 0.92em; opacity: 0.9; max-width: 600px; margin: 0 auto; line-height: 1.65; }
+
+    /* ── MAIN LAYOUT ── */
+    .main-wrap { max-width: 1300px; margin: 0 auto; padding: 36px 24px 80px; flex: 1; width: 100%; }
+
+    /* ── TABS (PILAR PKP) ── */
+    .tabs-wrapper { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; justify-content: center; }
+    .tab-btn { padding: 12px 20px; border-radius: 12px; border: 2px solid var(--border); background: var(--white); font-family: 'Poppins', sans-serif; font-size: 0.88em; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: var(--transition); box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+    .tab-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .tab-btn.active { background: var(--primary); border-color: var(--primary); color: var(--white); box-shadow: 0 6px 16px rgba(0,121,107,0.3); }
+
+    /* ── ACCORDION (KATEGORI) ── */
+    .pkp-container { display: none; animation: fadeIn 0.4s ease; }
+    .pkp-container.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .accordion-item { background: var(--white); border-radius: 14px; margin-bottom: 16px; box-shadow: var(--shadow); border: 1px solid var(--border); overflow: hidden; }
+    .accordion-header { padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; background: var(--white); transition: background 0.2s; user-select: none; }
+    .accordion-header:hover { background: var(--bg); }
+    .acc-title { font-family: 'Montserrat', sans-serif; font-size: 1.05em; font-weight: 800; color: var(--text); display: flex; align-items: center; gap: 12px; }
+    .acc-icon { width: 36px; height: 36px; border-radius: 10px; background: var(--primary-light); color: var(--primary-dark); display: flex; align-items: center; justify-content: center; font-size: 1.1em; }
+    .acc-toggle { font-size: 1.2em; color: var(--text-muted); transition: transform 0.3s; }
+    .accordion-item.open .acc-toggle { transform: rotate(180deg); color: var(--primary); }
+    
+    .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease-out; background: var(--white); }
+    .accordion-item.open .accordion-body { max-height: 2000px; /* Nilai besar agar tabel muat */ border-top: 1px solid var(--border); }
+    
+    /* ── TABLE PKP ── */
+    .table-responsive { width: 100%; overflow-x: auto; padding: 16px; background: #fff; }
+    .table-pkp { width: 100%; min-width: 1200px; border-collapse: collapse; font-size: 0.78em; }
+    .table-pkp th, .table-pkp td { padding: 10px 12px; border: 1px solid var(--border); text-align: center; vertical-align: middle; }
+    .table-pkp thead th { background: var(--primary-dark); color: #fff; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.8em; position: sticky; top: 0; }
+    
+    /* Warna Header Sub-Bulan */
+    .th-bulan { background: var(--primary) !important; font-size: 0.75em !important; }
+    .th-hasil { background: var(--secondary-dark) !important; }
+
+    .table-pkp tbody tr:nth-child(even) { background: var(--bg); }
+    .table-pkp tbody tr:hover { background: var(--primary-light); }
+    
+    /* Sticky Column 1 & 2 */
+    .table-pkp th:nth-child(1), .table-pkp td:nth-child(1) { width: 40px; font-weight: 700; }
+    .table-pkp th:nth-child(2), .table-pkp td:nth-child(2) { text-align: left; min-width: 250px; font-weight: 600; color: var(--slate-900); }
+    
+    .td-target { font-family: 'Montserrat', sans-serif; font-weight: 900; background: #fff3e0; color: #e65100; }
+    .td-total { font-family: 'Montserrat', sans-serif; font-weight: 900; background: #e8f5e9; color: #2e7d32; }
+    .td-pct { font-weight: 800; font-size: 1.1em; color: var(--primary-dark); }
+    .td-empty { color: #b0bec5; font-style: italic; }
+
+    /* ── FOOTER ── */
+    footer { text-align: center; padding: 32px; color: var(--white); background: var(--primary-dark); font-size: 0.86em; margin-top: auto; }
+    footer p { margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+
+<header class="site-header">
+    <a href="index.html" class="brand">
+        <div><h1>SI-Dirgahayu</h1><p>Puskesmas Dirgahayu</p></div>
+    </a>
+    <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Kembali</a>
+</header>
+
+<section class="hero">
+    <div class="hero-badge"><i class="fas fa-clipboard-check"></i> DATABASE PKP 2026</div>
+    <h2>Penilaian Kinerja Puskesmas</h2>
+    <p>Rincian cakupan kegiatan pelayanan kesehatan (Promkes, Kesling, KIA/KB, Gizi, P2P, dll) UPTD Puskesmas Dirgahayu periode Januari - Desember 2026.</p>
+</section>
+
+<div class="main-wrap">
+
+    <!-- TAB PILAR -->
+    <div class="tabs-wrapper">
+        <button class="tab-btn active" onclick="openTab('ukm-es')">I. UKM Essensial & Perkesmas</button>
+        <button class="tab-btn" onclick="openTab('ukm-bang')">II. UKM Pengembangan</button>
+        <button class="tab-btn" onclick="openTab('ukp')">III. UKP, Farmasi & Laboratorium</button>
+    </div>
+
+    <!-- KONTEN 1: UKM ESSENSIAL -->
+    <div id="ukm-es" class="pkp-container active"></div>
+
+    <!-- KONTEN 2: UKM PENGEMBANGAN -->
+    <div id="ukm-bang" class="pkp-container"></div>
+
+    <!-- KONTEN 3: UKP & LAB -->
+    <div id="ukp" class="pkp-container"></div>
+
+</div>
+
+<footer>
+    <p>SI-Dirgahayu &copy; 2026 | Puskesmas Dirgahayu — Kab. Kotabaru</p>
+    <div style="font-size: 0.75em; opacity: 0.4; margin-top: 6px; letter-spacing: 1px;">Innovator: ajiiskandar</div>
+</footer>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   DATA PKP 2026 (Diambil dari Screenshot)
+══════════════════════════════════════════════════════════════ */
+const DATA_PKP = {
+    'ukm-es': [
+        {
+            kategori: 'PROMOSI KESEHATAN', icon: 'fas fa-bullhorn',
+            rows: [
+                ['A','Jumlah Kader Kesehatan desa/kel. dalam wilayah Puskesmas yang telah dilatih/diorientasi','Kader','100%','90', 10,10,10,5,10,10,null,null,null,null,null,null, 55, '61,11'],
+                ['B','Jumlah Kelompok Sasaran yang telah dilakukan Penyuluhan','Kelompok','100%','15', 2,2,1,1,1,2,null,null,null,null,null,null, 9, '60,00'],
+                ['C','Jumlah Desa yang melakukan SMD dan MMD Kesehatan','Desa','100%','10', null,null,1,null,null,1,null,null,null,null,null,null, 2, '20,00'],
+                ['D','Jumlah Desa yang telah memanfaatkan Dana Desa Untuk UKBM','Desa','100%','10', 10,10,10,10,10,10,null,null,null,null,null,null, 60, '600,00'],
+                ['E','Jumlah Ormas/Kelompok potensial yang berperan serta dalam GERMAS','Ormas','100%','5', null,null,1,null,1,null,null,null,null,null,null,null, 2, '40,00'],
+                ['F','Jumlah Dunia Usaha/CSR yang bekerja sama mendukung kesehatan','Dunia Usaha','100%','2', null,null,null,null,null,null,null,null,null,null,null,null, 0, '0,00'],
+                ['G','Jumlah UKBM yang dilakukan Promosi Kesehatan oleh petugas Promkes','Posyandu','100%','24', 2,2,2,2,2,2,null,null,null,null,null,null, 12, '50,00'],
+                ['H','Jumlah Sarana dan jenis media yang digunakan Promkes','Saluran','100%','5', null,1,null,1,null,1,null,null,null,null,null,null, 3, '60,00']
+            ]
+        },
+        {
+            kategori: 'KESEHATAN LINGKUNGAN', icon: 'fas fa-leaf',
+            rows: [
+                ['A','Persentase Tempat dan Fasilitas Umum (TFU) memenuhi syarat kesehatan','TFU','65%/100%','21', 3,3,3,5,3,3,null,null,null,null,null,null, 20, '95,24'],
+                ['B','Persentase Tempat Pengelolaan Makanan (TPM) yang memenuhi syarat','TPM','50%/100%','32', 5,3,3,7,7,7,null,null,null,null,null,null, 32, '100,00'],
+                ['C','Persentase DAMIU yang diperiksa dan memenuhi syarat kesehatan','DAMIU','65%/100%','52', 18,8,10,7,7,7,null,null,null,null,null,null, 57, '109,62']
+            ]
+        },
+        {
+            kategori: 'KESEHATAN IBU, ANAK & KB', icon: 'fas fa-baby',
+            rows: [
+                ['1','Cakupan K1','Ibu Hamil','100%','980', 64,79,45,69,65,42,null,null,null,null,null,null, 364, '37,14'],
+                ['2','Cakupan K4','Ibu Hamil','80%','784', 24,40,32,51,37,38,null,null,null,null,null,null, 222, '28,32'],
+                ['3','Cakupan K6','Ibu Hamil','80%','784', 31,37,24,36,36,27,null,null,null,null,null,null, 191, '24,36'],
+                ['4','Cakupan Persalinan oleh tenaga kesehatan kompeten','Ibu Bersalin','100%','936', 41,46,33,51,54,48,null,null,null,null,null,null, 273, '29,17'],
+                ['5','Cakupan KF 3 (Kunjungan Nifas Lengkap)','Ibu Nifas','100%','936', 41,46,33,51,54,48,null,null,null,null,null,null, 273, '29,17'],
+                ['6','Cakupan Pemeriksaan KN1','Bayi','100%','891', 42,46,34,51,55,48,null,null,null,null,null,null, 276, '30,98'],
+                ['7','Cakupan Pemeriksaan KN Lengkap','Bayi','100%','891', 42,46,34,51,55,48,null,null,null,null,null,null, 276, '30,98'],
+                ['8','Cakupan Bumil Risti yang ditemukan oleh tenaga kesehatan','Ibu Hamil','100%','196', 19,30,19,27,29,15,null,null,null,null,null,null, 139, '70,92'],
+                ['9','Cakupan Bumil Risti oleh masyarakat','Ibu Hamil','100%','196', 2,2,3,0,0,0,null,null,null,null,null,null, 7, '3,57'],
+                ['10','Cakupan Persalinan nakes di Fasilitas Pelayanan Kesehatan','Ibu Bersalin','100%','936', 41,46,33,51,54,48,null,null,null,null,null,null, 273, '29,17'],
+                ['11','Cakupan Komplikasi persalinan yang ditangani','Ibu Bersalin','100%','187', 16,22,8,16,11,17,null,null,null,null,null,null, 90, '48,08']
+            ]
+        },
+        {
+            kategori: 'GIZI', icon: 'fas fa-apple-alt',
+            rows: [
+                ['1','Persentase Ibu hamil Anemia','Ibu Hamil','760','190', 9,11,9,20,17,9,null,null,null,null,null,null, 75, '39,47'],
+                ['2','Persentase Ibu Hamil mendapatkan minimal 90 tablet','Ibu Hamil','760','669', 30,40,33,52,40,44,null,null,null,null,null,null, 239, '35,72'],
+                ['3','Persentase ibu hamil KEK yang mendapat tambahan makanan','Ibu Hamil','139','117', 5,8,5,9,9,6,null,null,null,null,null,null, 42, '35,90'],
+                ['4','Persentase ibu nifas mendapat kapsul vitamin A','Ibu Nifas','576','513', 41,56,33,51,54,48,null,null,null,null,null,null, 283, '55,17'],
+                ['5','Persentase Bayi dengan BBLR','Bayi & Balita','667','37', 3,3,3,4,3,2,null,null,null,null,null,null, 18, '48,65'],
+                ['6','Persentase bayi baru lahir mendapatkan IMD','Bayi & Balita','667','367', 48,50,32,29,31,22,null,null,null,null,null,null, 212, '57,77'],
+                ['7','Persentase Bayi usia < 6 bulan ASI Eksklusif','Bayi','370','281', 75,69,61,31,88,41,null,null,null,null,null,null, 365, '129,89'],
+                ['8','Persentase bayi 6 bulan mendapat asi eksklusif','Bayi','370','237', 17,18,6,24,14,18,null,null,null,null,null,null, 97, '40,93'],
+                ['9','Persentase pemberian Vitamin A pada Balita 6-59 bulan','Balita','2784','2561', 0,'1.964',0,0,0,0,null,null,null,null,null,null, '1.964', '76,69'],
+                ['10','Persentase balita kurus mendapat makanan tambahan','Balita Kurus','150','105', 142,143,103,94,95,93,null,null,null,null,null,null, 670, '638,10'],
+                ['11','Persentase kasus Gizi Buruk yang mendapatkan perawatan','Bayi & Balita','7','7', 3,2,1,0,1,0,null,null,null,null,null,null, 7, '100,00'],
+                ['12','Persentase Balita yang ditimbang (D/S)','Bayi & Balita','2784','2004', '1.238','2.290','1.252','1.275','1.378','1.191',null,null,null,null,null,null, '8.624', '430,34'],
+                ['13','Persentase Balita yang memiliki buku KIA/KMS (K/S)','Bayi & Balita','2784','2171', '1.238','2.290','1.252','1.275','1.378','1.191',null,null,null,null,null,null, '8.624', '397,24'],
+                ['14','Persentase Balita ditimbang yang naik berat badannya (N/D)','Bayi & Balita','1437','1049', 540,665,719,635,648,604,null,null,null,null,null,null, '3.811', '363,30'],
+                ['15','Persentase balita underweight (kurang gizi/BGM)','Bayi & Balita','1437','201', 142,143,103,94,95,93,null,null,null,null,null,null, 670, '333,33'],
+                ['16','Persentase balita Stunting (Pendek)','Bayi & Balita','1437','254', 109,147,104,95,94,82,null,null,null,null,null,null, 631, '248,43'],
+                ['17','Persentase balita Wasting (Gizi Kurang dan gizi buruk)','Bayi & Balita','1437','108', 70,72,53,42,58,43,null,null,null,null,null,null, 338, '312,96'],
+                ['18','Persentase remaja putri mendapat tablet tambah darah','Remaja Putri','2283','1530', '2.281','2.281','2.281','2.281','2.266','2.266',null,null,null,null,null,null, '13.656', '892,55']
+            ]
+        },
+        {
+            kategori: 'PENCEGAHAN & PENGENDALIAN PENYAKIT (P2P)', icon: 'fas fa-shield-virus',
+            rows: [
+                ['A.1','Cakupan bayi imunisasi dasar lengkap','Orang','85%','694', 28,28,13,132,27,25,null,null,null,null,null,null, 253, '36,46'],
+                ['A.2','Cakupan UCI Desa','Desa','80%','10', 2,5,3,8,6,6,null,null,null,null,null,null, 30, '300,00'],
+                ['A.3','Imunisasi HB1 < 7 hari','Bayi','85%','694', 42,55,42,51,55,48,null,null,null,null,null,null, 293, '42,22'],
+                ['A.4','Imunisasi BCG pada bayi','Bayi','85%','694', 42,32,39,68,42,50,null,null,null,null,null,null, 273, '39,34'],
+                ['A.5','Imunisasi Polio 4','Bayi','85%','694', 22,23,16,52,27,40,null,null,null,null,null,null, 180, '25,94'],
+                ['A.6','Imunisasi DPT-HB-HIB3','Bayi','85%','694', 22,23,16,52,27,40,null,null,null,null,null,null, 180, '25,94'],
+                ['A.7','Imunisasi Campak /MR','Bayi','85%','694', 28,28,13,132,27,25,null,null,null,null,null,null, 253, '36,46'],
+                ['B.1','Desa tidak ada KLB','Desa','10','10', 0,0,0,0,0,0,null,null,null,null,null,null, 0, '0,00'],
+                ['C.1','Jumlah rumah tangga yang dikunjungi dan diabate sasi (DBD)','Rumah','80%','300', 189,0,0,0,0,95,null,null,null,null,null,null, 284, '94,67'],
+                ['C.2','Jumlah kasus DBD yang terjadi dan ditangani','Kasus','100%','20', 10,0,0,0,0,3,null,null,null,null,null,null, 13, '65,00'],
+                ['D.1','Persentase orang terinfeksi HIV mendapatkan pemeriksaan','Orang','100%','1000', 50,170,65,200,124,117,null,null,null,null,null,null, 726, '72,60'],
+                ['E.1','Penderita (+) malaria yang diobati sesuai standar','Orang','100%','1', 0,0,0,0,0,1,null,null,null,null,null,null, 1, '100,00'],
+                ['F.1','Cakupan Pemberian obat kecacingan umur 1-12 thn bln Mei','Orang','9311','8728', 0,0,0,0,'9.237',0,null,null,null,null,null,null, '9.237', '105,83'],
+                ['G.1','Jumlah kasus penderita Kusta yang ditemukan dan ditangani','Orang','100','4', 1,0,0,0,0,0,null,null,null,null,null,null, 1, '25,00'],
+                ['H.1','Jumlah Penemuan Kasus TB Paru','Orang','100%','487', 22,12,8,16,15,5,null,null,null,null,null,null, 78, '16,02'],
+                ['H.3','Persentase Angka Kesembuhan (Success Rate) Pengobatan Lengkap','Orang','90%','438', 0,2,5,3,2,8,null,null,null,null,null,null, 20, '4,56'],
+                ['I.1','Cakupan penemuan kasus pneumonia balita (ISPA)','Orang','100%','4933', 0,0,0,0,0,0,null,null,null,null,null,null, 0, '0,00'],
+                ['J.1','Cakupan penemuan kasus diare','Kasus','3.20%','429', 28,28,30,39,25,14,null,null,null,null,null,null, 164, '38,23'],
+                ['L.1','Jumlah campak yang ditemukan dan ditangani','Orang','100%','1', 0,0,0,0,0,2,null,null,null,null,null,null, 2, '200,00'],
+                ['M.1','Skrining Hepatitis pada ibu hamil','Ibu Hamil','100%','759', 43,37,45,59,61,0,null,null,null,null,null,null, 245, '32,28'],
+                ['M.2','Penemuan kasus Hepatitis pada ibu hamil','Ibu Hamil','100%','6', 0,1,2,2,1,0,null,null,null,null,null,null, 6, '100,00']
+            ]
+        }
+    ],
+    'ukm-bang': [
+        {
+            kategori: 'UKM PENGEMBANGAN', icon: 'fas fa-chart-line',
+            rows: [
+                ['A.1','Jumlah penderita ODGJ yang mendapat layanan (Kesehatan Jiwa)','Orang','100%','63', 13,10,9,12,5,5,null,null,null,null,null,null, 54, '85,71'],
+                ['B.1','Penjaringan peserta didik kelas 1 SD/MI (UKS)','Murid','100%','900', 0,0,0,0,0,0,null,null,null,null,null,null, 0, '0,00'],
+                ['C.2','Pembinaan kebugaran jasmani pegawai Puskesmas (Kes. Olahraga)','Orang','88','88', 46,24,0,30,27,36,null,null,null,null,null,null, 163, '185,23'],
+                ['D.1','Pembentukan pos UKK (Kesehatan Kerja)','Pos/Desa','10','3', 0,0,0,0,0,0,null,null,null,null,null,null, 0, '0,00'],
+                ['E.1','Pelayanan kesehatan Pra lansia umur 45-59 tahun','Orang','100%','3868', '1.428',459,349,147,157,163,null,null,null,null,null,null, '2.703', '69,88'],
+                ['E.2','Pelayanan kesehatan Lansia umur 60-70 tahun','Orang','100%','2700', 220,152,134,281,233,247,null,null,null,null,null,null, '1.267', '46,93'],
+                ['F.1','Pembinaan TOGA dan pemanfaatannya (Kes. Tradisional)','Desa','10','10', 0,0,0,0,0,0,null,null,null,null,null,null, 0, '0,00'],
+                ['G.1','Persentase penderita Hipertensi mendapat pelayanan (Posbindu PTM)','Orang','80%','1002', 100,277,114,79,79,80,null,null,null,null,null,null, 729, '72,75'],
+                ['G.2','Persentase penderita DM yang mendapat pelayanan (Posbindu PTM)','Orang','80%','152', 20,130,47,22,24,25,null,null,null,null,null,null, 268, '176,32']
+            ]
+        }
+    ],
+    'ukp': [
+        {
+            kategori: 'UKP, KEFARMASIAN & LABORATORIUM', icon: 'fas fa-clinic-medical',
+            rows: [
+                ['A.1','Kunjungan rawat jalan pasien Poli Umum','Kunjungan','100%','25300', '1.435','1.288','1.338','1.338','1.312','1.597',null,null,null,null,null,null, '8.308', '-'],
+                ['B.1','Kunjungan rawat jalan Poli Gigi','Kunjungan','100%','1782', 355,316,238,415,289,330,null,null,null,null,null,null, '1.943', '109,03'],
+                ['C.1','Kunjungan rawat jalan MTBS','Kunjungan','100%','2364', 280,215,175,317,270,340,null,null,null,null,null,null, '1.597', '67,55'],
+                ['D.1','Jumlah Kunjungan Resep BPJS (Kefarmasian)','Resep','-','-', '1.589','1.347','1.122','1.408','1.528','1.764',null,null,null,null,null,null, '8.758', '-'],
+                ['D.2','Jumlah Kunjungan Resep Umum (Kefarmasian)','Resep','-','-', 645,632,580,601,55,65,null,null,null,null,null,null, '2.578', '-'],
+                ['E.1','Pemeriksaan Hemoglobin (Laboratorium)','Spesimen','100%','980', 215,221,181,251,145,168,null,null,null,null,null,null, '1.181', '120,51'],
+                ['E.2','Pemeriksaan protein urine pada ibu hamil (Laboratorium)','Spesimen','100%','980', 67,166,133,140,96,115,null,null,null,null,null,null, 717, '73,16'],
+                ['E.3','Pemeriksaan HIV (Laboratorium)','Spesimen','100%','1000', 48,64,87,83,112,94,null,null,null,null,null,null, 488, '48,80']
+            ]
+        }
+    ]
+};
+
+/* ── RENDER ACCORDION & TABLE ── */
+function renderPKP(tabId) {
+    const container = document.getElementById(tabId);
+    if(container.innerHTML !== '') return; // Cek jika sudah dirender
+    
+    let html = '';
+    const categories = DATA_PKP[tabId];
+    
+    categories.forEach((cat, index) => {
+        const isOpen = index === 0 ? 'open' : ''; // Buka accordion pertama otomatis
+        
+        let tableRows = '';
+        cat.rows.forEach(r => {
+            const v = (val) => val === null ? '<span class="td-empty">—</span>' : val;
+            tableRows += `
+                <tr>
+                    <td>${r[0]}</td>
+                    <td>${r[1]}</td>
+                    <td>${r[2]}</td>
+                    <td>${r[3]}</td>
+                    <td class="td-target">${r[4]}</td>
+                    <td>${v(r[5])}</td><td>${v(r[6])}</td><td>${v(r[7])}</td>
+                    <td>${v(r[8])}</td><td>${v(r[9])}</td><td>${v(r[10])}</td>
+                    <td>${v(r[11])}</td><td>${v(r[12])}</td><td>${v(r[13])}</td>
+                    <td>${v(r[14])}</td><td>${v(r[15])}</td><td>${v(r[16])}</td>
+                    <td class="td-total">${r[17]}</td>
+                    <td class="td-pct">${r[18]}%</td>
+                </tr>
+            `;
+        });
+
+        html += `
+            <div class="accordion-item ${isOpen}">
+                <div class="accordion-header" onclick="toggleAcc(this)">
+                    <div class="acc-title"><div class="acc-icon"><i class="${cat.icon}"></i></div> ${cat.kategori}</div>
+                    <i class="fas fa-chevron-down acc-toggle"></i>
+                </div>
+                <div class="accordion-body">
+                    <div class="table-responsive">
+                        <table class="table-pkp">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" style="top:0; z-index:2">NO</th>
+                                    <th rowspan="2" style="top:0; z-index:2">JENIS KEGIATAN</th>
+                                    <th rowspan="2" style="top:0">SATUAN</th>
+                                    <th rowspan="2" style="top:0">JUMLAH SASARAN</th>
+                                    <th rowspan="2" style="top:0; background:#e65100">TARGET (T)</th>
+                                    <th colspan="12" style="top:0">REALISASI BULANAN</th>
+                                    <th rowspan="2" style="top:0; background:#2e7d32">REALISASI TOTAL</th>
+                                    <th rowspan="2" class="th-hasil" style="top:0">CAKUPAN (%)</th>
+                                </tr>
+                                <tr>
+                                    <th class="th-bulan" style="top:35px">JAN</th><th class="th-bulan" style="top:35px">FEB</th>
+                                    <th class="th-bulan" style="top:35px">MAR</th><th class="th-bulan" style="top:35px">APR</th>
+                                    <th class="th-bulan" style="top:35px">MEI</th><th class="th-bulan" style="top:35px">JUN</th>
+                                    <th class="th-bulan" style="top:35px">JUL</th><th class="th-bulan" style="top:35px">AGT</th>
+                                    <th class="th-bulan" style="top:35px">SEP</th><th class="th-bulan" style="top:35px">OKT</th>
+                                    <th class="th-bulan" style="top:35px">NOV</th><th class="th-bulan" style="top:35px">DES</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${tableRows}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+    
+    container.innerHTML = html;
+}
+
+/* ── TAB NAVIGATION ── */
+function openTab(tabId) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.pkp-container').forEach(c => c.classList.remove('active'));
+    
+    event.target.classList.add('active');
+    document.getElementById(tabId).classList.add('active');
+    
+    renderPKP(tabId);
+}
+
+/* ── ACCORDION TOGGLE ── */
+function toggleAcc(header) {
+    const item = header.parentElement;
+    item.classList.toggle('open');
+}
+
+// Inisialisasi Tab Pertama Saat Halaman Dimuat
+document.addEventListener('DOMContentLoaded', () => {
+    renderPKP('ukm-es');
+});
+
+</script>
+</body>
+</html>
