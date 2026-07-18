@@ -40,6 +40,14 @@
     /* ── MAIN LAYOUT ── */
     .main-wrap { max-width: 1300px; margin: 0 auto; padding: 36px 24px 80px; flex: 1; width: 100%; }
 
+    /* ── NAVIGASI HALAMAN (SWITCHER) ── */
+    .page-switcher-wrap { text-align: center; margin-bottom: 40px; }
+    .page-switcher { display: inline-flex; background: var(--white); padding: 6px; border-radius: 50px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid var(--border); overflow: hidden; }
+    .page-switcher a { padding: 12px 26px; border-radius: 50px; font-size: 0.85em; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 8px; transition: 0.2s; }
+    .page-switcher a.active { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(0,105,92,0.2); }
+    .page-switcher a:not(.active) { background: transparent; color: var(--text-muted); }
+    .page-switcher a:not(.active):hover { color: var(--primary-dark); background: var(--primary-light); }
+
     /* ── TABS (PILAR PKP) ── */
     .tabs-wrapper { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; justify-content: center; }
     .tab-btn { padding: 12px 20px; border-radius: 12px; border: 2px solid var(--border); background: var(--white); font-family: 'Poppins', sans-serif; font-size: 0.88em; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: var(--transition); box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
@@ -60,7 +68,7 @@
     .accordion-item.open .acc-toggle { transform: rotate(180deg); color: var(--primary); }
     
     .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease-out; background: var(--white); }
-    .accordion-item.open .accordion-body { max-height: 2000px; /* Nilai besar agar tabel muat */ border-top: 1px solid var(--border); }
+    .accordion-item.open .accordion-body { max-height: 4000px; border-top: 1px solid var(--border); }
     
     /* ── TABLE PKP ── */
     .table-responsive { width: 100%; overflow-x: auto; padding: 16px; background: #fff; }
@@ -75,7 +83,7 @@
     .table-pkp tbody tr:nth-child(even) { background: var(--bg); }
     .table-pkp tbody tr:hover { background: var(--primary-light); }
     
-    /* Perbaikan Kolom 1 & 2 (Spesifik hanya untuk isi dan header baris pertama) */
+    /* Perbaikan Kolom 1 & 2 (Spesifik) */
     .table-pkp tbody td:nth-child(1), 
     .table-pkp thead tr:first-child th:nth-child(1) { width: 40px; font-weight: 700; }
     
@@ -90,6 +98,12 @@
     /* ── FOOTER ── */
     footer { text-align: center; padding: 32px; color: var(--white); background: var(--primary-dark); font-size: 0.86em; margin-top: auto; }
     footer p { margin-bottom: 8px; }
+
+    @media (max-width: 900px) {
+        .page-switcher-wrap { padding: 0 20px; }
+        .page-switcher { display: flex; flex-direction: column; border-radius: 18px; width: 100%; }
+        .page-switcher a { justify-content: center; padding: 14px; border-radius: 12px; }
+    }
     </style>
 </head>
 <body>
@@ -108,6 +122,18 @@
 </section>
 
 <div class="main-wrap">
+
+    <!-- ══ NAVIGASI SWITCHER ANTARA SPM DAN PKP ══ -->
+    <div class="page-switcher-wrap">
+        <div class="page-switcher">
+            <a href="pencapaian.html">
+                <i class="fas fa-chart-pie"></i> Capaian SPM (12 Indikator)
+            </a>
+            <a href="pkp.html" class="active">
+                <i class="fas fa-table"></i> Penilaian Kinerja Puskesmas (PKP)
+            </a>
+        </div>
+    </div>
 
     <!-- TAB PILAR -->
     <div class="tabs-wrapper">
@@ -134,7 +160,7 @@
 
 <script>
 /* ══════════════════════════════════════════════════════════════
-   DATA PKP 2026 (Diambil dari Screenshot)
+   DATA PKP 2026 - LENGKAP 100% SESUAI GAMBAR
 ══════════════════════════════════════════════════════════════ */
 const DATA_PKP = {
     'ukm-es': [
@@ -213,15 +239,23 @@ const DATA_PKP = {
                 ['C.2','Jumlah kasus DBD yang terjadi dan ditangani','Kasus','100%','20', 10,0,0,0,0,3,null,null,null,null,null,null, 13, '65,00'],
                 ['D.1','Persentase orang terinfeksi HIV mendapatkan pemeriksaan','Orang','100%','1000', 50,170,65,200,124,117,null,null,null,null,null,null, 726, '72,60'],
                 ['E.1','Penderita (+) malaria yang diobati sesuai standar','Orang','100%','1', 0,0,0,0,0,1,null,null,null,null,null,null, 1, '100,00'],
+                ['E.2','Penderita terdeteksi malaria berat dirujuk ke RS','Orang','100%','1', 0,0,0,0,0,0,null,null,null,null,null,null, 0, '0,00'],
                 ['F.1','Cakupan Pemberian obat kecacingan umur 1-12 thn bln Mei','Orang','9311','8728', 0,0,0,0,'9.237',0,null,null,null,null,null,null, '9.237', '105,83'],
+                ['F.2','Cakupan Pemberian obat kecacingan umur 1-12 thn bln Oktober','Orang','8739','8728', 0,0,0,0,0,'8.489',null,null,null,null,null,null, '8.489', '97,26'],
                 ['G.1','Jumlah kasus penderita Kusta yang ditemukan dan ditangani','Orang','100','4', 1,0,0,0,0,0,null,null,null,null,null,null, 1, '25,00'],
                 ['H.1','Jumlah Penemuan Kasus TB Paru','Orang','100%','487', 22,12,8,16,15,5,null,null,null,null,null,null, 78, '16,02'],
+                ['H.2','Persentase Terkonfirmasi Bakteri dan Terdiagnosis Klinis TB','Orang','100%','487', 22,12,8,16,15,5,null,null,null,null,null,null, 78, '16,02'],
                 ['H.3','Persentase Angka Kesembuhan (Success Rate) Pengobatan Lengkap','Orang','90%','438', 0,2,5,3,2,8,null,null,null,null,null,null, 20, '4,56'],
                 ['I.1','Cakupan penemuan kasus pneumonia balita (ISPA)','Orang','100%','4933', 0,0,0,0,0,0,null,null,null,null,null,null, 0, '0,00'],
                 ['J.1','Cakupan penemuan kasus diare','Kasus','3.20%','429', 28,28,30,39,25,14,null,null,null,null,null,null, 164, '38,23'],
+                ['J.2','Cakupan pasien diare balita yang ditangani','Orang','5.90%','1270', 9,9,10,5,7,3,null,null,null,null,null,null, 43, '3,39'],
+                ['K.1','Cuci luka terhadap kasus gigitan HPR','Kasus','-','-', 0,0,0,0,0,0,null,null,null,null,null,null, 0, '-'],
+                ['K.2','Vaksinasi terhadap kasus gigitan HPR yang berindikasi','Kasus','-','-', 0,0,0,0,0,0,null,null,null,null,null,null, 0, '-'],
                 ['L.1','Jumlah campak yang ditemukan dan ditangani','Orang','100%','1', 0,0,0,0,0,2,null,null,null,null,null,null, 2, '200,00'],
                 ['M.1','Skrining Hepatitis pada ibu hamil','Ibu Hamil','100%','759', 43,37,45,59,61,0,null,null,null,null,null,null, 245, '32,28'],
-                ['M.2','Penemuan kasus Hepatitis pada ibu hamil','Ibu Hamil','100%','6', 0,1,2,2,1,0,null,null,null,null,null,null, 6, '100,00']
+                ['M.2','Penemuan kasus Hepatitis pada ibu hamil','Ibu Hamil','100%','6', 0,1,2,2,1,0,null,null,null,null,null,null, 6, '100,00'],
+                ['M.3','Ibu hamil dengan Hepatitis yang ditangani','Ibu Hamil','100%','6', 0,1,2,2,1,0,null,null,null,null,null,null, 6, '100,00'],
+                ['M.4','Bayi Baru Lahir dengan Hepatitis memperoleh Vaksin HBlg','Bayi','100%','6', 0,1,2,2,1,0,null,null,null,null,null,null, 6, '100,00']
             ]
         }
     ],
@@ -230,12 +264,21 @@ const DATA_PKP = {
             kategori: 'UKM PENGEMBANGAN', icon: 'fas fa-chart-line',
             rows: [
                 ['A.1','Jumlah penderita ODGJ yang mendapat layanan (Kesehatan Jiwa)','Orang','100%','63', 13,10,9,12,5,5,null,null,null,null,null,null, 54, '85,71'],
-                ['B.1','Penjaringan peserta didik kelas 1 SD/MI (UKS)','Murid','100%','900', 0,0,0,0,0,0,null,null,null,null,null,null, 0, '0,00'],
+                ['B.1','Penjaringan peserta didik kelas 1 SD/MI','Murid','100%','900', 0,0,0,0,0,0,null,null,null,null,null,null, 0, '0,00'],
+                ['B.2','Penjaringan peserta didik kelas 7 SMP/MTs','Murid','100%','785', 0,0,0,0,0,0,null,null,null,null,null,null, 0, '0,00'],
+                ['B.3','Penjaringan peserta didik kelas 10 SMA/MA','Murid','100%','739', 0,0,0,0,0,0,null,null,null,null,null,null, 0, '0,00'],
+                ['C.1','Pembinaan kelompok olahraga pada lansia','Desa','10','10', 0,0,0,0,0,0,null,null,null,null,null,null, 0, '0,00'],
                 ['C.2','Pembinaan kebugaran jasmani pegawai Puskesmas (Kes. Olahraga)','Orang','88','88', 46,24,0,30,27,36,null,null,null,null,null,null, 163, '185,23'],
-                ['D.1','Pembentukan pos UKK (Kesehatan Kerja)','Pos/Desa','10','3', 0,0,0,0,0,0,null,null,null,null,null,null, 0, '0,00'],
-                ['E.1','Pelayanan kesehatan Pra lansia umur 45-59 tahun','Orang','100%','3868', '1.428',459,349,147,157,163,null,null,null,null,null,null, '2.703', '69,88'],
-                ['E.2','Pelayanan kesehatan Lansia umur 60-70 tahun','Orang','100%','2700', 220,152,134,281,233,247,null,null,null,null,null,null, '1.267', '46,93'],
+                ['D.1','Pembentukan pos UKK','Pos/Desa','10','3', 0,0,0,0,0,0,null,null,null,null,null,null, 0, '0,00'],
+                ['D.2','Pembinaan pos UKK','Pos/Desa','10','3', 0,0,0,0,0,0,null,null,null,null,null,null, 0, '0,00'],
+                ['E.1.a','Pelayanan Posyandu Lansia: Pra lansia umur 45-59 tahun','Orang','100%','3868', '1.428',459,349,147,157,163,null,null,null,null,null,null, '2.703', '69,88'],
+                ['E.1.b','Pelayanan Posyandu Lansia: Lansia umur 60-70 tahun','Orang','100%','2700', 220,152,134,281,233,247,null,null,null,null,null,null, '1.267', '46,93'],
+                ['E.1.c','Pelayanan Posyandu Lansia: Lansia umur > 70 tahun','Orang','-','-', 163,117,111,174,175,188,null,null,null,null,null,null, 928, '-'],
+                ['E.2.a','KIE dan skrining P3G: Pra lansia umur 45-59 tahun','Orang','100%','3868', '1.428',459,349,147,157,163,null,null,null,null,null,null, '2.703', '69,88'],
+                ['E.2.b','KIE dan skrining P3G: Lansia umur 60-70 tahun','Orang','100%','2700', 220,152,134,281,233,247,null,null,null,null,null,null, '1.267', '46,93'],
+                ['E.2.c','KIE dan skrining P3G: Lansia umur > 70 tahun','Orang','-','-', 57,35,23,107,58,59,null,null,null,null,null,null, 339, '-'],
                 ['F.1','Pembinaan TOGA dan pemanfaatannya (Kes. Tradisional)','Desa','10','10', 0,0,0,0,0,0,null,null,null,null,null,null, 0, '0,00'],
+                ['F.2','Penyuluhan mengenai obat tradisional TOGA','Desa','10','10', 0,0,0,0,0,0,null,null,null,null,null,null, 0, '0,00'],
                 ['G.1','Persentase penderita Hipertensi mendapat pelayanan (Posbindu PTM)','Orang','80%','1002', 100,277,114,79,79,80,null,null,null,null,null,null, 729, '72,75'],
                 ['G.2','Persentase penderita DM yang mendapat pelayanan (Posbindu PTM)','Orang','80%','152', 20,130,47,22,24,25,null,null,null,null,null,null, 268, '176,32']
             ]
