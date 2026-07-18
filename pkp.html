@@ -75,9 +75,12 @@
     .table-pkp tbody tr:nth-child(even) { background: var(--bg); }
     .table-pkp tbody tr:hover { background: var(--primary-light); }
     
-    /* Sticky Column 1 & 2 */
-    .table-pkp th:nth-child(1), .table-pkp td:nth-child(1) { width: 40px; font-weight: 700; }
-    .table-pkp th:nth-child(2), .table-pkp td:nth-child(2) { text-align: left; min-width: 250px; font-weight: 600; color: var(--slate-900); }
+    /* Perbaikan Kolom 1 & 2 (Spesifik hanya untuk isi dan header baris pertama) */
+    .table-pkp tbody td:nth-child(1), 
+    .table-pkp thead tr:first-child th:nth-child(1) { width: 40px; font-weight: 700; }
+    
+    .table-pkp tbody td:nth-child(2), 
+    .table-pkp thead tr:first-child th:nth-child(2) { text-align: left; min-width: 250px; font-weight: 600; color: var(--slate-900); }
     
     .td-target { font-family: 'Montserrat', sans-serif; font-weight: 900; background: #fff3e0; color: #e65100; }
     .td-total { font-family: 'Montserrat', sans-serif; font-weight: 900; background: #e8f5e9; color: #2e7d32; }
