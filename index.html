@@ -168,10 +168,7 @@
     .motto-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0; margin-top: 6px; }
 
     .layanan-section { background: var(--slate-100); padding: 64px 28px; }
-    
-    /* MODIFIKASI LAYANAN GRID UNTUK 3 KOLOM */
     .layanan-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-    
     .layanan-card { background: white; border-radius: var(--radius-lg); padding: 26px 22px; display: flex; flex-direction: column; gap: 14px; text-decoration: none; color: var(--slate-900); box-shadow: var(--shadow-sm); border: 1px solid var(--slate-200); transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition); position: relative; overflow: hidden; }
     .layanan-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--green-600), var(--green-400)); transform: scaleX(0); transform-origin: left; transition: transform var(--transition); }
     .layanan-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--green-400); }
@@ -228,6 +225,19 @@
     .antrian-btn:hover .antrian-btn-arrow { transform: translateX(3px); opacity: 1; }
 
     /* ═══════════════════════════════════════════════
+       STATISTIK WEBSITE
+    ═══════════════════════════════════════════════ */
+    .stats-section { background: var(--white); padding: 64px 28px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 36px; }
+    .stat-card { background: var(--white); border-radius: var(--radius-lg); padding: 24px; display: flex; align-items: center; gap: 18px; box-shadow: var(--shadow-sm); border: 1px solid var(--slate-200); transition: transform var(--transition), box-shadow var(--transition); }
+    .stat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--green-400); }
+    .stat-icon { width: 56px; height: 56px; border-radius: 14px; background: var(--green-100); color: var(--green-700); display: flex; align-items: center; justify-content: center; font-size: 1.6em; flex-shrink: 0; }
+    .stat-info h4 { font-size: 0.75em; font-weight: 700; color: var(--slate-500); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+    .stat-info p { font-family: 'Montserrat', sans-serif; font-size: 1.6em; font-weight: 900; color: var(--slate-900); line-height: 1; }
+    .stats-note { text-align: center; margin-top: 28px; font-size: 0.8em; color: var(--slate-500); }
+    .stats-note b { color: var(--green-700); }
+
+    /* ═══════════════════════════════════════════════
        FOOTER
     ═══════════════════════════════════════════════ */
     footer { background: var(--green-900); padding: 48px 28px 28px; color: rgba(255,255,255,0.7); }
@@ -256,9 +266,8 @@
         .hero-visual { display: none; }
         .hero { min-height: 85vh; }
         .motto-grid, .antrian-inner { grid-template-columns: 1fr; }
-        
-        /* Grid Layanan turun menjadi 2 kolom di tablet */
         .layanan-grid { grid-template-columns: repeat(2, 1fr); }
+        .stats-grid { grid-template-columns: repeat(2, 1fr); }
     }
     
     @media (max-width: 640px) {
@@ -268,9 +277,8 @@
         .hero-actions { flex-direction: column; }
         .hero-btn { justify-content: center; }
         .dash-chart-wrap { height: 250px; }
-        
-        /* Grid Layanan turun menjadi 1 kolom di HP */
         .layanan-grid { grid-template-columns: 1fr; }
+        .stats-grid { grid-template-columns: 1fr; }
     }
 
     /* UTILITIES */
@@ -392,7 +400,7 @@
                 <div class="hero-card-text">
                     <h4>Total Kunjungan Web</h4>
                     <p style="font-size: 1.15em; font-weight: 700; color: white; margin-top: 2px; opacity: 1;">
-                        <span id="visitor-counter-val">0</span> 
+                        <span id="visitor-counter-val">-</span> 
                         <span style="font-size:0.65em; font-weight:normal; opacity:0.8;">Pengunjung</span>
                     </p>
                 </div>
@@ -405,7 +413,6 @@
     <div class="section-inner">
         <div class="section-header reveal"><div class="section-eyebrow">Layanan Digital</div><h2 class="section-title">Akses Semua Layanan<br>dalam Satu Platform</h2></div>
         
-        <!-- CARD LAYANAN (DENGAN TATA LETAK 3 KOLOM) -->
         <div class="layanan-grid">
             <a href="skrining.html" class="layanan-card reveal reveal-d1"><div class="layanan-card-icon"><i class="fas fa-file-medical-alt"></i></div><h4>Skrining Mandiri</h4><p>Deteksi dini TBC, HIV, Hepatitis, Kesehatan Jiwa, dan Kesehatan Anak secara mandiri.</p><div class="layanan-card-link">Mulai Skrining <i class="fas fa-arrow-right" style="font-size:0.8em"></i></div></a>
             
@@ -464,6 +471,53 @@
     </div>
 </section>
 
+<!-- ════════ STATISTIK WEBSITE SECTION ════════ -->
+<section class="stats-section" id="statistik">
+    <div class="section-inner">
+        <div class="section-header reveal">
+            <div class="section-eyebrow">Data Realtime</div>
+            <h2 class="section-title">Statistik Website</h2>
+        </div>
+        <div class="stats-grid">
+            <!-- Card 1 -->
+            <div class="stat-card reveal reveal-d1">
+                <div class="stat-icon"><i class="fas fa-users"></i></div>
+                <div class="stat-info">
+                    <h4>Total Pengunjung</h4>
+                    <p id="stats-total">-</p>
+                </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="stat-card reveal reveal-d2">
+                <div class="stat-icon"><i class="fas fa-user-clock"></i></div>
+                <div class="stat-info">
+                    <h4>Pengunjung Hari Ini</h4>
+                    <p id="stats-today">-</p>
+                </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="stat-card reveal reveal-d3">
+                <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="stat-info">
+                    <h4>Pengunjung Bulan Ini</h4>
+                    <p id="stats-month">-</p>
+                </div>
+            </div>
+            <!-- Card 4 -->
+            <div class="stat-card reveal reveal-d4">
+                <div class="stat-icon"><i class="fas fa-history"></i></div>
+                <div class="stat-info">
+                    <h4>Terakhir Dikunjungi</h4>
+                    <p id="stats-last" style="font-size:1.15em">-</p>
+                </div>
+            </div>
+        </div>
+        <div class="stats-note reveal reveal-d5">
+            <p><i class="fas fa-info-circle"></i> Angka statistik ini diperbarui secara otomatis menggunakan layanan <b>CounterAPI</b>.</p>
+        </div>
+    </div>
+</section>
+
 <footer>
     <div class="footer-inner">
         <div class="footer-grid">
@@ -509,71 +563,81 @@ const io = new IntersectionObserver((entries) => {
 revealEls.forEach(el => io.observe(el));
 document.querySelectorAll('.drawer-link[href^="#"]').forEach(a => { a.addEventListener('click', closeDrawer); });
 
-/* ── INISIALISASI FITUR BARU ── */
+/* ── STATISTIK WEBSITE (100% Client-Side via CounterAPI) ── */
 document.addEventListener("DOMContentLoaded", function() {
     
-    // 1. Animasi Counter Kunjungan Web (Dummy Data)
-    const visitorCounter = document.getElementById('visitor-counter-val');
-    if(visitorCounter) {
-        let start = 0; // Mulai animasi dari angka ini
-        const end = 124; // Target angka dummy kunjungan
-        const duration = 1500;
-        const increment = (end - start) / (duration / 16);
-        const timer = setInterval(() => {
-            start += increment;
-            if(start >= end) {
-                start = end;
-                clearInterval(timer);
-            }
-            visitorCounter.innerHTML = Math.floor(start).toLocaleString('id-ID');
-        }, 16);
-    }
+    const initStats = async () => {
+        const namespace = "sidirgahayu_web_2026"; // Nama unik API kita
+        
+        // Ambil waktu saat ini untuk format YYYY-MM-DD
+        const now = new Date();
+        const yearStr = now.getFullYear();
+        const monthStr = (now.getMonth() + 1).toString().padStart(2, '0');
+        const dayStr = now.getDate().toString().padStart(2, '0');
+        
+        const dateToday = `${yearStr}-${monthStr}-${dayStr}`;
+        const monthToday = `${yearStr}-${monthStr}`;
 
-    // 2. Inisialisasi Chart.js untuk Capaian Program
-    const ctx = document.getElementById('capaianChart');
-    if(ctx) {
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei'],
-                datasets: [{
-                    label: 'Jumlah Penerima (Orang)',
-                    data: [64, 79, 45, 69, 65], // Data capaian bulanan
-                    backgroundColor: 'rgba(0, 121, 107, 0.85)', // Warna teal/green puskesmas
-                    borderColor: '#00796b',
-                    borderWidth: 1,
-                    borderRadius: 8,
-                    barPercentage: 0.5
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }, // Disembunyikan karena hanya 1 kategori data
-                    tooltip: {
-                        backgroundColor: 'rgba(26, 46, 43, 0.95)',
-                        titleFont: { family: 'Poppins', size: 13 },
-                        bodyFont: { family: 'Poppins', size: 14, weight: 'bold' },
-                        padding: 12,
-                        cornerRadius: 8,
-                        displayColors: false
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: { color: '#e2ecea', drawBorder: false },
-                        ticks: { font: { family: 'Poppins' }, color: '#607a76', stepSize: 20 }
-                    },
-                    x: {
-                        grid: { display: false },
-                        ticks: { font: { family: 'Poppins' }, color: '#607a76' }
-                    }
-                }
+        // Kunci API untuk masing-masing data
+        const keyTotal = "kunjungan_total";
+        const keyToday = `kunjungan_harian_${dateToday}`;
+        const keyMonth = `kunjungan_bulanan_${monthToday}`;
+
+        // Cek LocalStorage agar user yang refresh berulang kali tidak membuat hitungan spam
+        const hasVisited = localStorage.getItem('visited_date') === dateToday;
+        
+        // '/up' digunakan untuk menambah angka. Kosong ('') hanya untuk membaca angka.
+        const action = hasVisited ? '' : '/up'; 
+
+        const fetchStat = async (key) => {
+            try {
+                const res = await fetch(`https://api.counterapi.dev/v1/${namespace}/${key}${action}`);
+                const data = await res.json();
+                return data.count;
+            } catch (e) {
+                console.error("Gagal memuat API counter", e);
+                return null;
+            }
+        };
+
+        // Ambil ketiga data statistik secara serentak
+        const [total, today, month] = await Promise.all([
+            fetchStat(keyTotal),
+            fetchStat(keyToday),
+            fetchStat(keyMonth)
+        ]);
+
+        // Jika perhitungan berhasil, tandai bahwa user ini sudah berkunjung hari ini
+        if (!hasVisited && total !== null) {
+            localStorage.setItem('visited_date', dateToday);
+        }
+
+        // Memasukkan angka asli ke dalam elemen HTML
+        if(total !== null) {
+            document.getElementById('stats-total').innerText = total.toLocaleString('id-ID');
+            const heroTotal = document.getElementById('visitor-counter-val');
+            if(heroTotal) heroTotal.innerText = total.toLocaleString('id-ID');
+        }
+        if(today !== null) document.getElementById('stats-today').innerText = today.toLocaleString('id-ID');
+        if(month !== null) document.getElementById('stats-month').innerText = month.toLocaleString('id-ID');
+
+        // Memasukkan Waktu Terakhir Dikunjungi
+        const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0') + ' WITA';
+        document.getElementById('stats-last').innerText = timeStr;
+    };
+
+    // Jalankan pengambilan data pengunjung ketika bagian statistik mulai terlihat di layar
+    const statObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                initStats();
+                statObserver.disconnect(); // Hanya panggil sekali
             }
         });
-    }
+    }, { threshold: 0.2 });
+    
+    const statsSec = document.getElementById('statistik');
+    if(statsSec) statObserver.observe(statsSec);
 });
 </script>
 </body>
