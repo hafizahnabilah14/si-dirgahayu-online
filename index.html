@@ -9,11 +9,26 @@
     <meta name="description" content="SI-Dirgahayu adalah Sistem Informasi Digital & Layanan Terpadu UPTD Puskesmas Dirgahayu, Kotabaru. Melayani antrian online, skrining mandiri, dan informasi kesehatan.">
     <meta name="keywords" content="Puskesmas Dirgahayu, SI-Dirgahayu, Puskesmas Kotabaru, Antrian Online Puskesmas, Skrining Kesehatan, Puskesmas Pulau Laut Utara">
     <meta name="author" content="UPTD Puskesmas Dirgahayu">
-    <meta name="google-site-verification" content="JcKcqAOnwgKMMpdbp91MOmLvF2Y2k6pggJqHo5Ax3U8">
+    
+    <!-- ═══ KODE VERIFIKASI GOOGLE SEARCH CONSOLE ═══ -->
+    <meta name="google-site-verification" content="JcKcqAOnwgKMMpdbp91MOmLvF2Y2k6pggJqHo5Ax3U8" />
+
+    <!-- ═══ PREVIEW GAMBAR & SOSIAL MEDIA (OPEN GRAPH) ═══ -->
+    <meta name="robots" content="max-image-preview:large">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://si-dirgahayu.web.id/">
+    <meta property="og:title" content="SI-Dirgahayu | Puskesmas Dirgahayu Kotabaru">
+    <meta property="og:description" content="Sistem Informasi Digital & Layanan Terpadu UPTD Puskesmas Dirgahayu. Melayani antrian online, skrining mandiri, dan informasi kesehatan.">
+    <meta property="og:image" content="https://si-dirgahayu.web.id/logo_kabupaten.png">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SI-Dirgahayu | Puskesmas Dirgahayu Kotabaru">
+    <meta name="twitter:description" content="Sistem Informasi Digital & Layanan Terpadu UPTD Puskesmas Dirgahayu.">
+    <meta name="twitter:image" content="https://si-dirgahayu.web.id/logo_kabupaten.png">
 
     <!-- ═══ FAVICON (Logo di Tab Browser & Google Search) ═══ -->
-    <link rel="icon" type="image/png" href="https://si-dirgahayu.web.id/logo_saijaan.png" sizes="192x192">
-    <link rel="apple-touch-icon" href="https://si-dirgahayu.web.id/logo_saijaan.png">
+    <link rel="icon" type="image/png" href="https://si-dirgahayu.web.id/logo_kabupaten.png" sizes="192x192">
+    <link rel="apple-touch-icon" href="https://si-dirgahayu.web.id/logo_kabupaten.png">
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -388,7 +403,7 @@
         <div class="hero-content">
             <div class="hero-eyebrow reveal"><i class="fas fa-shield-alt"></i> UPTD Puskesmas Dirgahayu — Kotabaru</div>
             <h1 class="hero-title reveal reveal-d1">Layanan Kesehatan <span class="accent">Digital Terpadu</span> untuk Masyarakat</h1>
-            <p class="hero-desc reveal reveal-d2">SI-Dirgahayu hadir sebagai platform informasi dan layanan kesehatan digital Puskesmas Dirgahayu, dari skrining mandiri, edukasi kesehatan, hingga pendaftaran antrian online.</p>
+            <p class="hero-desc reveal reveal-d2">SI-Dirgahayu hadir sebagai platform informasi dan layanan kesehatan digital Puskesmas Dirgahayu — dari skrining mandiri, edukasi kesehatan, hingga pendaftaran antrian online.</p>
             <div class="hero-actions reveal reveal-d3">
                 <a href="skrining.html" class="hero-btn primary"><i class="fas fa-file-medical-alt"></i> Skrining Mandiri</a>
                 <a href="#layanan" class="hero-btn secondary"><i class="fas fa-th-large"></i> Jelajahi Layanan</a>
@@ -574,11 +589,11 @@ const io = new IntersectionObserver((entries) => {
 revealEls.forEach(el => io.observe(el));
 document.querySelectorAll('.drawer-link[href^="#"]').forEach(a => { a.addEventListener('click', closeDrawer); });
 
-/* ── STATISTIK WEBSITE (100% Client-Side via CounterAPI) ── */
+/* ── STATISTIK WEBSITE (Setiap Refresh Dihitung) ── */
 document.addEventListener("DOMContentLoaded", function() {
     
     const initStats = async () => {
-        const namespace = "sidirgahayu_web_2026_live"; // Nama Unik API (diperbarui)
+        const namespace = "sidirgahayu_web_2026_live"; 
         
         // Atur Tanggal Hari Ini
         const now = new Date();
@@ -593,28 +608,34 @@ document.addEventListener("DOMContentLoaded", function() {
         const keyToday = `kunjungan_harian_${dateToday}`;
         const keyMonth = `kunjungan_bulanan_${monthToday}`;
 
-        // 1. TAMPILKAN CACHE LOKAL AGAR ANGKA TIDAK KOSONG SAAT REFRESH
-        let cachedTotal = localStorage.getItem('stat_total') || '0';
-        let cachedToday = localStorage.getItem('stat_today') || '0';
-        let cachedMonth = localStorage.getItem('stat_month') || '0';
+        // Tampilkan Cache Lokal Dahulu dengan fallback strip (-)
+        let cachedTotal = localStorage.getItem('stat_total') || '-';
+        let cachedToday = localStorage.getItem('stat_today') || '-';
+        let cachedMonth = localStorage.getItem('stat_month') || '-';
         let cachedTime  = localStorage.getItem('stat_last_time') || '-';
 
-        document.getElementById('stats-total').innerText = parseInt(cachedTotal).toLocaleString('id-ID');
-        document.getElementById('stats-today').innerText = parseInt(cachedToday).toLocaleString('id-ID');
-        document.getElementById('stats-month').innerText = parseInt(cachedMonth).toLocaleString('id-ID');
+        const formatAngka = (val) => val === '-' ? '-' : parseInt(val).toLocaleString('id-ID');
+
+        document.getElementById('stats-total').innerText = formatAngka(cachedTotal);
+        document.getElementById('stats-today').innerText = formatAngka(cachedToday);
+        document.getElementById('stats-month').innerText = formatAngka(cachedMonth);
         document.getElementById('stats-last').innerText = cachedTime;
         
         const heroTotal = document.getElementById('visitor-counter-val');
-        if(heroTotal) heroTotal.innerText = parseInt(cachedTotal).toLocaleString('id-ID');
+        if(heroTotal) heroTotal.innerText = formatAngka(cachedTotal);
 
-        // 2. CEK APAKAH USER SUDAH DIHITUNG HARI INI
-        const hasVisited = localStorage.getItem('visited_date') === dateToday;
-        // Jika belum, panggil /up untuk menambah angka. Jika sudah, kosongkan saja untuk membaca data.
-        const action = hasVisited ? '' : '/up'; 
+        // KUNCI PERUBAHAN: Mematikan pembatasan. Setiap kali dimuat, selalu perintahkan tambah (/up)
+        const action = '/up'; 
 
         const fetchStat = async (key) => {
             try {
-                const res = await fetch(`https://api.counterapi.dev/v1/${namespace}/${key}${action}`);
+                // Timeout 4 detik agar website tetap lancar walau API diblokir
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 4000);
+                
+                const res = await fetch(`https://api.counterapi.dev/v1/${namespace}/${key}${action}`, { signal: controller.signal });
+                clearTimeout(timeoutId);
+                
                 if (!res.ok) return null;
                 const data = await res.json();
                 return data.count;
@@ -623,20 +644,18 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         };
 
-        // 3. AMBIL DATA DARI SERVER
+        // Ambil data dan tambah angkanya ke server
         const [total, today, month] = await Promise.all([
             fetchStat(keyTotal),
             fetchStat(keyToday),
             fetchStat(keyMonth)
         ]);
 
-        // 4. SIMPAN HASIL KE CACHE DAN PERBARUI TAMPILAN
+        // Simpan Hasil ke Cache dan Tampilkan
         if (total !== null) {
             localStorage.setItem('stat_total', total);
             document.getElementById('stats-total').innerText = total.toLocaleString('id-ID');
             if(heroTotal) heroTotal.innerText = total.toLocaleString('id-ID');
-            
-            if (!hasVisited) localStorage.setItem('visited_date', dateToday);
         }
         if (today !== null) {
             localStorage.setItem('stat_today', today);
@@ -647,13 +666,13 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById('stats-month').innerText = month.toLocaleString('id-ID');
         }
 
-        // Simpan Jam Update
-        const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0') + ' WITA';
-        document.getElementById('stats-last').innerText = timeStr;
-        localStorage.setItem('stat_last_time', timeStr);
+        if (total !== null || today !== null || month !== null) {
+            const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0') + ' WITA';
+            document.getElementById('stats-last').innerText = timeStr;
+            localStorage.setItem('stat_last_time', timeStr);
+        }
     };
 
-    // Eksekusi API secara otomatis segera saat halaman dimuat (tanpa perlu men-scroll layar)
     initStats();
 });
 </script>
