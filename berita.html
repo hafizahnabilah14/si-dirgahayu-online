@@ -21,6 +21,7 @@
         --text-muted:    #5a7470;
         --border:        #c5d8d5;
         --card-shadow:   0 8px 32px rgba(0,100,80,0.10);
+        --gold-dark:     #e65100;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -62,7 +63,7 @@
     }
     .news-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(0,100,80,0.16); }
     
-    .news-img-wrap { position: relative; padding-bottom: 55%; overflow: hidden; background: var(--bg2); }
+    .news-img-wrap { position: relative; padding-bottom: 55%; overflow: hidden; background: var(--bg); }
     .news-img-wrap img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
     .news-card:hover .news-img-wrap img { transform: scale(1.05); }
     .news-badge { position: absolute; top: 12px; left: 12px; background: var(--primary); color: #fff; padding: 4px 10px; border-radius: 6px; font-size: 0.7em; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); z-index: 10; }
@@ -70,7 +71,7 @@
     .news-content { padding: 20px 22px; display: flex; flex-direction: column; flex: 1; }
     .news-meta { display: flex; align-items: center; gap: 12px; font-size: 0.75em; color: var(--text-muted); margin-bottom: 10px; font-weight: 500; }
     .news-meta i { color: var(--primary); }
-    .news-title { font-family: 'Montserrat', sans-serif; font-size: 1.1em; font-weight: 800; line-height: 1.4; margin-bottom: 10px; color: var(--slate-900); }
+    .news-title { font-family: 'Montserrat', sans-serif; font-size: 1.1em; font-weight: 800; line-height: 1.4; margin-bottom: 10px; color: var(--text); }
     .news-card:hover .news-title { color: var(--primary); }
     .news-excerpt { font-size: 0.82em; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; flex: 1; }
     
@@ -142,6 +143,57 @@
                 <h4 class="news-title">Puskesmas Dirgahayu Lakukan Kunjungan Monev</h4>
                 <p class="news-excerpt">Jajaran pimpinan dan tim kesehatan Puskesmas Dirgahayu melaksanakan kegiatan Monitoring dan Evaluasi (Monev) ke pos pelayanan tingkat desa untuk memastikan SOP dan layanan berjalan dengan baik.</p>
                 <div class="news-readmore">Baca di Media Nasional <i class="fas fa-external-link-alt"></i></div>
+            </div>
+        </a>
+
+        <!-- CARD BERITA 3 (Lapas Skrining) -->
+        <a href="https://www.ditjenpas.go.id/sinergi-layanan-kesehatan-lapas-kotabaru-dan-puskesmas-dirgahayu-gelar-skrining-tb-hiv-dan-hepatitis" target="_blank" rel="noopener" class="news-card">
+            <div class="news-img-wrap">
+                <div class="news-badge">Kegiatan</div>
+                <img src="https://images.unsplash.com/photo-1584515933487-779824d29309?w=600&q=80" alt="Skrining Lapas Kotabaru" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80'">
+            </div>
+            <div class="news-content">
+                <div class="news-meta">
+                    <span><i class="far fa-calendar-alt"></i> Februari 2026</span>
+                    <span><i class="fas fa-pen-nib"></i> Ditjenpas</span>
+                </div>
+                <h4 class="news-title">Sinergi Layanan Kesehatan, Lapas Kotabaru dan Puskesmas Dirgahayu Gelar Skrining TB, HIV, dan Hepatitis</h4>
+                <p class="news-excerpt">Lembaga Pemasyarakatan (Lapas) Kelas IIA Kotabaru bersinergi dengan Puskesmas Dirgahayu menyelenggarakan kegiatan skrining kesehatan meliputi TB, HIV, dan Hepatitis bagi warga binaan.</p>
+                <div class="news-readmore">Baca di Ditjenpas <i class="fas fa-external-link-alt"></i></div>
+            </div>
+        </a>
+
+        <!-- CARD BERITA 4 (Baksos Stunting) -->
+        <a href="https://www.metrokalimantan.com/2023/07/bersama-puskesmas-dirgahayu-lapas.html" target="_blank" rel="noopener" class="news-card">
+            <div class="news-img-wrap">
+                <div class="news-badge">Kegiatan</div>
+                <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600&q=80" alt="Baksos Stunting" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80'">
+            </div>
+            <div class="news-content">
+                <div class="news-meta">
+                    <span><i class="far fa-calendar-alt"></i> Juli 2023</span>
+                    <span><i class="fas fa-pen-nib"></i> Metro Kalimantan</span>
+                </div>
+                <h4 class="news-title">Bersama Puskesmas Dirgahayu, Lapas Kotabaru Gelar Baksos Pengentasan Risiko Stunting</h4>
+                <p class="news-excerpt">Kolaborasi Lapas Kotabaru dan Puskesmas Dirgahayu dalam menggelar bakti sosial sebagai upaya deteksi dan pengentasan risiko stunting di lingkungan masyarakat sekitar.</p>
+                <div class="news-readmore">Baca di Metro Kalimantan <i class="fas fa-external-link-alt"></i></div>
+            </div>
+        </a>
+
+        <!-- CARD BERITA 5 (Literasi Kesehatan) -->
+        <a href="https://www.newsindonesia.net/2026/04/gandeng-puskesmas-dirgahayu-lapas.html" target="_blank" rel="noopener" class="news-card">
+            <div class="news-img-wrap">
+                <div class="news-badge" style="background:var(--primary-dark);">Edukasi</div>
+                <img src="https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=600&q=80" alt="Literasi Kesehatan" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80'">
+            </div>
+            <div class="news-content">
+                <div class="news-meta">
+                    <span><i class="far fa-calendar-alt"></i> April 2026</span>
+                    <span><i class="fas fa-pen-nib"></i> News Indonesia</span>
+                </div>
+                <h4 class="news-title">Gandeng Puskesmas Dirgahayu, Lapas Kotabaru Tingkatkan Literasi Kesehatan Warga Binaan</h4>
+                <p class="news-excerpt">Dalam rangka meningkatkan kesadaran akan pentingnya kesehatan, Lapas Kotabaru menggandeng tenaga medis Puskesmas Dirgahayu untuk memberikan edukasi dan literasi kesehatan berkelanjutan.</p>
+                <div class="news-readmore">Baca di News Indonesia <i class="fas fa-external-link-alt"></i></div>
             </div>
         </a>
 
