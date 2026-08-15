@@ -588,13 +588,12 @@ const io = new IntersectionObserver((entries) => {
 revealEls.forEach(el => io.observe(el));
 document.querySelectorAll('.drawer-link[href^="#"]').forEach(a => { a.addEventListener('click', closeDrawer); });
 
-/* ── STATISTIK WEBSITE (Setiap Refresh Dihitung) ── */
+/* ── STATISTIK WEBSITE (Dengan Rem Anti-Spam API) ── */
 document.addEventListener("DOMContentLoaded", function() {
     
     const initStats = async () => {
         const namespace = "sidirgahayu_web_2026_live"; 
         
-        // Atur Tanggal Hari Ini
         const now = new Date();
         const yearStr = now.getFullYear();
         const monthStr = (now.getMonth() + 1).toString().padStart(2, '0');
@@ -607,7 +606,6 @@ document.addEventListener("DOMContentLoaded", function() {
         const keyToday = `kunjungan_harian_${dateToday}`;
         const keyMonth = `kunjungan_bulanan_${monthToday}`;
 
-        // Tampilkan Cache Lokal Dahulu dengan fallback strip (-)
         let cachedTotal = localStorage.getItem('stat_total') || '-';
         let cachedToday = localStorage.getItem('stat_today') || '-';
         let cachedMonth = localStorage.getItem('stat_month') || '-';
@@ -623,12 +621,13 @@ document.addEventListener("DOMContentLoaded", function() {
         const heroTotal = document.getElementById('visitor-counter-val');
         if(heroTotal) heroTotal.innerText = formatAngka(cachedTotal);
 
-        // KUNCI PERUBAHAN: Mematikan pembatasan. Setiap kali dimuat, selalu perintahkan tambah (/up)
-        const action = '/up'; 
+        // KUNCI PERBAIKAN: Pasang pelindung agar 1 Perangkat = 1 Hitungan per hari
+        // Ini akan menghentikan CounterAPI memblokir IP-mu
+        const hasVisited = localStorage.getItem('visited_date') === dateToday;
+        const action = hasVisited ? '' : '/up'; 
 
         const fetchStat = async (key) => {
             try {
-                // Timeout 4 detik agar website tetap lancar walau API diblokir
                 const controller = new AbortController();
                 const timeoutId = setTimeout(() => controller.abort(), 4000);
                 
@@ -643,18 +642,19 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         };
 
-        // Ambil data dan tambah angkanya ke server
         const [total, today, month] = await Promise.all([
             fetchStat(keyTotal),
             fetchStat(keyToday),
             fetchStat(keyMonth)
         ]);
 
-        // Simpan Hasil ke Cache dan Tampilkan
         if (total !== null) {
             localStorage.setItem('stat_total', total);
             document.getElementById('stats-total').innerText = total.toLocaleString('id-ID');
             if(heroTotal) heroTotal.innerText = total.toLocaleString('id-ID');
+            
+            // Tandai perangkat sudah berkunjung hari ini
+            if (!hasVisited) localStorage.setItem('visited_date', dateToday);
         }
         if (today !== null) {
             localStorage.setItem('stat_today', today);
