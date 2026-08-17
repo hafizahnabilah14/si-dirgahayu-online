@@ -588,91 +588,91 @@ const io = new IntersectionObserver((entries) => {
 revealEls.forEach(el => io.observe(el));
 document.querySelectorAll('.drawer-link[href^="#"]').forEach(a => { a.addEventListener('click', closeDrawer); });
 
-/* ── STATISTIK WEBSITE (Dengan Rem Anti-Spam API) ── */
-document.addEventListener("DOMContentLoaded", function() {
-    
-    const initStats = async () => {
-        const namespace = "sidirgahayu_web_2026_live"; 
-        
-        const now = new Date();
-        const yearStr = now.getFullYear();
-        const monthStr = (now.getMonth() + 1).toString().padStart(2, '0');
-        const dayStr = now.getDate().toString().padStart(2, '0');
-        
-        const dateToday = `${yearStr}-${monthStr}-${dayStr}`;
-        const monthToday = `${yearStr}-${monthStr}`;
+/* ── STATISTIK WEBSITE — COUNTERAPI V2 ── */
+document.addEventListener("DOMContentLoaded", async function () {
+    const WORKSPACE = "sidirgahayu_web_2026_live";
+    const API_BASE = `https://api.counterapi.dev/v2/${WORKSPACE}`;
 
-        const keyTotal = "kunjungan_total";
-        const keyToday = `kunjungan_harian_${dateToday}`;
-        const keyMonth = `kunjungan_bulanan_${monthToday}`;
+    const totalEl = document.getElementById("stats-total");
+    const todayEl = document.getElementById("stats-today");
+    const monthEl = document.getElementById("stats-month");
+    const lastEl = document.getElementById("stats-last");
+    const heroEl = document.getElementById("visitor-counter-val");
 
-        let cachedTotal = localStorage.getItem('stat_total') || '-';
-        let cachedToday = localStorage.getItem('stat_today') || '-';
-        let cachedMonth = localStorage.getItem('stat_month') || '-';
-        let cachedTime  = localStorage.getItem('stat_last_time') || '-';
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    const dateKey = `${year}-${month}-${day}`;
+    const monthKey = `${year}-${month}`;
 
-        const formatAngka = (val) => val === '-' ? '-' : parseInt(val).toLocaleString('id-ID');
+    const formatNumber = value => Number(value || 0).toLocaleString("id-ID");
 
-        document.getElementById('stats-total').innerText = formatAngka(cachedTotal);
-        document.getElementById('stats-today').innerText = formatAngka(cachedToday);
-        document.getElementById('stats-month').innerText = formatAngka(cachedMonth);
-        document.getElementById('stats-last').innerText = cachedTime;
-        
-        const heroTotal = document.getElementById('visitor-counter-val');
-        if(heroTotal) heroTotal.innerText = formatAngka(cachedTotal);
+    if (totalEl) totalEl.textContent = "...";
+    if (todayEl) todayEl.textContent = "...";
+    if (monthEl) monthEl.textContent = "...";
+    if (lastEl) lastEl.textContent = "...";
+    if (heroEl) heroEl.textContent = "...";
 
-        // KUNCI PERBAIKAN: Pasang pelindung agar 1 Perangkat = 1 Hitungan per hari
-        // Ini akan menghentikan CounterAPI memblokir IP-mu
-        const hasVisited = localStorage.getItem('visited_date') === dateToday;
-        const action = hasVisited ? '' : '/up'; 
+    // Setiap pembukaan / refresh halaman dihitung sebagai 1 kunjungan.
+    // Tidak menggunakan localStorage sebagai penghalang hitungan.
+    async function incrementCounter(counterName) {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 8000);
 
-        const fetchStat = async (key) => {
-            try {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 4000);
-                
-                const res = await fetch(`https://api.counterapi.dev/v1/${namespace}/${key}${action}`, { signal: controller.signal });
-                clearTimeout(timeoutId);
-                
-                if (!res.ok) return null;
-                const data = await res.json();
-                return data.count;
-            } catch (e) {
-                return null;
+        try {
+            const response = await fetch(`${API_BASE}/${encodeURIComponent(counterName)}/up`, {
+                method: "GET",
+                cache: "no-store",
+                signal: controller.signal
+            });
+
+            if (!response.ok) {
+                throw new Error(`CounterAPI HTTP ${response.status}`);
             }
-        };
 
-        const [total, today, month] = await Promise.all([
-            fetchStat(keyTotal),
-            fetchStat(keyToday),
-            fetchStat(keyMonth)
+            const data = await response.json();
+            return data.value;
+        } finally {
+            clearTimeout(timeout);
+        }
+    }
+
+    try {
+        const [total, today, monthTotal] = await Promise.all([
+            incrementCounter("kunjungan-total"),
+            incrementCounter(`kunjungan-harian-${dateKey}`),
+            incrementCounter(`kunjungan-bulanan-${monthKey}`)
         ]);
 
-        if (total !== null) {
-            localStorage.setItem('stat_total', total);
-            document.getElementById('stats-total').innerText = total.toLocaleString('id-ID');
-            if(heroTotal) heroTotal.innerText = total.toLocaleString('id-ID');
-            
-            // Tandai perangkat sudah berkunjung hari ini
-            if (!hasVisited) localStorage.setItem('visited_date', dateToday);
-        }
-        if (today !== null) {
-            localStorage.setItem('stat_today', today);
-            document.getElementById('stats-today').innerText = today.toLocaleString('id-ID');
-        }
-        if (month !== null) {
-            localStorage.setItem('stat_month', month);
-            document.getElementById('stats-month').innerText = month.toLocaleString('id-ID');
-        }
+        if (totalEl) totalEl.textContent = formatNumber(total);
+        if (heroEl) heroEl.textContent = formatNumber(total);
+        if (todayEl) todayEl.textContent = formatNumber(today);
+        if (monthEl) monthEl.textContent = formatNumber(monthTotal);
 
-        if (total !== null || today !== null || month !== null) {
-            const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0') + ' WITA';
-            document.getElementById('stats-last').innerText = timeStr;
-            localStorage.setItem('stat_last_time', timeStr);
-        }
-    };
+        const time = now.toLocaleTimeString("id-ID", {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false,
+            timeZone: "Asia/Makassar"
+        }) + " WITA";
 
-    initStats();
+        if (lastEl) lastEl.textContent = time;
+
+        console.log("CounterAPI berhasil diperbarui:", {
+            total,
+            today,
+            month: monthTotal
+        });
+    } catch (error) {
+        console.error("CounterAPI Error:", error);
+
+        if (totalEl) totalEl.textContent = "—";
+        if (todayEl) todayEl.textContent = "—";
+        if (monthEl) monthEl.textContent = "—";
+        if (lastEl) lastEl.textContent = "Tidak tersedia";
+        if (heroEl) heroEl.textContent = "—";
+    }
 });
 </script>
 </body>
