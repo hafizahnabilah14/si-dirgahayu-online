@@ -590,89 +590,123 @@ document.querySelectorAll('.drawer-link[href^="#"]').forEach(a => { a.addEventLi
 
 /* ── STATISTIK WEBSITE — COUNTERAPI V2 ── */
 document.addEventListener("DOMContentLoaded", async function () {
-    const WORKSPACE = "sidirgahayu_web_2026_live";
-    const API_BASE = `https://api.counterapi.dev/v2/${WORKSPACE}`;
+    // 1. Konfigurasi Workspace & Nama Counter sesuai instruksi
+    const WORKSPACE = "hafizah-nabilahs-team-5140";
+    const COUNTER_NAME = "kunjungan-total";
+    
+    // Endpoint dasar (belum termasuk /up)
+    const API_BASE = `https://api.counterapi.dev/v2/${WORKSPACE}/${COUNTER_NAME}`;
 
+    // 2. Elemen HTML yang akan diupdate
     const totalEl = document.getElementById("stats-total");
     const todayEl = document.getElementById("stats-today");
     const monthEl = document.getElementById("stats-month");
     const lastEl = document.getElementById("stats-last");
     const heroEl = document.getElementById("visitor-counter-val");
 
+    // 3. Konfigurasi Tanggal & localStorage keys
     const now = new Date();
     const year = now.getFullYear();
     const month = String(now.getMonth() + 1).padStart(2, "0");
     const day = String(now.getDate()).padStart(2, "0");
-    const dateKey = `${year}-${month}-${day}`;
-    const monthKey = `${year}-${month}`;
+    
+    const dateKey = `${year}-${month}-${day}`; // Format contoh: 2026-08-17
+    const storageDateKey = "visit_date";
+    const storageTotalKey = "last_total_visits";
 
-    const formatNumber = value => Number(value || 0).toLocaleString("id-ID");
+    // Fungsi format angka ribuan (1.000, 2.000 dst)
+    const formatNumber = (value) => Number(value || 0).toLocaleString("id-ID");
 
-    if (totalEl) totalEl.textContent = "...";
-    if (todayEl) todayEl.textContent = "...";
-    if (monthEl) monthEl.textContent = "...";
+    // 4. Tahap Awal: Tampilkan data cached jika ada (agar web tidak terlihat kosong)
+    const cachedTotal = localStorage.getItem(storageTotalKey);
+    if (totalEl) totalEl.textContent = cachedTotal ? formatNumber(cachedTotal) : "...";
+    if (heroEl) heroEl.textContent = cachedTotal ? formatNumber(cachedTotal) : "...";
+
+    // Tampilkan "—" (strip) untuk Hari Ini & Bulan Ini karena belum ada counternya
+    if (todayEl) todayEl.textContent = "—";
+    if (monthEl) monthEl.textContent = "—";
     if (lastEl) lastEl.textContent = "...";
-    if (heroEl) heroEl.textContent = "...";
 
-    // Setiap pembukaan / refresh halaman dihitung sebagai 1 kunjungan.
-    // Tidak menggunakan localStorage sebagai penghalang hitungan.
-    async function incrementCounter(counterName) {
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 8000);
-
+    // 5. Fungsi Utama Fetch ke API
+    async function fetchVisitorCounter() {
         try {
-            const response = await fetch(`${API_BASE}/${encodeURIComponent(counterName)}/up`, {
+            // Cek apakah browser ini sudah pernah terhitung hari ini
+            const lastVisitDate = localStorage.getItem(storageDateKey);
+            const hasVisitedToday = (lastVisitDate === dateKey);
+
+            // Jika belum berkunjung hari ini, URL ditambah '/up' untuk increment.
+            // Jika sudah berkunjung (refresh), cukup gunakan API_BASE untuk get jumlah (tanpa menambah).
+            const url = hasVisitedToday ? API_BASE : `${API_BASE}/up`;
+
+            // AbortController berguna untuk membatalkan request jika terlalu lama (timeout)
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 8000); // 8 detik
+
+            const response = await fetch(url, {
                 method: "GET",
                 cache: "no-store",
                 signal: controller.signal
             });
 
+            clearTimeout(timeout);
+
             if (!response.ok) {
-                throw new Error(`CounterAPI HTTP ${response.status}`);
+                throw new Error(`CounterAPI HTTP Error: ${response.status}`);
             }
 
             const data = await response.json();
-            return data.value;
-        } finally {
-            clearTimeout(timeout);
+            
+            // 6. Mengambil angka perhitungan dari response CounterAPI V2.
+            // Biasanya terletak di data.data.up_count atau data.count.
+            let totalCount = 0;
+            if (data && data.data && data.data.up_count !== undefined) {
+                totalCount = data.data.up_count;
+            } else if (data && data.count !== undefined) {
+                totalCount = data.count; // Fallback jika struktur API berbeda
+            }
+
+            // 7. Simpan penanda ke localStorage
+            if (!hasVisitedToday) {
+                localStorage.setItem(storageDateKey, dateKey); // Kunci agar hari ini tidak terhitung lagi
+            }
+            
+            // Simpan nilai total terakhir sebagai fallback jika besok API down
+            localStorage.setItem(storageTotalKey, totalCount);
+
+            // 8. Tampilkan data ke HTML
+            if (totalEl) totalEl.textContent = formatNumber(totalCount);
+            if (heroEl) heroEl.textContent = formatNumber(totalCount);
+
+            // Update waktu "Terakhir Dikunjungi"
+            const timeStr = now.toLocaleTimeString("id-ID", {
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: false,
+                timeZone: "Asia/Makassar"
+            }) + " WITA";
+            
+            if (lastEl) lastEl.textContent = timeStr;
+
+        } catch (error) {
+            // Tampilkan error hanya di console developer agar tidak merusak tampilan pengunjung
+            console.error("Gagal mengambil/memperbarui data CounterAPI:", error);
+
+            // Gunakan angka terakhir yang tersimpan di localStorage jika API gagal/error/timeout
+            const savedTotal = localStorage.getItem(storageTotalKey);
+            const displayVal = savedTotal ? formatNumber(savedTotal) : "—";
+            
+            if (totalEl) totalEl.textContent = displayVal;
+            if (heroEl) heroEl.textContent = displayVal;
+            if (lastEl) lastEl.textContent = "Tidak tersedia";
+            
+            // Pastikan Hari Ini dan Bulan Ini tetap strip
+            if (todayEl) todayEl.textContent = "—";
+            if (monthEl) monthEl.textContent = "—";
         }
     }
 
-    try {
-        const [total, today, monthTotal] = await Promise.all([
-            incrementCounter("kunjungan-total"),
-            incrementCounter(`kunjungan-harian-${dateKey}`),
-            incrementCounter(`kunjungan-bulanan-${monthKey}`)
-        ]);
-
-        if (totalEl) totalEl.textContent = formatNumber(total);
-        if (heroEl) heroEl.textContent = formatNumber(total);
-        if (todayEl) todayEl.textContent = formatNumber(today);
-        if (monthEl) monthEl.textContent = formatNumber(monthTotal);
-
-        const time = now.toLocaleTimeString("id-ID", {
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: false,
-            timeZone: "Asia/Makassar"
-        }) + " WITA";
-
-        if (lastEl) lastEl.textContent = time;
-
-        console.log("CounterAPI berhasil diperbarui:", {
-            total,
-            today,
-            month: monthTotal
-        });
-    } catch (error) {
-        console.error("CounterAPI Error:", error);
-
-        if (totalEl) totalEl.textContent = "—";
-        if (todayEl) todayEl.textContent = "—";
-        if (monthEl) monthEl.textContent = "—";
-        if (lastEl) lastEl.textContent = "Tidak tersedia";
-        if (heroEl) heroEl.textContent = "—";
-    }
+    // Eksekusi fungsinya ketika web berhasil dimuat
+    await fetchVisitorCounter();
 });
 </script>
 </body>
