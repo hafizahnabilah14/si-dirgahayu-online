@@ -178,21 +178,24 @@
     .sum-card-label { font-size: 0.7em; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--slate-500); margin-bottom: 6px; }
     .sum-card-val { font-family: 'Montserrat', sans-serif; font-size: 1.5em; font-weight: 900; color: var(--slate-900); line-height: 1; }
     .sum-card-sub { font-size: 0.72em; color: var(--slate-500); margin-top: 3px; }
+    .sum-card.target { border-top: 3px solid var(--gold-dark); }
     .sum-card.tw1 { border-top: 3px solid var(--green-500); }
     .sum-card.tw2 { border-top: 3px solid #1976d2; }
-    .sum-card.target { border-top: 3px solid var(--gold-dark); }
+    .sum-card.tw3 { border-top: 3px solid #8e24aa; }
     .sum-card .pct-mini { font-size: 0.68em; font-weight: 700; padding: 2px 8px; border-radius: 50px; display: inline-block; margin-top: 4px; }
     .pct-mini.g { background: #e8f5e9; color: #2e7d32; }
     .pct-mini.b { background: #e3f2fd; color: #1565c0; }
+    .pct-mini.p { background: #f3e5f5; color: #6a1b9a; }
 
     /* Triwulan progress bars */
-    .db-tw-bars { padding: 20px 28px; border-bottom: 1px solid var(--slate-200); display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .db-tw-bars { padding: 20px 28px; border-bottom: 1px solid var(--slate-200); display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
     .tw-bar-item .tw-label { display: flex; justify-content: space-between; font-size: 0.78em; font-weight: 600; color: var(--slate-700); margin-bottom: 6px; }
     .tw-bar-item .tw-label .tw-pct { font-family: 'Montserrat', sans-serif; font-weight: 900; }
     .tw-track { height: 10px; background: var(--slate-100); border-radius: 6px; overflow: hidden; }
     .tw-fill { height: 100%; border-radius: 6px; transition: width 0.7s ease 0.2s; }
     .tw-fill.tw1 { background: linear-gradient(90deg, var(--green-700), var(--green-400)); }
     .tw-fill.tw2 { background: linear-gradient(90deg, #1565c0, #42a5f5); }
+    .tw-fill.tw3 { background: linear-gradient(90deg, #6a1b9a, #ab47bc); }
 
     /* Chart */
     .db-chart-wrap { padding: 22px 28px; border-bottom: 1px solid var(--slate-200); }
@@ -455,8 +458,7 @@
 <script>
 /* ══════════════════════════════════════════════════════════════
    DATA 12 INDIKATOR SPM
-   Untuk menambah/mengubah data: edit objek di array DATA_INDIKATOR
-   Kolom bulan yg belum ada data: isi dengan null
+   Diperbarui: Capaian Data s/d Juli 2026 (Triwulan III)
 ══════════════════════════════════════════════════════════════ */
 const DATA_INDIKATOR = [
   {
@@ -469,9 +471,10 @@ const DATA_INDIKATOR = [
         indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Ibu Hamil',
         satuan: 'Orang',
         target: 980,
-        bulan: [64, 79, 45, 69, 65, 42, null, null, null, null, null, null],
+        bulan: [64, 79, 45, 69, 65, 42, 57, null, null, null, null, null],
         tw1Total: 188, tw1Pct: 19.18,
-        tw2Total: 364, tw2Pct: 37.14
+        tw2Total: 364, tw2Pct: 37.14,
+        tw3Total: 421, tw3Pct: 42.96
       }
     ]
   },
@@ -485,9 +488,10 @@ const DATA_INDIKATOR = [
         indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Ibu Bersalin',
         satuan: 'Orang',
         target: 936,
-        bulan: [41, 46, 33, 51, 54, 48, null, null, null, null, null, null],
+        bulan: [41, 46, 33, 51, 54, 48, 56, null, null, null, null, null],
         tw1Total: 120, tw1Pct: 12.82,
-        tw2Total: 273, tw2Pct: 29.17
+        tw2Total: 273, tw2Pct: 29.17,
+        tw3Total: 329, tw3Pct: 35.15
       }
     ]
   },
@@ -501,9 +505,10 @@ const DATA_INDIKATOR = [
         indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Bayi Baru Lahir',
         satuan: 'Orang',
         target: 891,
-        bulan: [42, 46, 34, 51, 55, 48, null, null, null, null, null, null],
+        bulan: [42, 46, 34, 51, 55, 48, 54, null, null, null, null, null],
         tw1Total: 122, tw1Pct: 13.69,
-        tw2Total: 276, tw2Pct: 30.98
+        tw2Total: 276, tw2Pct: 30.98,
+        tw3Total: 330, tw3Pct: 37.04
       }
     ]
   },
@@ -517,9 +522,10 @@ const DATA_INDIKATOR = [
         indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Balita',
         satuan: 'Orang',
         target: 4267,
-        bulan: [251, 272, 141, 349, 277, 355, null, null, null, null, null, null],
+        bulan: [251, 272, 141, 349, 277, 355, 312, null, null, null, null, null],
         tw1Total: 664, tw1Pct: 15.56,
-        tw2Total: 1645, tw2Pct: 38.55
+        tw2Total: 1645, tw2Pct: 38.55,
+        tw3Total: 1957, tw3Pct: 45.86
       }
     ]
   },
@@ -533,9 +539,10 @@ const DATA_INDIKATOR = [
         indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Usia Pendidikan Dasar',
         satuan: 'Orang',
         target: 8908,
-        bulan: [0, 0, 0, 0, 0, 0, null, null, null, null, null, null],
-        tw1Total: 0, tw1Pct: 0,
-        tw2Total: 0, tw2Pct: 0
+        bulan: [0, 0, 0, 0, 0, 0, 0, null, null, null, null, null],
+        tw1Total: 0, tw1Pct: 0.00,
+        tw2Total: 0, tw2Pct: 0.00,
+        tw3Total: 0, tw3Pct: 0.00
       }
     ]
   },
@@ -549,33 +556,37 @@ const DATA_INDIKATOR = [
         indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Usia 15–59 Tahun',
         satuan: 'Orang',
         target: 12954,
-        bulan: [1668, 1506, 1320, 584, 829, 500, null, null, null, null, null, null],
+        bulan: [1668, 1506, 1320, 584, 829, 500, 300, null, null, null, null, null],
         tw1Total: 4494, tw1Pct: 34.69,
-        tw2Total: 6407, tw2Pct: 49.46
+        tw2Total: 6407, tw2Pct: 49.46,
+        tw3Total: 6707, tw3Pct: 51.78
       },
       {
         indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Pemeriksaan SADANIS dan IVA Tes',
         satuan: 'Orang',
         target: 1500,
-        bulan: [0, 0, 4, 1, 18, 9, null, null, null, null, null, null],
+        bulan: [0, 0, 4, 1, 18, 9, 37, null, null, null, null, null],
         tw1Total: 4, tw1Pct: 0.27,
-        tw2Total: 32, tw2Pct: 2.13
+        tw2Total: 32, tw2Pct: 2.13,
+        tw3Total: 69, tw3Pct: 4.60
       },
       {
         indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Calon Pengantin (Catin)',
         satuan: 'Orang',
         target: 245,
-        bulan: [29, 31, 16, 33, 44, 19, null, null, null, null, null, null],
+        bulan: [29, 31, 16, 33, 44, 19, 30, null, null, null, null, null],
         tw1Total: 76, tw1Pct: 31.02,
-        tw2Total: 172, tw2Pct: 70.20
+        tw2Total: 172, tw2Pct: 70.20,
+        tw3Total: 202, tw3Pct: 82.45
       },
       {
         indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap PUS Perempuan dengan 4T',
         satuan: 'Orang',
         target: 1657,
-        bulan: [405, 185, 147, 112, 130, 93, null, null, null, null, null, null],
+        bulan: [405, 185, 147, 112, 130, 93, 58, null, null, null, null, null],
         tw1Total: 737, tw1Pct: 44.48,
-        tw2Total: 1072, tw2Pct: 64.70
+        tw2Total: 1072, tw2Pct: 64.70,
+        tw3Total: 1130, tw3Pct: 68.20
       }
     ]
   },
@@ -589,9 +600,10 @@ const DATA_INDIKATOR = [
         indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Usia Lanjut',
         satuan: 'Orang',
         target: 2700,
-        bulan: [220, 152, 134, 281, 233, 247, null, null, null, null, null, null],
+        bulan: [220, 152, 134, 281, 233, 247, 252, null, null, null, null, null],
         tw1Total: 506, tw1Pct: 18.74,
-        tw2Total: 1267, tw2Pct: 46.93
+        tw2Total: 1267, tw2Pct: 46.93,
+        tw3Total: 1519, tw3Pct: 56.26
       }
     ]
   },
@@ -605,9 +617,10 @@ const DATA_INDIKATOR = [
         indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Penderita Hipertensi',
         satuan: 'Orang',
         target: 1002,
-        bulan: [100, 277, 114, 79, 79, 80, null, null, null, null, null, null],
+        bulan: [100, 277, 114, 79, 79, 80, 131, null, null, null, null, null],
         tw1Total: 491, tw1Pct: 49.00,
-        tw2Total: 729, tw2Pct: 72.75
+        tw2Total: 729, tw2Pct: 72.75,
+        tw3Total: 860, tw3Pct: 85.83
       }
     ]
   },
@@ -621,9 +634,10 @@ const DATA_INDIKATOR = [
         indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Penderita Diabetes Melitus',
         satuan: 'Orang',
         target: 152,
-        bulan: [20, 130, 47, 22, 24, 25, null, null, null, null, null, null],
+        bulan: [20, 130, 47, 22, 24, 25, 20, null, null, null, null, null],
         tw1Total: 197, tw1Pct: 129.61,
-        tw2Total: 268, tw2Pct: 176.32
+        tw2Total: 268, tw2Pct: 176.32,
+        tw3Total: 288, tw3Pct: 189.47
       }
     ]
   },
@@ -637,9 +651,10 @@ const DATA_INDIKATOR = [
         indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Penderita ODGJ',
         satuan: 'Orang',
         target: 63,
-        bulan: [13, 10, 9, 12, 5, 5, null, null, null, null, null, null],
+        bulan: [13, 10, 9, 12, 5, 5, 4, null, null, null, null, null],
         tw1Total: 32, tw1Pct: 50.79,
-        tw2Total: 54, tw2Pct: 85.71
+        tw2Total: 54, tw2Pct: 85.71,
+        tw3Total: 58, tw3Pct: 92.06
       }
     ]
   },
@@ -653,9 +668,10 @@ const DATA_INDIKATOR = [
         indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Orang Terduga Tuberkulosis',
         satuan: 'Orang',
         target: 487,
-        bulan: [34, 24, 20, 30, 16, 11, null, null, null, null, null, null],
+        bulan: [34, 24, 20, 30, 16, 11, 43, null, null, null, null, null],
         tw1Total: 78, tw1Pct: 16.02,
-        tw2Total: 135, tw2Pct: 27.72
+        tw2Total: 135, tw2Pct: 27.72,
+        tw3Total: 178, tw3Pct: 36.55
       }
     ]
   },
@@ -669,9 +685,10 @@ const DATA_INDIKATOR = [
         indikator: 'Layanan Jumlah Penerima yang Harus Dilayani Terhadap Orang dengan Risiko Terinfeksi HIV',
         satuan: 'Orang',
         target: 1000,
-        bulan: [50, 170, 65, 200, 124, 117, null, null, null, null, null, null],
+        bulan: [50, 170, 65, 200, 124, 117, 102, null, null, null, null, null],
         tw1Total: 285, tw1Pct: 28.50,
-        tw2Total: 726, tw2Pct: 72.60
+        tw2Total: 726, tw2Pct: 72.60,
+        tw3Total: 828, tw3Pct: 82.80
       }
     ]
   }
@@ -740,18 +757,20 @@ function selectIndicator(id) {
 function renderDashboard(ind) {
   const panel = document.getElementById('dashboardPanel');
 
-  // Compute aggregate capaian from TW2 of first row for main progress
+  // Compute aggregate capaian from TW3 (as the latest point) of first row for main progress
   const mainRow   = ind.rows[0];
-  const mainPct   = mainRow.tw2Pct;
+  const mainPct   = mainRow.tw3Pct;
   const badge     = getBadge(mainPct);
   const fillWidth = clampPct(mainPct);
 
-  // Aggregate totals across all rows (for multi-row indikators like no.6)
+  // Aggregate totals across all rows (for multi-row indikators)
   const totalTW1  = ind.rows.reduce((s, r) => s + r.tw1Total, 0);
   const totalTW2  = ind.rows.reduce((s, r) => s + r.tw2Total, 0);
+  const totalTW3  = ind.rows.reduce((s, r) => s + r.tw3Total, 0);
   const totalTarget = ind.rows.reduce((s, r) => s + r.target, 0);
   const aggTW1Pct = totalTarget > 0 ? (totalTW1 / totalTarget * 100) : 0;
   const aggTW2Pct = totalTarget > 0 ? (totalTW2 / totalTarget * 100) : 0;
+  const aggTW3Pct = totalTarget > 0 ? (totalTW3 / totalTarget * 100) : 0;
 
   // Chart data: sum bulan across all rows
   const chartData = BULAN.map((_, i) =>
@@ -760,7 +779,7 @@ function renderDashboard(ind) {
   const chartLabels = BULAN_FULL;
   const hasData = chartData.some(v => v > 0);
 
-  // Mencari bulan terakhir yang ada datanya untuk label Triwulan 2
+  // Mencari bulan terakhir yang ada datanya
   const lastMonthIdx = mainRow.bulan.findLastIndex(v => v !== null);
   const lastMonthTxt = lastMonthIdx >= 0 ? BULAN_FULL[lastMonthIdx] : 'Desember';
 
@@ -772,6 +791,7 @@ function renderDashboard(ind) {
     ).join('');
     const tw1PctClass = r.tw1Pct > 100 ? 'td-pct over' : 'td-pct';
     const tw2PctClass = r.tw2Pct > 100 ? 'td-pct over' : 'td-pct';
+    const tw3PctClass = r.tw3Pct > 100 ? 'td-pct over' : 'td-pct';
     return `
       <tr>
         <td>${r.indikator}</td>
@@ -782,6 +802,8 @@ function renderDashboard(ind) {
         <td><span class="${tw1PctClass}">${fmtPct(r.tw1Pct)}</span></td>
         <td class="td-highlight">${fmt(r.tw2Total)}</td>
         <td><span class="${tw2PctClass}">${fmtPct(r.tw2Pct)}</span></td>
+        <td class="td-highlight">${fmt(r.tw3Total)}</td>
+        <td><span class="${tw3PctClass}">${fmtPct(r.tw3Pct)}</span></td>
       </tr>`;
   }).join('');
 
@@ -798,7 +820,7 @@ function renderDashboard(ind) {
 
     <div class="db-progress-wrap">
       <div class="db-progress-label">
-        <span>Capaian Triwulan II (s/d ${lastMonthTxt} 2026)</span>
+        <span>Capaian Triwulan III (s/d ${lastMonthTxt} 2026)</span>
         <span class="pct">${fmtPct(mainPct)}</span>
       </div>
       <div class="db-progress-track">
@@ -821,29 +843,36 @@ function renderDashboard(ind) {
       <div class="sum-card tw2">
         <div class="sum-card-label"><i class="fas fa-calendar-alt" style="margin-right:4px"></i>Total Triwulan II</div>
         <div class="sum-card-val">${fmt(totalTW2)}</div>
-        <div class="sum-card-sub">Jan – ${lastMonthTxt.substring(0,3)} 2026<br><span class="pct-mini b">${fmtPct(aggTW2Pct)}</span></div>
+        <div class="sum-card-sub">Jan – Jun 2026<br><span class="pct-mini b">${fmtPct(aggTW2Pct)}</span></div>
       </div>
-      <div class="sum-card" style="border-top:3px solid var(--slate-400)">
-        <div class="sum-card-label"><i class="fas fa-percentage" style="margin-right:4px"></i>Persentase TW I</div>
-        <div class="sum-card-val" style="font-size:1.2em">${fmtPct(mainRow.tw1Pct)}</div>
-        <div class="sum-card-sub">dari target tahunan</div>
+      <div class="sum-card tw3">
+        <div class="sum-card-label"><i class="fas fa-chart-line" style="margin-right:4px"></i>Total Triwulan III</div>
+        <div class="sum-card-val">${fmt(totalTW3)}</div>
+        <div class="sum-card-sub">Jan – ${lastMonthTxt.substring(0,3)} 2026<br><span class="pct-mini p">${fmtPct(aggTW3Pct)}</span></div>
       </div>
     </div>
 
     <div class="db-tw-bars">
       <div class="tw-bar-item">
         <div class="tw-label">
-          <span>Capaian Triwulan I (Jan–Mar)</span>
+          <span>Triwulan I (Jan–Mar)</span>
           <span class="tw-pct" style="color:var(--green-700)">${fmtPct(mainRow.tw1Pct)}</span>
         </div>
         <div class="tw-track"><div class="tw-fill tw1" id="tw1Fill" style="width:0%"></div></div>
       </div>
       <div class="tw-bar-item">
         <div class="tw-label">
-          <span>Capaian Triwulan II (Jan–${lastMonthTxt.substring(0,3)})</span>
+          <span>Triwulan II (Jan–Jun)</span>
           <span class="tw-pct" style="color:#1565c0">${fmtPct(mainRow.tw2Pct)}</span>
         </div>
         <div class="tw-track"><div class="tw-fill tw2" id="tw2Fill" style="width:0%"></div></div>
+      </div>
+      <div class="tw-bar-item">
+        <div class="tw-label">
+          <span>Triwulan III (Jan–${lastMonthTxt.substring(0,3)})</span>
+          <span class="tw-pct" style="color:#6a1b9a">${fmtPct(mainRow.tw3Pct)}</span>
+        </div>
+        <div class="tw-track"><div class="tw-fill tw3" id="tw3Fill" style="width:0%"></div></div>
       </div>
     </div>
 
@@ -866,6 +895,8 @@ function renderDashboard(ind) {
               <th>% TW I</th>
               <th>Total TW II</th>
               <th>% TW II</th>
+              <th>Total TW III</th>
+              <th>% TW III</th>
             </tr>
           </thead>
           <tbody>${tableRows}</tbody>
@@ -880,8 +911,10 @@ function renderDashboard(ind) {
       document.getElementById('mainFill').style.width = fillWidth + '%';
       const tw1w = clampPct(mainRow.tw1Pct);
       const tw2w = clampPct(mainRow.tw2Pct);
+      const tw3w = clampPct(mainRow.tw3Pct);
       document.getElementById('tw1Fill').style.width = tw1w + '%';
       document.getElementById('tw2Fill').style.width = tw2w + '%';
+      document.getElementById('tw3Fill').style.width = tw3w + '%';
     });
   });
 
