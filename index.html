@@ -251,19 +251,6 @@
     .antrian-btn:hover .antrian-btn-arrow { transform: translateX(3px); opacity: 1; }
 
     /* ═══════════════════════════════════════════════
-       STATISTIK WEBSITE
-    ═══════════════════════════════════════════════ */
-    .stats-section { background: var(--white); padding: 64px 28px; }
-    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 36px; }
-    .stat-card { background: var(--white); border-radius: var(--radius-lg); padding: 24px; display: flex; align-items: center; gap: 18px; box-shadow: var(--shadow-sm); border: 1px solid var(--slate-200); transition: transform var(--transition), box-shadow var(--transition); }
-    .stat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--green-400); }
-    .stat-icon { width: 56px; height: 56px; border-radius: 14px; background: var(--green-100); color: var(--green-700); display: flex; align-items: center; justify-content: center; font-size: 1.6em; flex-shrink: 0; }
-    .stat-info h4 { font-size: 0.75em; font-weight: 700; color: var(--slate-500); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
-    .stat-info p { font-family: 'Montserrat', sans-serif; font-size: 1.6em; font-weight: 900; color: var(--slate-900); line-height: 1; }
-    .stats-note { text-align: center; margin-top: 28px; font-size: 0.8em; color: var(--slate-500); }
-    .stats-note b { color: var(--green-700); }
-
-    /* ═══════════════════════════════════════════════
        FOOTER
     ═══════════════════════════════════════════════ */
     footer { background: var(--green-900); padding: 48px 28px 28px; color: rgba(255,255,255,0.7); }
@@ -292,7 +279,6 @@
         .hero { min-height: 85vh; }
         .motto-grid, .antrian-inner { grid-template-columns: 1fr; }
         .layanan-grid { grid-template-columns: repeat(2, 1fr); }
-        .stats-grid { grid-template-columns: repeat(2, 1fr); }
     }
     
     @media (max-width: 640px) {
@@ -303,7 +289,6 @@
         .hero-btn { justify-content: center; }
         .dash-chart-wrap { height: 250px; }
         .layanan-grid { grid-template-columns: 1fr; }
-        .stats-grid { grid-template-columns: 1fr; }
     }
 
     /* UTILITIES */
@@ -419,17 +404,6 @@
             <a href="berita.html" class="hero-card reveal reveal-d2"><div class="hero-card-icon">📰</div><div class="hero-card-text"><h4>Berita Terkini</h4><p>Informasi & Kabar Puskesmas</p></div><i class="fas fa-arrow-right hero-card-arrow"></i></a>
             <a href="edukasi.html" class="hero-card reveal reveal-d3"><div class="hero-card-icon">📚</div><div class="hero-card-text"><h4>Media Edukasi Kesehatan</h4><p>Video YouTube · TikTok · Poster</p></div><i class="fas fa-arrow-right hero-card-arrow"></i></a>
             <a href="eksplorasi.html" class="hero-card reveal reveal-d4"><div class="hero-card-icon">🏥</div><div class="hero-card-text"><h4>Profil Puskesmas</h4><p>SDM · Fasilitas · Maps · Organisasi</p></div><i class="fas fa-arrow-right hero-card-arrow"></i></a>
-            
-            <div class="hero-card reveal reveal-d5" style="border-color: rgba(255,183,77,0.4); background: rgba(255,183,77,0.08); cursor: default;">
-                <div class="hero-card-icon" style="color: var(--gold); background: rgba(255,183,77,0.15);">📈</div>
-                <div class="hero-card-text">
-                    <h4>Total Kunjungan Web</h4>
-                    <p style="font-size: 1.15em; font-weight: 700; color: white; margin-top: 2px; opacity: 1;">
-                        <span id="visitor-counter-val">-</span> 
-                        <span style="font-size:0.65em; font-weight:normal; opacity:0.8;">Pengunjung</span>
-                    </p>
-                </div>
-            </div>
         </div>
     </div>
 </section>
@@ -496,53 +470,6 @@
     </div>
 </section>
 
-<!-- ════════ STATISTIK WEBSITE SECTION ════════ -->
-<section class="stats-section" id="statistik">
-    <div class="section-inner">
-        <div class="section-header reveal">
-            <div class="section-eyebrow">Data Realtime</div>
-            <h2 class="section-title">Statistik Website</h2>
-        </div>
-        <div class="stats-grid">
-            <!-- Card 1 -->
-            <div class="stat-card reveal reveal-d1">
-                <div class="stat-icon"><i class="fas fa-users"></i></div>
-                <div class="stat-info">
-                    <h4>Total Pengunjung</h4>
-                    <p id="stats-total">-</p>
-                </div>
-            </div>
-            <!-- Card 2 -->
-            <div class="stat-card reveal reveal-d2">
-                <div class="stat-icon"><i class="fas fa-user-clock"></i></div>
-                <div class="stat-info">
-                    <h4>Pengunjung Hari Ini</h4>
-                    <p id="stats-today">-</p>
-                </div>
-            </div>
-            <!-- Card 3 -->
-            <div class="stat-card reveal reveal-d3">
-                <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
-                <div class="stat-info">
-                    <h4>Pengunjung Bulan Ini</h4>
-                    <p id="stats-month">-</p>
-                </div>
-            </div>
-            <!-- Card 4 -->
-            <div class="stat-card reveal reveal-d4">
-                <div class="stat-icon"><i class="fas fa-history"></i></div>
-                <div class="stat-info">
-                    <h4>Terakhir Dikunjungi</h4>
-                    <p id="stats-last" style="font-size:1.15em">-</p>
-                </div>
-            </div>
-        </div>
-        <div class="stats-note reveal reveal-d5">
-            <p><i class="fas fa-info-circle"></i> Angka statistik ini diperbarui secara otomatis menggunakan layanan <b>CounterAPI</b>.</p>
-        </div>
-    </div>
-</section>
-
 <footer>
     <div class="footer-inner">
         <div class="footer-grid">
@@ -588,126 +515,6 @@ const io = new IntersectionObserver((entries) => {
 revealEls.forEach(el => io.observe(el));
 document.querySelectorAll('.drawer-link[href^="#"]').forEach(a => { a.addEventListener('click', closeDrawer); });
 
-/* ── STATISTIK WEBSITE — COUNTERAPI V2 ── */
-document.addEventListener("DOMContentLoaded", async function () {
-    // 1. Konfigurasi Workspace & Nama Counter sesuai instruksi
-    const WORKSPACE = "hafizah-nabilahs-team-5140";
-    const COUNTER_NAME = "kunjungan-total";
-    
-    // Endpoint dasar (belum termasuk /up)
-    const API_BASE = `https://api.counterapi.dev/v2/${WORKSPACE}/${COUNTER_NAME}`;
-
-    // 2. Elemen HTML yang akan diupdate
-    const totalEl = document.getElementById("stats-total");
-    const todayEl = document.getElementById("stats-today");
-    const monthEl = document.getElementById("stats-month");
-    const lastEl = document.getElementById("stats-last");
-    const heroEl = document.getElementById("visitor-counter-val");
-
-    // 3. Konfigurasi Tanggal & localStorage keys
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, "0");
-    const day = String(now.getDate()).padStart(2, "0");
-    
-    const dateKey = `${year}-${month}-${day}`; // Format contoh: 2026-08-17
-    const storageDateKey = "visit_date";
-    const storageTotalKey = "last_total_visits";
-
-    // Fungsi format angka ribuan (1.000, 2.000 dst)
-    const formatNumber = (value) => Number(value || 0).toLocaleString("id-ID");
-
-    // 4. Tahap Awal: Tampilkan data cached jika ada (agar web tidak terlihat kosong)
-    const cachedTotal = localStorage.getItem(storageTotalKey);
-    if (totalEl) totalEl.textContent = cachedTotal ? formatNumber(cachedTotal) : "...";
-    if (heroEl) heroEl.textContent = cachedTotal ? formatNumber(cachedTotal) : "...";
-
-    // Tampilkan "—" (strip) untuk Hari Ini & Bulan Ini karena belum ada counternya
-    if (todayEl) todayEl.textContent = "—";
-    if (monthEl) monthEl.textContent = "—";
-    if (lastEl) lastEl.textContent = "...";
-
-    // 5. Fungsi Utama Fetch ke API
-    async function fetchVisitorCounter() {
-        try {
-            // Cek apakah browser ini sudah pernah terhitung hari ini
-            const lastVisitDate = localStorage.getItem(storageDateKey);
-            const hasVisitedToday = (lastVisitDate === dateKey);
-
-            // Jika belum berkunjung hari ini, URL ditambah '/up' untuk increment.
-            // Jika sudah berkunjung (refresh), cukup gunakan API_BASE untuk get jumlah (tanpa menambah).
-            const url = hasVisitedToday ? API_BASE : `${API_BASE}/up`;
-
-            // AbortController berguna untuk membatalkan request jika terlalu lama (timeout)
-            const controller = new AbortController();
-            const timeout = setTimeout(() => controller.abort(), 8000); // 8 detik
-
-            const response = await fetch(url, {
-                method: "GET",
-                cache: "no-store",
-                signal: controller.signal
-            });
-
-            clearTimeout(timeout);
-
-            if (!response.ok) {
-                throw new Error(`CounterAPI HTTP Error: ${response.status}`);
-            }
-
-            const data = await response.json();
-            
-            // 6. Mengambil angka perhitungan dari response CounterAPI V2.
-            // Biasanya terletak di data.data.up_count atau data.count.
-            let totalCount = 0;
-            if (data && data.data && data.data.up_count !== undefined) {
-                totalCount = data.data.up_count;
-            } else if (data && data.count !== undefined) {
-                totalCount = data.count; // Fallback jika struktur API berbeda
-            }
-
-            // 7. Simpan penanda ke localStorage
-            if (!hasVisitedToday) {
-                localStorage.setItem(storageDateKey, dateKey); // Kunci agar hari ini tidak terhitung lagi
-            }
-            
-            // Simpan nilai total terakhir sebagai fallback jika besok API down
-            localStorage.setItem(storageTotalKey, totalCount);
-
-            // 8. Tampilkan data ke HTML
-            if (totalEl) totalEl.textContent = formatNumber(totalCount);
-            if (heroEl) heroEl.textContent = formatNumber(totalCount);
-
-            // Update waktu "Terakhir Dikunjungi"
-            const timeStr = now.toLocaleTimeString("id-ID", {
-                hour: "2-digit",
-                minute: "2-digit",
-                hour12: false,
-                timeZone: "Asia/Makassar"
-            }) + " WITA";
-            
-            if (lastEl) lastEl.textContent = timeStr;
-
-        } catch (error) {
-            // Tampilkan error hanya di console developer agar tidak merusak tampilan pengunjung
-            console.error("Gagal mengambil/memperbarui data CounterAPI:", error);
-
-            // Gunakan angka terakhir yang tersimpan di localStorage jika API gagal/error/timeout
-            const savedTotal = localStorage.getItem(storageTotalKey);
-            const displayVal = savedTotal ? formatNumber(savedTotal) : "—";
-            
-            if (totalEl) totalEl.textContent = displayVal;
-            if (heroEl) heroEl.textContent = displayVal;
-            if (lastEl) lastEl.textContent = "Tidak tersedia";
-            
-            // Pastikan Hari Ini dan Bulan Ini tetap strip
-            if (todayEl) todayEl.textContent = "—";
-            if (monthEl) monthEl.textContent = "—";
-        }
-    }
-
-    // Eksekusi fungsinya ketika web berhasil dimuat
-    await fetchVisitorCounter();
-});
 </script>
 </body>
 </html>
