@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendaftaran Mandiri Pasien | SI-Dirgahayu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary:       #00796b;
+            --primary-dark:  #004d40;
+            --primary-light: #e0f2f1;
+            --orange:        #e65100;
+            --orange-light:  #fff3e0;
+            --secondary:     #ffb74d;
+            --white:         #ffffff;
+            --bg:            #f4f7f6;
+            --text:          #1a2e2b;
+            --text-muted:    #5a7470;
+            --border:        #d0e4e1;
+            --shadow:        0 8px 32px rgba(0,77,64,0.09);
+            --red:           #e53935;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+        /* ── HEADER ── */
+        .site-header { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%); padding: 14px 28px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 900; box-shadow: 0 4px 20px rgba(0,0,0,0.18); }
+        .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .brand h1 { font-family: 'Montserrat', sans-serif; font-size: 1.4em; color: #fff; font-weight: 900; letter-spacing: 2px; line-height: 1; }
+        .brand p { font-size: 0.63em; color: rgba(255,255,255,0.75); margin-top: 2px; }
+        .back-btn { display: flex; align-items: center; gap: 7px; background: rgba(255,255,255,0.15); color: #fff; text-decoration: none; padding: 8px 18px; border-radius: 50px; font-size: 0.82em; font-weight: 600; border: 1px solid rgba(255,255,255,0.25); transition: background 0.2s; }
+        .back-btn:hover { background: rgba(255,255,255,0.28); }
+
+        /* ── HERO ── */
+        .hero { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 60%, #26a69a 100%); padding: 50px 28px 68px; text-align: center; color: #fff; clip-path: polygon(0 0,100% 0,100% 88%,0 100%); position: relative; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='20' fill='%23ffffff' fill-opacity='0.05'/%3E%3C/svg%3E"); }
+        .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); border-radius: 50px; padding: 6px 18px; font-size: 0.78em; font-weight: 600; letter-spacing: 1px; margin-bottom: 16px; }
+        .hero h2 { font-family: 'Montserrat', sans-serif; font-size: 2em; font-weight: 900; line-height: 1.15; margin-bottom: 12px; }
+        .hero p { font-size: 0.92em; opacity: 0.9; max-width: 520px; margin: 0 auto; line-height: 1.65; }
+
+        /* ── MAIN LAYOUT ── */
+        .main-wrap { max-width: 900px; margin: 0 auto; padding: 36px 22px 70px; }
+
+        /* ── INFO CARDS ── */
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 32px; }
+        .info-card { background: var(--white); border-radius: 16px; padding: 18px 20px; box-shadow: var(--shadow); border-left: 5px solid var(--primary); display: flex; align-items: flex-start; gap: 14px; }
+        .info-card.orange { border-left-color: var(--orange); }
+        .info-card.accent { border-left-color: #26a69a; }
+        .info-card .ic-icon { font-size: 1.8em; flex-shrink: 0; }
+        .info-card h4 { font-size: 0.85em; font-weight: 700; margin-bottom: 4px; }
+        .info-card p { font-size: 0.76em; color: var(--text-muted); line-height: 1.55; }
+
+        /* ── FORM CARD ── */
+        .form-card { background: var(--white); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+        .form-header { background: linear-gradient(135deg, var(--primary-dark), var(--primary)); padding: 22px 28px; color: #fff; }
+        .form-header h3 { font-family: 'Montserrat', sans-serif; font-size: 1.1em; font-weight: 900; margin-bottom: 4px; }
+        .form-header p { font-size: 0.78em; opacity: 0.85; }
+        .form-body { padding: 28px; }
+
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
+        .form-group.full { grid-column: 1 / -1; }
+        .form-group label { font-size: 0.76em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); }
+        .form-group label .req { color: var(--red); margin-left: 3px; }
+        .form-group input,
+        .form-group textarea,
+        .form-group select { padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 10px; font-family: 'Poppins', sans-serif; font-size: 0.86em; color: var(--text); background: var(--white); outline: none; transition: border-color 0.2s, box-shadow 0.2s; width: 100%; }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,121,107,0.1); }
+        .form-group input.error,
+        .form-group textarea.error,
+        .form-group select.error { border-color: var(--red); box-shadow: 0 0 0 3px rgba(229,57,53,0.15); }
+        .form-group .err-msg { font-size: 0.72em; color: var(--red); display: none; }
+        .form-group .err-msg.show { display: block; }
+        .form-group textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+
+        /* Poli pilihan pills */
+        .poli-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+        .poli-pill { padding: 7px 16px; border-radius: 50px; border: 1.5px solid var(--border); background: var(--white); font-family: 'Poppins', sans-serif; font-size: 0.78em; font-weight: 600; cursor: pointer; color: var(--text-muted); transition: all 0.2s; }
+        .poli-pill:hover { border-color: var(--primary); color: var(--primary); }
+        .poli-pill.selected { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
+
+        /* Submit button */
+        .submit-btn { width: 100%; padding: 15px; background: linear-gradient(135deg, var(--primary-dark), var(--primary)); color: #fff; border: none; border-radius: 12px; font-family: 'Poppins', sans-serif; font-size: 0.95em; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.2s; box-shadow: 0 4px 16px rgba(0,121,107,0.3); margin-top: 8px; }
+        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,121,107,0.35); }
+        .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        /* ── HASIL / SUKSES ── */
+        .hasil-panel { display: none; }
+        .hasil-panel.show { display: block; }
+        .hasil-card { background: var(--white); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+        .hasil-header { background: linear-gradient(135deg, #1b5e20, #2e7d32); padding: 28px; text-align: center; color: #fff; }
+        .hasil-header .h-icon { font-size: 3.5em; margin-bottom: 10px; }
+        .hasil-header h3 { font-family: 'Montserrat', sans-serif; font-size: 1.3em; font-weight: 900; margin-bottom: 6px; }
+        .hasil-header p { font-size: 0.85em; opacity: 0.9; }
+        .hasil-body { padding: 28px; }
+
+        /* Ringkasan pendaftaran */
+        .ringkasan-box { background: var(--bg); border-radius: 14px; padding: 18px 20px; margin-bottom: 22px; }
+        .ringkasan-box h4 { font-size: 0.78em; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 12px; }
+        .ringkasan-row { display: flex; gap: 10px; font-size: 0.83em; margin-bottom: 8px; }
+        .ringkasan-row .rr-label { font-weight: 700; min-width: 140px; flex-shrink: 0; color: var(--text-muted); }
+        .ringkasan-row .rr-val { color: var(--text); line-height: 1.5; }
+
+        /* Template WA */
+        .template-box { background: #e8f5e9; border: 1.5px solid #a5d6a7; border-radius: 14px; padding: 18px 20px; margin-bottom: 20px; }
+        .template-box h4 { font-size: 0.78em; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #1b5e20; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+        .template-text { background: var(--white); border: 1px solid #c8e6c9; border-radius: 10px; padding: 14px 16px; font-size: 0.82em; color: var(--text); line-height: 1.7; font-family: monospace; white-space: pre-wrap; word-break: break-word; }
+
+        /* Action buttons */
+        .action-row { display: flex; gap: 12px; flex-wrap: wrap; }
+        .act-btn { flex: 1; min-width: 150px; padding: 13px 18px; border-radius: 12px; border: 2px solid var(--border); background: var(--white); font-family: 'Poppins', sans-serif; font-size: 0.85em; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--text); text-decoration: none; transition: all 0.2s; }
+        .act-btn:hover { background: var(--bg); transform: translateY(-1px); }
+        .act-btn.wa { background: linear-gradient(135deg, #25d366, #128c7e); border: none; color: #fff; box-shadow: 0 4px 14px rgba(37,211,102,0.3); }
+        .act-btn.wa:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,211,102,0.4); }
+        .act-btn.copy { background: var(--primary-light); border-color: var(--border); color: var(--primary-dark); }
+        .act-btn.copy:hover { background: #b2dfdb; }
+        .act-btn.primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+        .act-btn.primary:hover { background: var(--primary-dark); }
+
+        /* Catatan */
+        .catatan-box { background: var(--orange-light); border-left: 4px solid var(--orange); border-radius: 0 12px 12px 0; padding: 14px 18px; margin-top: 20px; font-size: 0.8em; color: var(--orange); line-height: 1.65; }
+
+        /* Toast */
+        .toast { position: fixed; bottom: 28px; right: 28px; background: #1b5e20; color: #fff; padding: 13px 20px; border-radius: 12px; font-size: 0.84em; font-weight: 600; display: flex; align-items: center; gap: 9px; box-shadow: 0 8px 28px rgba(0,0,0,0.2); z-index: 9999; transform: translateY(80px); opacity: 0; transition: all 0.35s ease; }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast.err { background: #b71c1c; }
+
+        /* ── MODAL EVALUASI & BADGE (TAMBAHAN BARU) ── */
+        .badge-soon { background: var(--orange); color: white; font-size: 0.65em; padding: 3px 8px; border-radius: 50px; margin-left: 6px; font-weight: 700; letter-spacing: 0.5px; display: inline-block; vertical-align: middle; }
+        
+        .dev-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,30,20,0.6); z-index: 9999; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; backdrop-filter: blur(5px); }
+        .dev-modal-overlay.active { opacity: 1; visibility: visible; }
+        .dev-modal { background: var(--white); border-radius: 20px; padding: 32px 24px; max-width: 380px; width: 90%; text-align: center; box-shadow: 0 24px 48px rgba(0,0,0,0.2); transform: translateY(20px) scale(0.95); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .dev-modal-overlay.active .dev-modal { transform: translateY(0) scale(1); }
+        .dev-modal-icon { width: 64px; height: 64px; background: var(--orange-light); color: var(--orange); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8em; margin: 0 auto 18px; }
+        .dev-modal h3 { font-family: 'Montserrat', sans-serif; font-size: 1.15em; font-weight: 800; color: var(--text); margin-bottom: 12px; line-height: 1.4; }
+        .dev-modal p { font-size: 0.85em; color: var(--text-muted); line-height: 1.6; margin-bottom: 24px; }
+        .dev-modal-btn { background: var(--primary); color: white; border: none; padding: 12px 28px; border-radius: 50px; font-family: 'Poppins', sans-serif; font-size: 0.9em; font-weight: 600; cursor: pointer; transition: all 0.2s; width: 100%; box-shadow: 0 4px 12px rgba(0,121,107,0.2); }
+        .dev-modal-btn:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,121,107,0.3); }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 620px) { .form-row { grid-template-columns: 1fr; } .hero h2 { font-size: 1.5em; } .action-row { flex-direction: column; } }
+
+        /* ── PRINT ── */
+        @media print { .site-header, .hero, .back-btn, .action-row, .submit-btn, .form-card { display: none !important; } .hasil-panel.show { display: block !important; } }
+    </style>
+</head>
+<body>
+
+<header class="site-header">
+    <a href="index.html" class="brand">
+        <div><h1>SI-Dirgahayu</h1><p>Puskesmas Dirgahayu</p></div>
+    </a>
+    <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Kembali ke Beranda</a>
+</header>
+
+<section class="hero">
+    <div class="hero-badge"><i class="fas fa-edit"></i>LAYANAN PENDAFTARAN ONLINE</div>
+    <h2>Daftar Sebelum Datang ke Puskesmas</h2>
+    <p>Silakan isi data diri Anda dengan lengkap dan benar. Data yang dikirim akan diterima oleh petugas puskesmas untuk diproses lebih lanjut pada saat Anda datang berobat.</p>
+</section>
+
+<div class="main-wrap">
+
+    <div class="info-grid">
+        <div class="info-card">
+            <div class="ic-icon">📝</div>
+            <div>
+                <h4>Gunakan Data Asli</h4>
+                <p>Pastikan Nama dan NIK/No. Kartu BPJS diisi sesuai dengan KTP atau KK pasien.</p>
+            </div>
+        </div>
+        <div class="info-card orange">
+            <div class="ic-icon">📋</div>
+            <div>
+                <h4>Wajib Isi Lengkap</h4>
+                <p>Isi semua bidang isian bertanda * agar pendaftaran dapat divalidasi dengan cepat.</p>
+            </div>
+        </div>
+        <div class="info-card accent">
+            <div class="ic-icon">📲</div>
+            <div>
+                <h4>Kirim ke Petugas</h4>
+                <p>Setelah kirim data di web, teruskan template pesan yang terbentuk ke WhatsApp Petugas Loket.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-card" id="formCard">
+        <div class="form-header">
+            <h3><i class="fas fa-user-plus" style="margin-right:8px"></i>Formulir Identitas Pasien</h3>
+            <p>Puskesmas Dirgahayu — Kabupaten Kotabaru, Kalimantan Selatan</p>
+        </div>
+        <div class="form-body">
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Tanggal Rencana Berobat <span class="req">*</span></label>
+                    <input type="date" id="r-tanggal">
+                    <span class="err-msg" id="err-tanggal">Tanggal kunjungan wajib diisi</span>
+                </div>
+
+                <div class="form-group">
+                    <label>Jenis Pembiayaan <span class="req">*</span></label>
+                    <select id="r-biaya">
+                        <option value="">— Pilih Pembiayaan —</option>
+                        <option>BPJS Kesehatan / JKN</option>
+                        <option>Umum / Mandiri</option>
+                        <option>Jamkesda</option>
+                    </select>
+                    <span class="err-msg" id="err-biaya">Pilih jenis pembiayaan</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Poliklinik Tujuan <span class="req">*</span></label>
+                <div class="poli-grid" id="poliGrid">
+                    <div class="poli-pill" onclick="pilihPoli(this,'Ruang Pelayanan Kesehatan Umum Dewasa/Lansia')">🩺 Ruang Pelayanan Kesehatan Umum Dewasa/Lansia</div>
+                    <div class="poli-pill" onclick="pilihPoli(this,'Ruang Kesehatan Gigi & Mulut')">🦷 Ruang Kesehatan Gigi & Mulut</div>
+                    <div class="poli-pill" onclick="pilihPoli(this,'Ruang KIA')">👶 Ruang KIA</div>
+                    <div class="poli-pill" onclick="pilihPoli(this,'Ruang MTBS/Anak')">🧒 Ruang MTBS/Anak</div>
+                    <div class="poli-pill" onclick="pilihPoli(this,'Ruang PKPR/Remaja')">🧑‍🎓 Ruang PKPR/Remaja</div>
+                    <div class="poli-pill" onclick="pilihPoli(this,'Ruang Pelayanan Gizi')">🍏 Ruang Pelayanan Gizi</div>
+                    <div class="poli-pill" onclick="pilihPoli(this,'Ruang Pelayanan Imunisasi')">💉 Ruang Pelayanan Imunisasi</div>
+                    <div class="poli-pill" onclick="pilihPoli(this,'Ruang Tindakan')">🩹 Ruang Tindakan</div>
+                    <div class="poli-pill" onclick="pilihPoli(this,'Ruang Pelayanan Penyakit Menular (TB/HIV/Sifilis/Hepatitis/Kusta)')">🦠 Ruang Pelayanan Penyakit Menular</div>
+                    <div class="poli-pill" onclick="pilihPoli(this,'KIE Kesehatan')">📢 KIE Kesehatan</div>
+                </div>
+                <input type="hidden" id="r-poli">
+                <span class="err-msg" id="err-poli">Pilih poliklinik tujuan berobat</span>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Nama Lengkap Pasien <span class="req">*</span></label>
+                    <input type="text" id="r-nama" placeholder="Isi Nama sesuai KTP atau KK pasien">
+                    <span class="err-msg" id="err-nama">Nama lengkap pasien wajib diisi</span>
+                </div>
+
+                <div class="form-group">
+                    <label>Nomor NIK / Kartu JKN BPJS <span class="req">*</span></label>
+                    <input type="number" id="r-nik" placeholder="Masukkan 16 digit NIK atau nomor kartu">
+                    <span class="err-msg" id="err-nik">NIK/No. BPJS wajib diisi (minimal 13 digit)</span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Tanggal Lahir Pasien <span class="req">*</span></label>
+                    <input type="date" id="r-tgllahir">
+                    <span class="err-msg" id="err-tgllahir">Tanggal lahir pasien wajib diisi</span>
+                </div>
+
+                <div class="form-group">
+                    <label>No. HP / WhatsApp Aktif <span class="req">*</span></label>
+                    <input type="tel" id="r-hp" placeholder="Contoh: 0812xxxxxxxx" maxlength="15">
+                    <span class="err-msg" id="err-hp">Nomor kontak wajib diisi untuk konfirmasi antrian</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Alamat Rumah Tempat Tinggal <span class="req">*</span></label>
+                <textarea id="r-alamat" placeholder="Tuliskan nama jalan, RT/RW, kelurahan/desa, dan kecamatan tempat tinggal saat ini..." maxlength="500"></textarea>
+                <span class="err-msg" id="err-alamat">Alamat lengkap pasien wajib diisi</span>
+            </div>
+
+            <button class="submit-btn" onclick="submitRegistrasi()" id="submitBtn">
+                <i class="fas fa-paper-plane"></i> Daftarkan Sekarang
+            </button>
+
+        </div>
+    </div>
+
+    <div class="hasil-panel" id="hasilPanel">
+        <div class="hasil-card">
+            <div class="hasil-header">
+                <div class="h-icon">✅</div>
+                <h3>Pra-Pendaftaran Berhasil Terkirim!</h3>
+                <p>Data identitas Anda telah terekam. Silakan teruskan berkas identitas ini ke WhatsApp petugas loket.</p>
+            </div>
+            <div class="hasil-body">
+
+                <div class="ringkasan-box">
+                    <h4><i class="fas fa-clipboard-check" style="margin-right:6px"></i>Ringkasan Identitas Pasien</h4>
+                    <div id="ringkasanIsi"></div>
+                </div>
+
+                <div class="template-box">
+                    <h4><i class="fab fa-whatsapp"></i> Format Pesan untuk WhatsApp Petugas</h4>
+                    <p style="font-size:0.78em;color:#1b5e20;margin-bottom:10px;line-height:1.55;">
+                        Salin teks di bawah ini lalu kirimkan ke nomor WhatsApp resmi petugas pendaftaran untuk validasi berkas fisik dan pencetakan nomor antrian loket.
+                    </p>
+                    <div class="template-text" id="templateWA"></div>
+                </div>
+
+                <div class="action-row">
+                    <button class="act-btn copy" onclick="copyTemplate()" id="copyBtn">
+                        <i class="fas fa-copy"></i> Salin Format
+                    </button>
+                    <a href="#" target="_blank" rel="noopener" class="act-btn wa" id="waBtn">
+                        <i class="fab fa-whatsapp"></i> Hubungi WhatsApp Petugas
+                    </a>
+                    <button class="act-btn primary" onclick="resetForm()">
+                        <i class="fas fa-plus-circle"></i> Pendaftaran Baru
+                    </button>
+                    <a href="index.html" class="act-btn">
+                        <i class="fas fa-home"></i> Beranda
+                    </a>
+                </div>
+
+                <div class="catatan-box">
+                    <i class="fas fa-info-circle" style="margin-right:6px"></i>
+                    <strong>Penting:</strong> Setelah mengirim pesan WhatsApp, harap datang pada tanggal rencana berobat dengan membawa **KTP/KK asli** serta **Kartu BPJS (jika menggunakan jalur BPJS)** untuk verifikasi ulang di meja loket pendaftaran.
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer style="text-align:center;padding:32px;color:var(--primary);font-size:0.86em;border-top:1px solid var(--border);">
+    <p>SI-Dirgahayu &copy; 2026 | Puskesmas Dirgahayu — Kec. Pulau Laut Utara, Kab. Kotabaru</p>
+</footer>
+
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMsg">Berhasil!</span></div>
+
+<!-- ── MODAL EVALUASI HTML (TAMBAHAN BARU) ── -->
+<div class="dev-modal-overlay" id="devModalOverlay">
+    <div class="dev-modal">
+        <div class="dev-modal-icon"><i class="fas fa-tools"></i></div>
+        <h3>Fitur Pendaftaran Sedang Dalam Pengembangan</h3>
+        <p>Layanan pendaftaran online saat ini masih dalam tahap evaluasi dan pengembangan. Fitur akan tersedia setelah siap digunakan.</p>
+        <button class="dev-modal-btn" onclick="closeDevModal()">Mengerti</button>
+    </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+// GANTI DENGAN URL WEB APP DARI GOOGLE APPS SCRIPT YANG BARU
+// ══════════════════════════════════════════════════════════════
+const SCRIPT_URL_REGISTRASI = 'https://script.google.com/macros/s/AKfycbywyDFN0HiM4HGCTym4NERgte_D0naa13bzHOawmyF5QjFV7u5RrstkYHNtTcmJxNHp/exec';
+
+// NOMOR WHATSAPP PETUGAS LOKET PENDAFTARAN (Ganti sesuai nomor asli faskes)
+const NO_HP_PETUGAS = "628134259201"; 
+
+let selectedPoli = '';
+let templateText = '';
+
+// ── Fungsi Tampilkan & Tutup Modal Pengembangan ──
+function showDevModal(e) {
+    if (e) e.preventDefault(); // Mencegah reload halaman
+    document.getElementById('devModalOverlay').classList.add('active');
+}
+
+function closeDevModal() {
+    document.getElementById('devModalOverlay').classList.remove('active');
+}
+
+// ── Tangkap Navigasi Menu Pendaftaran ──
+document.addEventListener('DOMContentLoaded', () => {
+    // Memberikan Modal pada link navbar pendaftaran jika ada di halaman ini
+    document.querySelectorAll('a[href="registrasi.html"]').forEach(link => {
+        // Tambahkan badge "Segera Hadir" tanpa merusak desain link asli
+        if(!link.querySelector('.badge-soon')){
+            link.innerHTML += ' <span class="badge-soon">Segera Hadir</span>';
+        }
+        link.addEventListener('click', showDevModal);
+    });
+
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    document.getElementById('r-tanggal').min = tomorrow.toISOString().split('T')[0];
+    document.getElementById('r-tanggal').value = tomorrow.toISOString().split('T')[0];
+});
+
+// ── Pilih Poliklinik ──
+function pilihPoli(el, val) {
+    document.querySelectorAll('.poli-pill').forEach(p => p.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedPoli = val;
+    document.getElementById('r-poli').value = val;
+    document.getElementById('err-poli').classList.remove('show');
+}
+
+// ── Validasi Form ──
+function validate() {
+    const checks = [
+        { id:'r-tanggal',  err:'err-tanggal',  ok: v => v !== '' },
+        { id:'r-biaya',    err:'err-biaya',    ok: v => v !== '' },
+        { id:'r-nama',     err:'err-nama',     ok: v => v.trim().length >= 2 },
+        { id:'r-nik',      err:'err-nik',      ok: v => v.trim().length >= 12 },
+        { id:'r-tgllahir', err:'err-tgllahir', ok: v => v !== '' },
+        { id:'r-hp',       err:'err-hp',       ok: v => v.trim().length >= 10 },
+        { id:'r-alamat',   err:'err-alamat',   ok: v => v.trim().length >= 8 }
+    ];
+    let ok = true, first = null;
+    checks.forEach(c => {
+        const el = document.getElementById(c.id);
+        const err = document.getElementById(c.err);
+        if (!c.ok(el.value)) { el.classList.add('error'); err.classList.add('show'); if (!first) first = el; ok = false; }
+        else { el.classList.remove('error'); err.classList.remove('show'); }
+    });
+    if (!selectedPoli) {
+        document.getElementById('err-poli').classList.add('show'); ok = false;
+    }
+    if (first) first.focus();
+    return ok;
+}
+
+// ── Submit Registrasi Pendaftaran Pasien ──
+async function submitRegistrasi() {
+    // ══════════════════════════════════════════════════════════════
+    // FITUR REGISTRASI DINONAKTIFKAN SEMENTARA (TAHAP EVALUASI)
+    // Memanggil Modal Notifikasi
+    // ══════════════════════════════════════════════════════════════
+    showDevModal();
+    return; // Eksekusi berhenti di sini, data form tidak akan terkirim.
+
+
+    // ══════════════════════════════════════════════════════════════
+    // KODE ASLI DI BAWAH INI TIDAK DIHAPUS (Hanya dinonaktifkan via return)
+    // ══════════════════════════════════════════════════════════════
+    if (!validate()) {
+        showToast('Periksa kembali data yang belum lengkap', true);
+        return;
+    }
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memproses...';
+
+    const data = {
+        tanggalKunjungan: document.getElementById('r-tanggal').value,
+        pembiayaan: document.getElementById('r-biaya').value,
+        poliTujuan: selectedPoli,
+        namaPasien: document.getElementById('r-nama').value.trim(),
+        nikJkn: document.getElementById('r-nik').value.trim(),
+        tanggalLahir: document.getElementById('r-tgllahir').value,
+        noHp: document.getElementById('r-hp').value.trim(),
+        alamat: document.getElementById('r-alamat').value.trim(),
+        timestamp: new Date().toLocaleString('id-ID')
+    };
+
+    try {
+        if (data.nikJkn.length < 13) throw new Error('NIK / No. BPJS minimal 13 digit');
+        if (data.namaPasien.length < 3) throw new Error('Nama pasien terlalu pendek');
+
+        // MENGUBAH DATA MENJADI FORM URL-ENCODED
+        const formData = new URLSearchParams();
+        for (const key in data) {
+            formData.append(key, data[key]);
+        }
+
+        // MENGIRIM DATA KE GOOGLE APPS SCRIPT
+        await fetch(SCRIPT_URL_REGISTRASI, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: formData.toString()
+        });
+
+        // Menampilkan hasil setelah fetch selesai
+        tampilkanHasil(data);
+
+    } catch (error) {
+        console.error(error);
+        let pesan = 'Tidak dapat terhubung ke server spreadsheet';
+        if (!navigator.onLine) pesan = 'Tidak ada koneksi internet';
+        showToast('❌ ' + pesan, true);
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Daftarkan Sekarang';
+    }
+}
+
+// ── Tampilkan Hasil Ringkasan Berkas & Pembuatan Template WA ──
+function tampilkanHasil(data) {
+    document.getElementById('formCard').style.display = 'none';
+
+    document.getElementById('ringkasanIsi').innerHTML = `
+        <div class="ringkasan-row"><span class="rr-label">Tgl Kunjungan</span><span class="rr-val">${formatTanggal(data.tanggalKunjungan)}</span></div>
+        <div class="ringkasan-row"><span class="rr-label">Pembiayaan</span><span class="rr-val">${data.pembiayaan}</span></div>
+        <div class="ringkasan-row"><span class="rr-label">Poli Tujuan</span><span class="rr-val">${data.poliTujuan}</span></div>
+        <div class="ringkasan-row"><span class="rr-label">Nama Pasien</span><span class="rr-val">${data.namaPasien}</span></div>
+        <div class="ringkasan-row"><span class="rr-label">NIK / No. JKN</span><span class="rr-val">${data.nikJkn}</span></div>
+        <div class="ringkasan-row"><span class="rr-label">Tanggal Lahir</span><span class="rr-val">${formatTanggal(data.tanggalLahir)}</span></div>
+        <div class="ringkasan-row"><span class="rr-label">No. HP Aktif</span><span class="rr-val">${data.noHp}</span></div>
+        <div class="ringkasan-row"><span class="rr-label">Alamat Lengkap</span><span class="rr-val">${data.alamat}</span></div>
+    `;
+
+    templateText =
+`*PENDAFTARAN MANDIRI PASIEN - SI-Dirgahayu*
+==============================
+Rencana Kunjungan : ${formatTanggal(data.tanggalKunjungan)}
+Jalur Pembiayaan  : ${data.pembiayaan}
+Poliklinik Tujuan : ${data.poliTujuan}
+
+*DATA IDENTITAS PASIEN:*
+Nama Lengkap    : ${data.namaPasien}
+NIK / No. Kartu : ${data.nikJkn}
+Tanggal Lahir   : ${formatTanggal(data.tanggalLahir)}
+No. HP Kontak   : ${data.noHp}
+Alamat Rumah    : ${data.alamat}
+==============================
+Mohon divalidasi datanya untuk diproses berkas antrian loket pendaftarannya. Terima kasih!`;
+
+    document.getElementById('templateWA').textContent = templateText;
+
+    const urlWhatsapp = `https://api.whatsapp.com/send?phone=${NO_HP_PETUGAS}&text=${encodeURIComponent(templateText)}`;
+    document.getElementById('waBtn').href = urlWhatsapp;
+
+    const panel = document.getElementById('hasilPanel');
+    panel.classList.add('show');
+    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    showToast('Berhasil mencatat pra-pendaftaran!', false);
+}
+
+function formatTanggal(d) {
+    if (!d) return '—';
+    const [y, m, day] = d.split('-');
+    const bulan = ['','Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+    return `${parseInt(day)} ${bulan[parseInt(m)]} ${y}`;
+}
+
+function copyTemplate() {
+    if (!templateText) return;
+    navigator.clipboard.writeText(templateText).then(() => {
+        showToast('Format pesan disalin! Teruskan ke WhatsApp.', false);
+        const btn = document.getElementById('copyBtn');
+        btn.innerHTML = '<i class="fas fa-check"></i> Tersalin!';
+        setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy"></i> Salin Format'; }, 2500);
+    }).catch(() => {
+        showToast('Gagal menyalin — silakan salin teks secara manual', true);
+    });
+}
+
+function resetForm() {
+    document.getElementById('formCard').style.display = 'block';
+    document.getElementById('hasilPanel').classList.remove('show');
+    document.getElementById('r-nama').value = '';
+    document.getElementById('r-nik').value = '';
+    document.getElementById('r-hp').value = '';
+    document.getElementById('r-alamat').value = '';
+    document.getElementById('r-biaya').selectedIndex = 0;
+    selectedPoli = ''; templateText = '';
+    document.querySelectorAll('.poli-pill').forEach(p => p.classList.remove('selected'));
+    
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('r-tanggal').value = today;
+    document.getElementById('r-tgllahir').value = '';
+    
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-paper-plane"></i> Daftarkan Sekarang';
+    document.getElementById('formCard').scrollIntoView({ behavior: 'smooth' });
+}
+
+function showToast(msg, isErr=false) {
+    const t = document.getElementById('toast');
+    document.getElementById('toastMsg').textContent = msg;
+    t.className = 'toast' + (isErr ? ' err' : '');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 4000);
+}
+</script>
+</body>
+</html>
