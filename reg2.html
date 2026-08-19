@@ -54,7 +54,7 @@
         .info-card p { font-size: 0.76em; color: var(--text-muted); line-height: 1.55; }
 
         /* ── FORM CARD ── */
-        .form-card { background: var(--white); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+        .form-card { position: relative; background: var(--white); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
         .form-header { background: linear-gradient(135deg, var(--primary-dark), var(--primary)); padding: 22px 28px; color: #fff; }
         .form-header h3 { font-family: 'Montserrat', sans-serif; font-size: 1.1em; font-weight: 900; margin-bottom: 4px; }
         .form-header p { font-size: 0.78em; opacity: 0.85; }
@@ -88,6 +88,67 @@
         .submit-btn { width: 100%; padding: 15px; background: linear-gradient(135deg, var(--primary-dark), var(--primary)); color: #fff; border: none; border-radius: 12px; font-family: 'Poppins', sans-serif; font-size: 0.95em; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.2s; box-shadow: 0 4px 16px rgba(0,121,107,0.3); margin-top: 8px; }
         .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,121,107,0.35); }
         .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        /* ── EFEK BLUR OVERLAY (PENGEMBANGAN) ── */
+        .form-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 30px;
+            border-radius: 20px;
+        }
+        .form-overlay-icon {
+            font-size: 3.5em;
+            color: var(--orange);
+            margin-bottom: 15px;
+            filter: drop-shadow(0 4px 12px rgba(230,81,0,0.2));
+        }
+        .form-overlay h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.4em;
+            font-weight: 900;
+            color: var(--text);
+            margin-bottom: 10px;
+        }
+        .form-overlay p {
+            font-size: 0.9em;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            line-height: 1.6;
+            max-width: 480px;
+        }
+        .form-overlay-btns {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .form-overlay-btn {
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85em;
+            font-weight: 700;
+            text-decoration: none;
+            color: white;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .btn-jkn { background: #1565c0; }
+        .btn-jkn:hover { background: #0d47a1; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(21,101,192,0.3); }
+        .btn-klinisia { background: var(--primary); }
+        .btn-klinisia:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,121,107,0.3); }
 
         /* ── HASIL / SUKSES ── */
         .hasil-panel { display: none; }
@@ -144,7 +205,7 @@
         .dev-modal-btn:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,121,107,0.3); }
 
         /* ── RESPONSIVE ── */
-        @media (max-width: 620px) { .form-row { grid-template-columns: 1fr; } .hero h2 { font-size: 1.5em; } .action-row { flex-direction: column; } }
+        @media (max-width: 620px) { .form-row { grid-template-columns: 1fr; } .hero h2 { font-size: 1.5em; } .action-row { flex-direction: column; } .form-overlay h3 { font-size: 1.2em; } }
 
         /* ── PRINT ── */
         @media print { .site-header, .hero, .back-btn, .action-row, .submit-btn, .form-card { display: none !important; } .hasil-panel.show { display: block !important; } }
@@ -191,7 +252,24 @@
         </div>
     </div>
 
+    <!-- FORMAT KARTU FORM DENGAN EFEK BLUR OVERLAY -->
     <div class="form-card" id="formCard">
+        
+        <!-- OVERLAY BLUR PENGEMBANGAN (Menutupi seluruh form aslinya) -->
+        <div class="form-overlay">
+            <div class="form-overlay-icon"><i class="fas fa-tools"></i></div>
+            <h3>Fitur Masih Dalam Tahap Pengembangan</h3>
+            <p>Layanan pendaftaran mandiri SI-Dirgahayu saat ini masih dalam tahap evaluasi. Untuk sementara, silakan daftar melalui aplikasi resmi berikut:</p>
+            <div class="form-overlay-btns">
+                <a href="https://play.google.com/store/apps/details?id=app.bpjs.mobile" target="_blank" rel="noopener" class="form-overlay-btn btn-jkn">
+                    <i class="fab fa-google-play"></i> Mobile JKN
+                </a>
+                <a href="https://www.klinisia.id/" target="_blank" rel="noopener" class="form-overlay-btn btn-klinisia">
+                    <i class="fas fa-mobile-alt"></i> Klinisia Umum
+                </a>
+            </div>
+        </div>
+
         <div class="form-header">
             <h3><i class="fas fa-user-plus" style="margin-right:8px"></i>Formulir Identitas Pasien</h3>
             <p>Puskesmas Dirgahayu — Kabupaten Kotabaru, Kalimantan Selatan</p>
@@ -329,7 +407,7 @@
 
 <div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMsg">Berhasil!</span></div>
 
-<!-- ── MODAL EVALUASI HTML (TAMBAHAN BARU) ── -->
+<!-- ── MODAL EVALUASI HTML (UNTUK LINK NAVBAR) ── -->
 <div class="dev-modal-overlay" id="devModalOverlay">
     <div class="dev-modal">
         <div class="dev-modal-icon"><i class="fas fa-tools"></i></div>
@@ -416,11 +494,8 @@ function validate() {
 async function submitRegistrasi() {
     // ══════════════════════════════════════════════════════════════
     // FITUR REGISTRASI DINONAKTIFKAN SEMENTARA (TAHAP EVALUASI)
-    // Memanggil Modal Notifikasi
     // ══════════════════════════════════════════════════════════════
-    showDevModal();
-    return; // Eksekusi berhenti di sini, data form tidak akan terkirim.
-
+    return; // Eksekusi berhenti di sini, karena form aslinya juga sudah ditutup efek Blur.
 
     // ══════════════════════════════════════════════════════════════
     // KODE ASLI DI BAWAH INI TIDAK DIHAPUS (Hanya dinonaktifkan via return)
