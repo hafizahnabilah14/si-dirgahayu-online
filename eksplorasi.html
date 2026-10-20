@@ -67,6 +67,7 @@
         .stat-box { background: var(--white); border-radius: 14px; padding: 16px 14px; text-align: center; box-shadow: var(--shadow); }
         .stat-box .sb-num { font-family: 'Montserrat', sans-serif; font-size: 2em; font-weight: 900; color: var(--primary); line-height: 1; }
         .stat-box .sb-label { font-size: 0.72em; color: var(--text-muted); margin-top: 5px; line-height: 1.4; font-weight: 500; }
+        .sdm-private-content { filter: blur(6px); user-select: none; pointer-events: none; }
 
         /* ── TABEL SDM ── */
         .tabel-wrap { background: var(--white); border-radius: 18px; box-shadow: var(--shadow); overflow: hidden; }
@@ -249,6 +250,7 @@
         </div>
         <div class="section-divider"></div>
 
+        <div class="sdm-private-content" aria-label="Konten data SDM disamarkan untuk menjaga privasi" aria-hidden="true">
         <!-- Statistik ringkas -->
         <div class="stat-row">
             <div class="stat-box"><div class="sb-num">88</div><div class="sb-label">Total Pegawai</div></div>
@@ -301,6 +303,7 @@
                 <span id="rowCount">Menampilkan 88 dari 88 pegawai</span>
                 <span style="color:var(--text-muted)">Data Kepegawaian Puskesmas Dirgahayu — Tahun 2026</span>
             </div>
+        </div>
         </div>
     </section>
 
